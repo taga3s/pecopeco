@@ -3,7 +3,7 @@
 │   ├── root.go
 │   ├── your_command.go
 │   └── your_other_command.go
-├── internal
+├── core
 │   ├── usecase
 │   │   ├── user.go
 │   │   └── user_test.go
