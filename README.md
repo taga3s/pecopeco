@@ -50,3 +50,53 @@ API に、REST API を利用する。以下の 2 つのポイントから選定�
 ### 開発環境
 
 - [Docker](https://docs.docker.com/)
+
+## 環境構築
+
+### 共通事項
+
+1.  `/cli`と`/service`にある`.env.example`をそれぞれコピーして、`.env`として配置します。
+
+```sh
+cp .env.example .env
+```
+
+2. cli, api, db のコンテナを全て起動します。
+
+```sh
+make run
+```
+
+### cli, api コンテナに接続し、Go を実行する
+
+1. コンテナに接続します。
+
+```sh
+make it-cli
+```
+
+or
+
+```sh
+make it-api
+```
+
+2. main.go を実行します。
+
+```sh
+go run main.go
+```
+
+### db コンテナに接続し、mysql に root ユーザとしてログインする
+
+1. コンテナに接続します。
+
+```sh
+make it-db
+```
+
+2. mysql に root ユーザとしてログインします。
+
+```sh
+mysql -uroot -ppeco_password
+```

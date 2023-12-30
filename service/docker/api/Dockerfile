@@ -9,7 +9,7 @@ RUN apk update \
     && apk add --no-cache git \
     && apk add bash 
 
-COPY ./go.mod .
-COPY ./go.sum .
+COPY ./service/go.mod .
+COPY ./service/go.sum .
 
 RUN go mod download
