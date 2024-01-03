@@ -11,8 +11,6 @@ services:
       - 6000:6001
     volumes:
       - ./cli:/app
-    depends_on:
-      - api
     env_file: ./cli/.env
 
   api:

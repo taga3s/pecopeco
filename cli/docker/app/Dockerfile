@@ -9,6 +9,8 @@ RUN apk update \
     && apk add --no-cache git \
     && apk add bash 
 
+RUN go install github.com/spf13/cobra-cli@latest
+
 COPY ./cli/go.mod .
 COPY ./cli/go.sum .
 
