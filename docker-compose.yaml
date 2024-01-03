@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  cli:
+    container_name: cli
+    tty: true
+    build:
+      context: .
+      dockerfile: ./cli/docker/app/Dockerfile
+    ports:
+      - 6000:6001
+    volumes:
+      - ./cli:/app
+    depends_on:
+      - api
+    env_file: ./cli/.env
+
+  api:
+    container_name: api
+    tty: true
+    build:
+      context: .
+      dockerfile: ./service/docker/api/Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./service:/app
+    depends_on:
+      - db
+    env_file: ./service/.env
+
+  db:
+    container_name: db
+    build:
+      context: .
+      dockerfile: ./service/docker/db/Dockerfile
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: peco_password
+      MYSQL_DATABASE: peco_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./service/docker/db/script:/docker-entrypoint-initdb.d
+volumes:
+  mysql-data:
