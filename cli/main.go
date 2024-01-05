@@ -1,7 +1,10 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+*/
 package main
 
-import "fmt"
+import "github.com/Seiya-Tagami/pecopeco-cli/cmd"
 
 func main() {
-	fmt.Println("This is cli app.")
+	cmd.Execute()
 }
