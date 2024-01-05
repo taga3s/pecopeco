@@ -20,7 +20,7 @@ var runCmd = &cobra.Command{
 func selectOption() {
 	prompt := promptui.Select{
 		Label: "What would you like to do?",
-		Items: []string{"search food", "show favorites", "exit"},
+		Items: []string{"Search food", "Show favorites", "Exit"},
 	}
 
 	_, result, err := prompt.Run()
@@ -31,12 +31,12 @@ func selectOption() {
 	}
 
 	switch result {
-	case "search food":
+	case "Search food":
 		fmt.Printf("%s called\n", result)
-	case "show your favorites":
+	case "Show favorites":
 		fmt.Printf("%s called\n", result)
-	case "exit":
-		fmt.Print("bye!\n")
+	case "Exit":
+		fmt.Print("Bye!\n")
 		os.Exit(1)
 	}
 }
