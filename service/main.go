@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"context"
+
+	"github.com/Seiya-Tagami/pecopeco-service/internal/server"
+)
 
 func main() {
-	fmt.Println("This is api.")
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	server.Run(ctx)
 }
