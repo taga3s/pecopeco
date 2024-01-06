@@ -8,7 +8,7 @@ import (
 )
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
-	db, err := db.NewMySQL()
+	err := db.CheckConnection()
 	if err != nil {
 		res := HealthResponse{
 			Status:  http.StatusServiceUnavailable,
@@ -18,8 +18,6 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 		responder.RespondJson(w, res, res.Status)
 		return
 	}
-	defer db.Close()
-
 	res := HealthResponse{
 		Status:  http.StatusOK,
 		Message: "success to connect database",

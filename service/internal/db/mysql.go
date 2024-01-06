@@ -8,10 +8,12 @@ import (
 	"github.com/go-sql-driver/mysql"
 )
 
-func NewMySQL() (*sql.DB, error) {
+var sqlDB *sql.DB
+
+func NewMySQL() {
 	jst, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 	conf := config.GetDBConfig()
 	c := mysql.Config{
@@ -26,11 +28,19 @@ func NewMySQL() (*sql.DB, error) {
 	}
 	db, err := sql.Open("mysql", c.FormatDSN())
 	if err != nil {
-		return nil, err
-	}
-	if err := db.Ping(); err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	return db, nil
+	sqlDB = db
+}
+
+func CloseDB() {
+	sqlDB.Close()
+}
+
+func CheckConnection() error {
+	if err := sqlDB.Ping(); err != nil {
+		return err
+	}
+	return nil
 }
