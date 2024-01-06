@@ -2,7 +2,6 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 	"time"
 
 	"github.com/Seiya-Tagami/pecopeco-service/internal/config"
@@ -25,7 +24,6 @@ func NewMySQL() (*sql.DB, error) {
 		Collation: "utf8mb4_0900_ai_ci",
 		Loc:       jst,
 	}
-	fmt.Println(c.FormatDSN())
 	db, err := sql.Open("mysql", c.FormatDSN())
 	if err != nil {
 		return nil, err
