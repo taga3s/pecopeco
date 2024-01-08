@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Seiya-Tagami/pecopeco-service/internal/db"
 	"github.com/Seiya-Tagami/pecopeco-service/internal/server"
@@ -11,7 +12,11 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	db.NewMySQL()
+	err := db.NewMySQL()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	defer db.CloseDB()
 
 	server.Run(ctx)

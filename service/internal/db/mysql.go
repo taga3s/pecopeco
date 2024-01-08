@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 
 	"github.com/Seiya-Tagami/pecopeco-service/internal/config"
@@ -10,10 +11,11 @@ import (
 
 var sqlDB *sql.DB
 
-func NewMySQL() {
+func NewMySQL() error {
 	jst, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
-		panic(err)
+		err := fmt.Errorf("Error occurred while loading the 'Asia/Tokyo' time zone: %v", err)
+		return err
 	}
 	conf := config.GetDBConfig()
 	c := mysql.Config{
@@ -28,10 +30,13 @@ func NewMySQL() {
 	}
 	db, err := sql.Open("mysql", c.FormatDSN())
 	if err != nil {
-		panic(err)
+		err := fmt.Errorf("Error occurred while loading the 'Asia/Tokyo' time zone: %v", err)
+		return err
 	}
 
 	sqlDB = db
+
+	return nil
 }
 
 func CloseDB() {

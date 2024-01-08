@@ -41,6 +41,6 @@ func Run(ctx context.Context) {
 	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		os.Exit(1)
+		log.Fatalf("Shutdown Error: %v", err)
 	}
 }
