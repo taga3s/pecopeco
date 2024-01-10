@@ -2,7 +2,6 @@ package food
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -22,7 +21,6 @@ func (r *repository) GetFoodList(request GetFoodListRequest) (GetFoodListRespons
 	uri := os.Getenv("HOTPEPPER_API_URL")
 	key := os.Getenv("HOTPEPPER_API_KEY")
 
-	fmt.Println(uri + "/?key=" + key + "&keyword=" + request.City + "," + request.Food + "&count=100&format=json")
 	req, _ := http.NewRequest("GET", uri+"/?key="+key+"&keyword="+request.City+","+request.Food+"&count=100&format=json", nil)
 
 	client := http.Client{}
