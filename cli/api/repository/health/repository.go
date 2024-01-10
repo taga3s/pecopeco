@@ -1,10 +1,7 @@
 package health
 
 import (
-	"encoding/json"
-	"io"
-	"net/http"
-	"os"
+	"github.com/Seiya-Tagami/pecopeco-cli/api/client/app"
 )
 
 type Repository interface {
@@ -18,22 +15,9 @@ func New() Repository {
 }
 
 func (r *repository) HealthCheck() (HealthCheckResponse, error) {
-	uri := os.Getenv("API_URI")
-	req, _ := http.NewRequest("GET", uri+"/health-check", nil)
-
-	client := http.Client{}
-	res, err := client.Do(req)
-	if err != nil {
-		return HealthCheckResponse{}, err
-	}
-	defer res.Body.Close()
-
-	byteArray, _ := io.ReadAll(res.Body)
-
 	healthCheckResponse := HealthCheckResponse{}
-	if err := json.Unmarshal(byteArray, &healthCheckResponse); err != nil {
-		return HealthCheckResponse{}, err
+	if err := app.HttpClient("GET", "/health-check", nil, &healthCheckResponse); err != nil {
+		return healthCheckResponse, nil
 	}
-
 	return healthCheckResponse, nil
 }
