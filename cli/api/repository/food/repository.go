@@ -2,13 +2,15 @@ package food
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 )
 
 type Repository interface {
-	GetFoodList(request GetFoodListRequest) (GetFoodListResponse, error)
+	List(request ListRequest) (ListResponse, error)
 }
 
 type repository struct{}
@@ -17,23 +19,31 @@ func New() Repository {
 	return &repository{}
 }
 
-func (r *repository) GetFoodList(request GetFoodListRequest) (GetFoodListResponse, error) {
+func (r *repository) List(request ListRequest) (ListResponse, error) {
 	uri := os.Getenv("HOTPEPPER_API_URL")
 	key := os.Getenv("HOTPEPPER_API_KEY")
 
-	req, _ := http.NewRequest("GET", uri+"/?key="+key+"&keyword="+request.City+","+request.Food+"&count=100&format=json", nil)
+	queryParams := url.Values{}
+	queryParams.Add("key", key)
+	queryParams.Add("keyword", fmt.Sprintf("%s,%s", request.City, request.Food))
+	queryParams.Add("count", "100")
+	queryParams.Add("format", "json")
+
+	fullURL := fmt.Sprintf("%s?%s", uri, queryParams.Encode())
+
+	req, _ := http.NewRequest("GET", fullURL, nil)
 
 	client := http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
-		return GetFoodListResponse{}, err
+		return ListResponse{}, err
 	}
 	defer res.Body.Close()
 
 	byteArray, _ := io.ReadAll(res.Body)
-	getFoodListResponse := GetFoodListResponse{}
-	if err := json.Unmarshal(byteArray, &getFoodListResponse); err != nil {
-		return GetFoodListResponse{}, err
+	listResponse := ListResponse{}
+	if err := json.Unmarshal(byteArray, &listResponse); err != nil {
+		return ListResponse{}, err
 	}
-	return getFoodListResponse, nil
+	return listResponse, nil
 }

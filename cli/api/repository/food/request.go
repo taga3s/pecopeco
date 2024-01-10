@@ -1,6 +1,6 @@
 package food
 
-type GetFoodListRequest struct {
+type ListRequest struct {
 	City string
 	Food string
 }

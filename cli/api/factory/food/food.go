@@ -16,8 +16,8 @@ func CreateFactory() model.FoodFactory {
 	return &factory{repository}
 }
 
-func (f *factory) GetFoodList(request food.GetFoodListRequest) ([]model.Food, error) {
-	res, err := f.repository.GetFoodList(request)
+func (f *factory) ListFood(request food.ListRequest) ([]model.Food, error) {
+	res, err := f.repository.List(request)
 	if err != nil {
 		err := fmt.Errorf("Failed to implement Get FoodList: %v", err)
 		return []model.Food{}, err

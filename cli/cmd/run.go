@@ -39,12 +39,12 @@ func selectOption() {
 		factory := foodFactory.CreateFactory()
 
 		searchFoodInput := getSearchFoodInput()
-		request := food.GetFoodListRequest{
+		request := food.ListRequest{
 			City: searchFoodInput.city,
 			Food: searchFoodInput.food,
 		}
 
-		foodList, err := factory.GetFoodList(request)
+		foodList, err := factory.ListFood(request)
 		if err != nil {
 			fmt.Println(err)
 			return

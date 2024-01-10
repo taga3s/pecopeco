@@ -1,6 +1,6 @@
 package food
 
-type GetFoodListResponse struct {
+type ListResponse struct {
 	Results struct {
 		Shop []struct {
 			Name        string `json:"name"`

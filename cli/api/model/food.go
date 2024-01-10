@@ -11,5 +11,5 @@ type Food struct {
 }
 
 type FoodFactory interface {
-	GetFoodList(request food.GetFoodListRequest) ([]Food, error)
+	ListFood(request food.ListRequest) ([]Food, error)
 }
