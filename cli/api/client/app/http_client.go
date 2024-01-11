@@ -6,11 +6,15 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 )
 
 func HttpClient(method string, endpoint string, request interface{}, response interface{}) error {
 	uri := os.Getenv("API_URI")
-	req, _ := http.NewRequest(method, uri+endpoint, nil)
+	req, err := http.NewRequest(method, uri+endpoint, nil)
+	if err != nil {
+		return err
+	}
 
 	if request != nil {
 		req.Header.Set("Content-Type", "application/json")
@@ -21,14 +25,17 @@ func HttpClient(method string, endpoint string, request interface{}, response in
 		req.Body = io.NopCloser(bytes.NewBuffer(reqBody))
 	}
 
-	client := http.Client{}
+	client := http.Client{Timeout: 30 * time.Second}
 	res, err := client.Do(req)
 	if err != nil {
 		return err
 	}
 	defer res.Body.Close()
 
-	byteArray, _ := io.ReadAll(res.Body)
+	byteArray, err := io.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
 
 	if err := json.Unmarshal(byteArray, response); err != nil {
 		return err

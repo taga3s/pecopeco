@@ -23,7 +23,7 @@ func (f *factory) ListFood(request food.ListRequest) ([]model.Food, error) {
 		return []model.Food{}, err
 	}
 
-	foodList := []model.Food{}
+	foodList := make([]model.Food, 0, len(res.Results.Shop))
 
 	for _, v := range res.Results.Shop {
 		food := model.Food{

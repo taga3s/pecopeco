@@ -5,21 +5,28 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 )
 
 func HttpClient(method string, queryParams string, response interface{}) error {
 	uri := os.Getenv("HOTPEPPER_API_URL")
 	key := os.Getenv("HOTPEPPER_API_KEY")
-	req, _ := http.NewRequest(method, uri+"/?key="+key+queryParams, nil)
+	req, err := http.NewRequest(method, uri+"/?key="+key+queryParams, nil)
+	if err != nil {
+		return err
+	}
 
-	client := http.Client{}
+	client := http.Client{Timeout: 30 * time.Second}
 	res, err := client.Do(req)
 	if err != nil {
 		return err
 	}
 	defer res.Body.Close()
 
-	byteArray, _ := io.ReadAll(res.Body)
+	byteArray, err := io.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
 
 	if err := json.Unmarshal(byteArray, response); err != nil {
 		return err
