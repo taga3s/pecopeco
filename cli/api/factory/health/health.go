@@ -7,11 +7,15 @@ import (
 	"github.com/Seiya-Tagami/pecopeco-cli/api/repository/health"
 )
 
+type HealthFactory interface {
+	HealthCheck() (model.Health, error)
+}
+
 type factory struct {
 	repository health.Repository
 }
 
-func CreateFactory() model.HealthFactory {
+func CreateFactory() HealthFactory {
 	repository := health.New()
 	return &factory{repository}
 }

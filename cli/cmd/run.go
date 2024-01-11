@@ -8,7 +8,6 @@ import (
 	"unicode/utf8"
 
 	foodFactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/food"
-	"github.com/Seiya-Tagami/pecopeco-cli/api/repository/food"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -40,12 +39,12 @@ func selectOption() {
 		factory := foodFactory.CreateFactory()
 
 		searchFoodInput := getSearchFoodInput()
-		request := food.ListRequest{
+		params := foodFactory.ListFoodParams{
 			City: searchFoodInput.city,
 			Food: searchFoodInput.food,
 		}
 
-		foodList, err := factory.ListFood(request)
+		foodList, err := factory.ListFood(params)
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -58,6 +57,7 @@ func selectOption() {
 		selectOption()
 	case "Show favorites":
 		fmt.Printf("%s called\n", result)
+		selectOption()
 	case "Exit":
 		fmt.Print("Bye!\n")
 		os.Exit(1)
