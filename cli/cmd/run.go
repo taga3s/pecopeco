@@ -106,7 +106,7 @@ func getSearchFoodInput() searchFoodInput {
 		return searchFoodInput{}
 	}
 
-	return searchFoodInput{city, food}
+	return searchFoodInput{city: strings.TrimSpace(city), food: strings.TrimSpace(food)}
 }
 
 func init() {
