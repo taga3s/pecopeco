@@ -21,7 +21,7 @@ func HttpClient(method string, queryParams string, response interface{}) error {
 
 	byteArray, _ := io.ReadAll(res.Body)
 
-	if err := json.Unmarshal(byteArray, &response); err != nil {
+	if err := json.Unmarshal(byteArray, response); err != nil {
 		return err
 	}
 

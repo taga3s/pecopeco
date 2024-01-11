@@ -30,7 +30,7 @@ func HttpClient(method string, endpoint string, request interface{}, response in
 
 	byteArray, _ := io.ReadAll(res.Body)
 
-	if err := json.Unmarshal(byteArray, &response); err != nil {
+	if err := json.Unmarshal(byteArray, response); err != nil {
 		return err
 	}
 
