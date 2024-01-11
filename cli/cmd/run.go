@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 	"unicode/utf8"
 
 	foodFactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/food"
@@ -75,6 +76,9 @@ func getSearchFoodInput() searchFoodInput {
 			if utf8.RuneCountInString(input) == 0 {
 				return errors.New("Please enter a city.")
 			}
+			if strings.TrimSpace(input) == "" {
+				return errors.New("City name cannot be only whitespace.")
+			}
 			return nil
 		},
 	}
@@ -89,6 +93,9 @@ func getSearchFoodInput() searchFoodInput {
 		Validate: func(input string) error {
 			if utf8.RuneCountInString(input) == 0 {
 				return errors.New("Please enter food.")
+			}
+			if strings.TrimSpace(input) == "" {
+				return errors.New("Food name cannot be only whitespace")
 			}
 			return nil
 		},
