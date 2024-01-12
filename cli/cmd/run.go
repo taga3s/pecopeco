@@ -22,19 +22,19 @@ var runCmd = &cobra.Command{
 }
 
 func selectOption() {
-	prompt := promptui.Select{
+	promptForMode := promptui.Select{
 		Label: "What would you like to do?",
 		Items: []string{"Search food", "Show favorites", "Exit"},
 	}
 
-	_, result, err := prompt.Run()
+	_, mode, err := promptForMode.Run()
 
 	if err != nil {
 		fmt.Printf("Prompt failed%v\n", err)
 		return
 	}
 
-	switch result {
+	switch mode {
 	case "Search food":
 		factory := foodFactory.CreateFactory()
 
@@ -56,7 +56,7 @@ func selectOption() {
 
 		selectOption()
 	case "Show favorites":
-		fmt.Printf("%s called\n", result)
+		fmt.Printf("%s called\n", mode)
 		selectOption()
 	case "Exit":
 		fmt.Print("Bye!\n")
