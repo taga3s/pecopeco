@@ -36,7 +36,7 @@ API に、REST API を利用する。以下の 2 つのポイントから選定�
 - HTTP ベースで、JSON を用いるといった主流な Web 技術を利用するためシンプルに構築できる。
 - gRPC も型安全に開発を行える点で検討したが、学習コストが高いことや、今回マイクロサービスの実装を行わないため不採用にした。
 
-### 外部 API（仮）
+### 外部 API
 
 - [ホットペッパー API](https://webservice.recruit.co.jp/doc/hotpepper/reference.html)
 - [LINE Notify API](https://notify-bot.line.me/doc/ja/)
