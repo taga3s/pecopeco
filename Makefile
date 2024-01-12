@@ -24,14 +24,14 @@ stop-cli:
 
 # コンテナを停止し、 up によって作成されたコンテナ、ネットワークを削除
 .PHONY: down
-stop: down-api down-cli
+down: down-api down-cli
 
 .PHONY: down-api
-stop-api:
+down-api:
 	docker compose down api db
 
 .PHONY: down-cli
-stop-cli:
+down-cli:
 	docker compose down cli
 
 # コンテナに接続する
