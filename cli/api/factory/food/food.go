@@ -7,16 +7,24 @@ import (
 	"github.com/Seiya-Tagami/pecopeco-cli/api/repository/food"
 )
 
+type FoodFactory interface {
+	ListFood(params ListFoodParams) ([]model.Food, error)
+}
+
 type factory struct {
 	repository food.Repository
 }
 
-func CreateFactory() model.FoodFactory {
+func CreateFactory() FoodFactory {
 	repository := food.New()
 	return &factory{repository}
 }
 
-func (f *factory) ListFood(request food.ListRequest) ([]model.Food, error) {
+func (f *factory) ListFood(params ListFoodParams) ([]model.Food, error) {
+	request := food.ListRequest{
+		City: params.City,
+		Food: params.Food,
+	}
 	res, err := f.repository.List(request)
 	if err != nil {
 		err := fmt.Errorf("Failed to implement Get FoodList: %v", err)

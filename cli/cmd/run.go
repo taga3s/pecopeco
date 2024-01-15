@@ -8,7 +8,6 @@ import (
 	"unicode/utf8"
 
 	foodFactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/food"
-	"github.com/Seiya-Tagami/pecopeco-cli/api/repository/food"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -23,29 +22,29 @@ var runCmd = &cobra.Command{
 }
 
 func selectOption() {
-	prompt := promptui.Select{
+	promptForMode := promptui.Select{
 		Label: "What would you like to do?",
 		Items: []string{"Search food", "Show favorites", "Exit"},
 	}
 
-	_, result, err := prompt.Run()
+	_, mode, err := promptForMode.Run()
 
 	if err != nil {
 		fmt.Printf("Prompt failed%v\n", err)
 		return
 	}
 
-	switch result {
+	switch mode {
 	case "Search food":
 		factory := foodFactory.CreateFactory()
 
 		searchFoodInput := getSearchFoodInput()
-		request := food.ListRequest{
+		params := foodFactory.ListFoodParams{
 			City: searchFoodInput.city,
 			Food: searchFoodInput.food,
 		}
 
-		foodList, err := factory.ListFood(request)
+		foodList, err := factory.ListFood(params)
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -57,7 +56,8 @@ func selectOption() {
 
 		selectOption()
 	case "Show favorites":
-		fmt.Printf("%s called\n", result)
+		fmt.Printf("%s called\n", mode)
+		selectOption()
 	case "Exit":
 		fmt.Print("Bye!\n")
 		os.Exit(1)

@@ -16,10 +16,22 @@ stop: stop-api stop-cli
 
 .PHONY: stop-api
 stop-api:
-	docker compose down api db
+	docker compose stop api db
 
 .PHONY: stop-cli
 stop-cli:
+	docker compose stop cli
+
+# コンテナを停止し、 up によって作成されたコンテナ、ネットワークを削除
+.PHONY: down
+down: down-api down-cli
+
+.PHONY: down-api
+down-api:
+	docker compose down api db
+
+.PHONY: down-cli
+down-cli:
 	docker compose down cli
 
 # コンテナに接続する
