@@ -1,4 +1,4 @@
-package food
+package restaurant
 
 type ListRequest struct {
 	City string

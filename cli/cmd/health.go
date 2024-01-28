@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/api/factory/health"
-	"github.com/fatih/color"
+	"github.com/Seiya-Tagami/pecopeco-cli/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -22,8 +22,7 @@ var healthCmd = &cobra.Command{
 				fmt.Println(err)
 				return
 			}
-			c := color.New(color.FgHiGreen)
-			c.Printf("service health check... status: %d, message: %s\n", health.Status, health.Message)
+			ui.TextGreen().Printf("service health check... status: %d, message: %s\n", health.Status, health.Message)
 		} else {
 			panic("health: command not found.")
 		}

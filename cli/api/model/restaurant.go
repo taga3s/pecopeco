@@ -1,6 +1,6 @@
 package model
 
-type Food struct {
+type Restaurant struct {
 	Name        string
 	Address     string
 	StationName string
