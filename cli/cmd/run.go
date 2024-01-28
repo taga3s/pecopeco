@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 	"unicode/utf8"
 
 	foodFactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/food"
 	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
-	"github.com/fatih/color"
+	"github.com/Seiya-Tagami/pecopeco-cli/ui"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -30,12 +31,10 @@ func run() {
 	}
 
 	_, mode, err := promptForMode.Run()
-
 	if err != nil {
 		fmt.Printf("Prompt failed%v\n", err)
 		return
 	}
-
 	switch mode {
 	case "Search food":
 		factory := foodFactory.CreateFactory()
@@ -50,21 +49,26 @@ func run() {
 			fmt.Println(err)
 			return
 		}
+		if len(foodList) == 0 {
+			ui.TextBlue().Println("Sorry, there is no data. Please try to change the input parameters.")
+			time.Sleep(1 * time.Second)
+			run()
+		}
 
-		food, label, err := selectFood(foodList)
+		selectFoodResult, err := selectFood(foodList)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		switch label {
-		case "LINE":
-			fmt.Println(food)
-		case "favorites":
-			fmt.Println(food)
-		case "cancel":
-			run()
-		}
 
+		if selectFoodResult.addToFavorites {
+			ui.TextGreen().Println("Add to favorites!")
+		}
+		if selectFoodResult.notify {
+			ui.TextGreen().Println("Notify to your line app!")
+		}
+		time.Sleep(2 * time.Second)
+		run()
 	case "Show favorites":
 		fmt.Printf("%s called\n", mode)
 		run()
@@ -81,7 +85,7 @@ type searchFoodInput struct {
 
 func getSearchFoodInput() searchFoodInput {
 	promptForCity := promptui.Prompt{
-		Label: "Which city?",
+		Label: "> Which city?",
 		Validate: func(input string) error {
 			if utf8.RuneCountInString(input) == 0 {
 				return errors.New("Please enter a city.")
@@ -89,8 +93,12 @@ func getSearchFoodInput() searchFoodInput {
 			if strings.TrimSpace(input) == "" {
 				return errors.New("City name cannot be only whitespace.")
 			}
+			if strings.Contains(input, " ") {
+				return errors.New("City name cannot contain whitespace.")
+			}
 			return nil
 		},
+		Templates: ui.DefaultPromptTemplate(),
 	}
 	city, err := promptForCity.Run()
 	if err != nil {
@@ -99,16 +107,20 @@ func getSearchFoodInput() searchFoodInput {
 	}
 
 	promptForFood := promptui.Prompt{
-		Label: "What food?",
+		Label: "> What food?",
 		Validate: func(input string) error {
 			if utf8.RuneCountInString(input) == 0 {
 				return errors.New("Please enter food.")
 			}
 			if strings.TrimSpace(input) == "" {
-				return errors.New("Food name cannot be only whitespace")
+				return errors.New("Food name cannot be only whitespace.")
+			}
+			if strings.Contains(input, " ") {
+				return errors.New("Food name cannot contain whitespace.")
 			}
 			return nil
 		},
+		Templates: ui.DefaultPromptTemplate(),
 	}
 	food, err := promptForFood.Run()
 	if err != nil {
@@ -119,7 +131,13 @@ func getSearchFoodInput() searchFoodInput {
 	return searchFoodInput{city: strings.TrimSpace(city), food: strings.TrimSpace(food)}
 }
 
-func selectFood(foodList []model.Food) (model.Food, string, error) {
+type selectFoodResult struct {
+	food           model.Food
+	addToFavorites bool
+	notify         bool
+}
+
+func selectFood(foodList []model.Food) (selectFoodResult, error) {
 	foodMap := map[string]model.Food{}
 	options := make([]string, 0, len(foodList))
 
@@ -136,13 +154,11 @@ func selectFood(foodList []model.Food) (model.Food, string, error) {
 	_, option, err := promptForOptions.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return model.Food{}, "", err
+		return selectFoodResult{}, err
 	}
 
 	food := foodMap[option]
-
-	c := color.New(color.FgHiGreen)
-	c.Printf("---------------------\n[店名] %s\n[住所] %s\n[最寄り駅] %s\n[ジャンル] %s\n[URL] %s\n---------------------\n",
+	ui.TextGreen().Printf("---------------------\n[店名] %s\n[住所] %s\n[最寄り駅] %s\n[ジャンル] %s\n[URL] %s\n---------------------\n",
 		food.Name,
 		food.Address,
 		food.StationName,
@@ -158,27 +174,40 @@ func selectFood(foodList []model.Food) (model.Food, string, error) {
 	_, decision, err := promptForDecision.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return model.Food{}, "", err
+		return selectFoodResult{}, err
 	}
 
 	if decision == "Yes" {
-		promptForNextAction := promptui.Select{
-			Label: "What do you do?",
-			Items: []string{"Notify your LINE app", "Add to favorites", "Cancel"},
-		}
+		result := selectFoodResult{}
+		result.food = food
 
-		_, nextAction, err := promptForNextAction.Run()
+		promptForAddToFavorites := promptui.Select{
+			Label: "Add to favorites?",
+			Items: []string{"Yes", "No"},
+		}
+		_, addToFavorites, err := promptForAddToFavorites.Run()
 		if err != nil {
 			fmt.Printf("Prompt failed %v\n", err)
-			return model.Food{}, "", err
+			return selectFoodResult{}, err
 		}
-		if nextAction == "Notify your LINE app" {
-			return food, "LINE", nil
-		} else if nextAction == "Add to favorites" {
-			return food, "favorites", nil
-		} else {
-			return food, "cancel", nil
+		if addToFavorites == "Yes" {
+			result.addToFavorites = true
 		}
+
+		promptForNotify := promptui.Select{
+			Label: "Notify your LINE app?",
+			Items: []string{"Yes", "No"},
+		}
+		_, notify, err := promptForNotify.Run()
+		if err != nil {
+			fmt.Printf("Prompt failed %v\n", err)
+			return selectFoodResult{}, err
+		}
+		if notify == "Yes" {
+			result.notify = true
+		}
+
+		return result, nil
 	} else {
 		return selectFood(foodList)
 	}
