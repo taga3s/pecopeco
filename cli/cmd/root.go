@@ -9,7 +9,7 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "pecopeco-cli",
-	Short: "A food searching application",
+	Short: "A restaurant searching application",
 	Long:  "The pecopeco-cli enables you to search restaurants and register it as a favorite.",
 }
 

@@ -91,10 +91,10 @@ func getSearchRestaurantInput() searchRestaurantInput {
 				return errors.New("Please enter a city.")
 			}
 			if strings.TrimSpace(input) == "" {
-				return errors.New("City name cannot be only whitespace.")
+				return errors.New("City cannot be only whitespace.")
 			}
 			if strings.Contains(input, " ") {
-				return errors.New("City name cannot contain whitespace.")
+				return errors.New("City cannot contain whitespace.")
 			}
 			return nil
 		},
@@ -106,23 +106,23 @@ func getSearchRestaurantInput() searchRestaurantInput {
 		return searchRestaurantInput{}
 	}
 
-	promptForrestaurant := promptui.Prompt{
+	promptForRestaurant := promptui.Prompt{
 		Label: "> What restaurant?",
 		Validate: func(input string) error {
 			if utf8.RuneCountInString(input) == 0 {
 				return errors.New("Please enter restaurant.")
 			}
 			if strings.TrimSpace(input) == "" {
-				return errors.New("restaurant name cannot be only whitespace.")
+				return errors.New("Restaurant cannot be only whitespace.")
 			}
 			if strings.Contains(input, " ") {
-				return errors.New("restaurant name cannot contain whitespace.")
+				return errors.New("Restaurant cannot contain whitespace.")
 			}
 			return nil
 		},
 		Templates: ui.DefaultPromptTemplate(),
 	}
-	restaurant, err := promptForrestaurant.Run()
+	restaurant, err := promptForRestaurant.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
 		return searchRestaurantInput{}
