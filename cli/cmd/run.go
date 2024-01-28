@@ -8,7 +8,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	foodFactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/food"
+	restaurantFactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/restaurant"
 	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
 	"github.com/Seiya-Tagami/pecopeco-cli/ui"
 	"github.com/manifoldco/promptui"
@@ -27,7 +27,7 @@ var runCmd = &cobra.Command{
 func run() {
 	promptForMode := promptui.Select{
 		Label: "What would you like to do?",
-		Items: []string{"Search food", "Show favorites", "Exit"},
+		Items: []string{"Search restaurants", "Show favorites", "Exit"},
 	}
 
 	_, mode, err := promptForMode.Run()
@@ -36,35 +36,35 @@ func run() {
 		return
 	}
 	switch mode {
-	case "Search food":
-		factory := foodFactory.CreateFactory()
+	case "Search restaurants":
+		factory := restaurantFactory.CreateFactory()
 
-		searchFoodInput := getSearchFoodInput()
-		params := foodFactory.ListFoodParams{
-			City: searchFoodInput.city,
-			Food: searchFoodInput.food,
+		searchRestaurantInput := getSearchRestaurantInput()
+		params := restaurantFactory.ListRestaurantsParams{
+			City: searchRestaurantInput.city,
+			Food: searchRestaurantInput.food,
 		}
-		foodList, err := factory.ListFood(params)
+		restaurantList, err := factory.ListRestaurants(params)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		if len(foodList) == 0 {
+		if len(restaurantList) == 0 {
 			ui.TextBlue().Println("Sorry, there is no data. Please try to change the input parameters.")
 			time.Sleep(1 * time.Second)
 			run()
 		}
 
-		selectFoodResult, err := selectFood(foodList)
+		selectRestaurantResult, err := selectRestaurant(restaurantList)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 
-		if selectFoodResult.addToFavorites {
+		if selectRestaurantResult.addToFavorites {
 			ui.TextGreen().Println("Add to favorites!")
 		}
-		if selectFoodResult.notify {
+		if selectRestaurantResult.notify {
 			ui.TextGreen().Println("Notify to your line app!")
 		}
 		time.Sleep(2 * time.Second)
@@ -78,12 +78,12 @@ func run() {
 	}
 }
 
-type searchFoodInput struct {
+type searchRestaurantInput struct {
 	city string
 	food string
 }
 
-func getSearchFoodInput() searchFoodInput {
+func getSearchRestaurantInput() searchRestaurantInput {
 	promptForCity := promptui.Prompt{
 		Label: "> Which city?",
 		Validate: func(input string) error {
@@ -103,83 +103,83 @@ func getSearchFoodInput() searchFoodInput {
 	city, err := promptForCity.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return searchFoodInput{}
+		return searchRestaurantInput{}
 	}
 
-	promptForFood := promptui.Prompt{
-		Label: "> What food?",
+	promptForrestaurant := promptui.Prompt{
+		Label: "> What restaurant?",
 		Validate: func(input string) error {
 			if utf8.RuneCountInString(input) == 0 {
-				return errors.New("Please enter food.")
+				return errors.New("Please enter restaurant.")
 			}
 			if strings.TrimSpace(input) == "" {
-				return errors.New("Food name cannot be only whitespace.")
+				return errors.New("restaurant name cannot be only whitespace.")
 			}
 			if strings.Contains(input, " ") {
-				return errors.New("Food name cannot contain whitespace.")
+				return errors.New("restaurant name cannot contain whitespace.")
 			}
 			return nil
 		},
 		Templates: ui.DefaultPromptTemplate(),
 	}
-	food, err := promptForFood.Run()
+	restaurant, err := promptForrestaurant.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return searchFoodInput{}
+		return searchRestaurantInput{}
 	}
 
-	return searchFoodInput{city: strings.TrimSpace(city), food: strings.TrimSpace(food)}
+	return searchRestaurantInput{city: strings.TrimSpace(city), food: strings.TrimSpace(restaurant)}
 }
 
-type selectFoodResult struct {
-	food           model.Food
+type selectRestaurantResult struct {
+	restaurant     model.Restaurant
 	addToFavorites bool
 	notify         bool
 }
 
-func selectFood(foodList []model.Food) (selectFoodResult, error) {
-	foodMap := map[string]model.Food{}
-	options := make([]string, 0, len(foodList))
+func selectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult, error) {
+	restaurantMap := map[string]model.Restaurant{}
+	options := make([]string, 0, len(restaurantList))
 
-	for _, v := range foodList {
-		foodMap[v.Name] = v
+	for _, v := range restaurantList {
+		restaurantMap[v.Name] = v
 		options = append(options, v.Name)
 	}
 
 	promptForOptions := promptui.Select{
-		Label: "Please select following food",
+		Label: "Please select following restaurants",
 		Items: options,
 	}
 
 	_, option, err := promptForOptions.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return selectFoodResult{}, err
+		return selectRestaurantResult{}, err
 	}
 
-	food := foodMap[option]
+	restaurant := restaurantMap[option]
 	ui.TextGreen().Printf("---------------------\n[店名] %s\n[住所] %s\n[最寄り駅] %s\n[ジャンル] %s\n[URL] %s\n---------------------\n",
-		food.Name,
-		food.Address,
-		food.StationName,
-		food.GenreName,
-		food.URL,
+		restaurant.Name,
+		restaurant.Address,
+		restaurant.StationName,
+		restaurant.GenreName,
+		restaurant.URL,
 	)
 
 	promptForDecision := promptui.Select{
-		Label: "Select this food?",
+		Label: "Select this restaurant?",
 		Items: []string{"Yes", "No"},
 	}
 
 	_, decision, err := promptForDecision.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return selectFoodResult{}, err
+		return selectRestaurantResult{}, err
 	}
 
 	if decision == "Yes" {
-		result := selectFoodResult{}
-		result.food = food
+		result := selectRestaurantResult{}
+		result.restaurant = restaurant
 
 		promptForAddToFavorites := promptui.Select{
 			Label: "Add to favorites?",
@@ -188,7 +188,7 @@ func selectFood(foodList []model.Food) (selectFoodResult, error) {
 		_, addToFavorites, err := promptForAddToFavorites.Run()
 		if err != nil {
 			fmt.Printf("Prompt failed %v\n", err)
-			return selectFoodResult{}, err
+			return selectRestaurantResult{}, err
 		}
 		if addToFavorites == "Yes" {
 			result.addToFavorites = true
@@ -201,7 +201,7 @@ func selectFood(foodList []model.Food) (selectFoodResult, error) {
 		_, notify, err := promptForNotify.Run()
 		if err != nil {
 			fmt.Printf("Prompt failed %v\n", err)
-			return selectFoodResult{}, err
+			return selectRestaurantResult{}, err
 		}
 		if notify == "Yes" {
 			result.notify = true
@@ -209,7 +209,7 @@ func selectFood(foodList []model.Food) (selectFoodResult, error) {
 
 		return result, nil
 	} else {
-		return selectFood(foodList)
+		return selectRestaurant(restaurantList)
 	}
 }
 

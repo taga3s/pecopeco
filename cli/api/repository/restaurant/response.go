@@ -1,4 +1,4 @@
-package food
+package restaurant
 
 type ListResponse struct {
 	Results struct {

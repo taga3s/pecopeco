@@ -7,14 +7,15 @@ cli
 │   │   └── app
 │   │       └── http_client.go
 │   ├── factory
-│   │   └── food
-│   │       ├── food.go
+│   │   └── restaurant
+│   │       ├── restaurant.go
 │   │       └── params.go
 │   ├── model
-│   │   └── food.go
+│   │   └── restaurant.go
 │   └── repository
-│       └── food
+│       └── restaurant
 │           ├── repository.go
+│           └── request.go
 │           └── response.go
 ├── cmd
 │   ├── run.go
