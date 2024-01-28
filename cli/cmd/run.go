@@ -13,6 +13,7 @@ import (
 	"github.com/Seiya-Tagami/pecopeco-cli/ui"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var runCmd = &cobra.Command{
@@ -65,7 +66,15 @@ func run() {
 			ui.TextGreen().Println("Add to favorites!")
 		}
 		if selectRestaurantResult.notify {
-			ui.TextGreen().Println("Notify to your line app!")
+			params := restaurantFactory.NotifyRestaurantToLINEParams{
+				Restaurant: selectRestaurantResult.restaurant,
+			}
+			err := factory.NotifyRestaurantToLINE(params)
+			if err != nil {
+				fmt.Println(err)
+			} else {
+				ui.TextGreen().Println("Notify to your line app!")
+			}
 		}
 		time.Sleep(2 * time.Second)
 		run()
@@ -204,9 +213,13 @@ func selectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 			return selectRestaurantResult{}, err
 		}
 		if notify == "Yes" {
-			result.notify = true
+			// トークンがセットされていない場合、ここで弾くようにする。
+			if viper.GetString("line_notify_api_token") == "" {
+				ui.TextBlue().Println("Sorry, you have not set your personal token to notify your line app yet. To notify your line app, you can use following command.\n> pecopeco config --token <your personal token>\nFor more info, you can reach https://github.com/Seiya-Tagami/pecopeco")
+			} else {
+				result.notify = true
+			}
 		}
-
 		return result, nil
 	} else {
 		return selectRestaurant(restaurantList)

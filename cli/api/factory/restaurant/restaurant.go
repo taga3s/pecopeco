@@ -9,6 +9,7 @@ import (
 
 type RestaurantFactory interface {
 	ListRestaurants(params ListRestaurantsParams) ([]model.Restaurant, error)
+	NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) error
 }
 
 type factory struct {
@@ -27,7 +28,7 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 	}
 	res, err := f.repository.List(request)
 	if err != nil {
-		err := fmt.Errorf("Failed to implement Get restaurantList: %v", err)
+		err := fmt.Errorf("Failed to implement List: %v", err)
 		return []model.Restaurant{}, err
 	}
 
@@ -44,4 +45,20 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 		restaurantList = append(restaurantList, restaurant)
 	}
 	return restaurantList, nil
+}
+
+func (f *factory) NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) error {
+	request := restaurant.NotifyToLINERequest{
+		Name:        params.Restaurant.Name,
+		Address:     params.Restaurant.Address,
+		StationName: params.Restaurant.StationName,
+		GenreName:   params.Restaurant.GenreName,
+		URL:         params.Restaurant.URL,
+	}
+	err := f.repository.NotifyToLINE(request)
+	if err != nil {
+		err := fmt.Errorf("Failed to implement NotifyToLINE: %v", err)
+		return err
+	}
+	return nil
 }

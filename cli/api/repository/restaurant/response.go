@@ -16,3 +16,7 @@ type ListResponse struct {
 		} `json:"shop"`
 	} `json:"results"`
 }
+
+type NotifyToLINEResponse struct {
+	Status int `json:"status"`
+}
