@@ -27,8 +27,6 @@ func (r *repository) List(request ListRequest) (ListResponse, error) {
 	return listResponse, nil
 }
 
-var body map[string]string
-
 func (r *repository) NotifyToLINE(request NotifyToLINERequest) error {
 	notifyToLINEResponse := NotifyToLINEResponse{}
 	if err := notify.HttpClient("POST", fmt.Sprintf(
