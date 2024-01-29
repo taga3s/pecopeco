@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/Seiya-Tagami/pecopeco-cli/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -17,12 +18,12 @@ var configCmd = &cobra.Command{
 			fmt.Println(err)
 			return
 		}
-		viper.Set("line_notify_api_token", token)
+		viper.Set(config.LINE_NOTIFY_API_TOKEN, token)
 		if err := viper.WriteConfig(); err != nil {
 			fmt.Printf("Error writing config file: %s\n", err)
 			return
 		}
-		fmt.Println("Updated line_notify_api_token:", viper.GetString("line_notify_api_token"))
+		fmt.Println("Updated line_notify_api_token:", viper.GetString(config.LINE_NOTIFY_API_TOKEN))
 	},
 }
 

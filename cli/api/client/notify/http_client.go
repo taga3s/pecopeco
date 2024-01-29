@@ -1,4 +1,4 @@
-package linenotify
+package notify
 
 import (
 	"bytes"
@@ -6,10 +6,10 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
-	"net/url"
 	"os"
 	"time"
 
+	"github.com/Seiya-Tagami/pecopeco-cli/config"
 	"github.com/spf13/viper"
 )
 
@@ -20,21 +20,19 @@ func HttpClient(method string, message string, response interface{}) error {
 		return err
 	}
 
-	accessToken := viper.GetString("line_notify_api_token")
-
-	formData := url.Values{}
-	formData.Set("message", message)
-
 	var reqBody bytes.Buffer
 	multipartWriter := multipart.NewWriter(&reqBody)
-
-	for key, values := range formData {
-		for _, value := range values {
-			multipartWriter.WriteField(key, value)
-		}
+	err = multipartWriter.WriteField("message", message)
+	if err != nil {
+		return err
 	}
 
-	multipartWriter.Close()
+	err = multipartWriter.Close()
+	if err != nil {
+		return err
+	}
+
+	accessToken := viper.GetString(config.LINE_NOTIFY_API_TOKEN)
 
 	req.Header.Set("Authorization", "Bearer "+accessToken)
 	req.Header.Set("Content-Type", multipartWriter.FormDataContentType())
@@ -52,7 +50,8 @@ func HttpClient(method string, message string, response interface{}) error {
 		return err
 	}
 
-	if err := json.Unmarshal(byteArray, response); err != nil {
+	err = json.Unmarshal(byteArray, response)
+	if err != nil {
 		return err
 	}
 

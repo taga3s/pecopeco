@@ -10,6 +10,7 @@ import (
 
 	restaurantFactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/restaurant"
 	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
+	"github.com/Seiya-Tagami/pecopeco-cli/config"
 	"github.com/Seiya-Tagami/pecopeco-cli/ui"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -214,7 +215,7 @@ func selectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 		}
 		if notify == "Yes" {
 			// トークンがセットされていない場合、ここで弾くようにする。
-			if viper.GetString("line_notify_api_token") == "" {
+			if viper.GetString(config.LINE_NOTIFY_API_TOKEN) == "" {
 				ui.TextBlue().Println("Sorry, you have not set your personal token to notify your line app yet. To notify your line app, you can use following command.\n> pecopeco config --token <your personal token>\nFor more info, you can reach https://github.com/Seiya-Tagami/pecopeco")
 			} else {
 				result.notify = true
