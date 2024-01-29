@@ -8,10 +8,10 @@ import (
 	"time"
 )
 
-func HttpClient(method string, queryParams string, response interface{}) error {
+func HttpClient(method string, endpoint string, queryParams string, response interface{}) error {
 	uri := os.Getenv("HOTPEPPER_API_URL")
 	key := os.Getenv("HOTPEPPER_API_KEY")
-	req, err := http.NewRequest(method, uri+"/?key="+key+queryParams, nil)
+	req, err := http.NewRequest(method, uri+endpoint+"/?key="+key+queryParams, nil)
 	if err != nil {
 		return err
 	}

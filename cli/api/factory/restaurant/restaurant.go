@@ -23,8 +23,8 @@ func CreateFactory() RestaurantFactory {
 
 func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaurant, error) {
 	request := restaurant.ListRequest{
-		City: params.City,
-		Food: params.Food,
+		City:  params.City,
+		Genre: params.Genre,
 	}
 	res, err := f.repository.List(request)
 	if err != nil {

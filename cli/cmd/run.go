@@ -8,7 +8,8 @@ import (
 	"time"
 	"unicode/utf8"
 
-	restaurantFactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/restaurant"
+	genrefactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/genre"
+	restaurantfactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/restaurant"
 	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
 	"github.com/Seiya-Tagami/pecopeco-cli/config"
 	"github.com/Seiya-Tagami/pecopeco-cli/ui"
@@ -39,14 +40,20 @@ func run() {
 	}
 	switch mode {
 	case "Search restaurants":
-		factory := restaurantFactory.CreateFactory()
+		genreFactory := genrefactory.CreateFactory()
+		restaurantFactory := restaurantfactory.CreateFactory()
 
-		searchRestaurantInput := getSearchRestaurantInput()
-		params := restaurantFactory.ListRestaurantsParams{
-			City: searchRestaurantInput.city,
-			Food: searchRestaurantInput.food,
+		genreList, err := genreFactory.ListGenres()
+		if err != nil {
+			fmt.Println(err)
+			return
 		}
-		restaurantList, err := factory.ListRestaurants(params)
+		searchRestaurantInput := getSearchRestaurantInput(genreList)
+		params := restaurantfactory.ListRestaurantsParams{
+			City:  searchRestaurantInput.city,
+			Genre: searchRestaurantInput.genre,
+		}
+		restaurantList, err := restaurantFactory.ListRestaurants(params)
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -67,10 +74,10 @@ func run() {
 			ui.TextGreen().Println("Add to favorites!")
 		}
 		if selectRestaurantResult.notify {
-			params := restaurantFactory.NotifyRestaurantToLINEParams{
+			params := restaurantfactory.NotifyRestaurantToLINEParams{
 				Restaurant: selectRestaurantResult.restaurant,
 			}
-			err := factory.NotifyRestaurantToLINE(params)
+			err := restaurantFactory.NotifyRestaurantToLINE(params)
 			if err != nil {
 				fmt.Println(err)
 			} else {
@@ -89,13 +96,13 @@ func run() {
 }
 
 type searchRestaurantInput struct {
-	city string
-	food string
+	city  string
+	genre string
 }
 
-func getSearchRestaurantInput() searchRestaurantInput {
+func getSearchRestaurantInput(genreList []model.Genre) searchRestaurantInput {
 	promptForCity := promptui.Prompt{
-		Label: "> Which city?",
+		Label: "> Which city? (Japanese only, ex.渋谷)",
 		Validate: func(input string) error {
 			if utf8.RuneCountInString(input) == 0 {
 				return errors.New("Please enter a city.")
@@ -116,29 +123,24 @@ func getSearchRestaurantInput() searchRestaurantInput {
 		return searchRestaurantInput{}
 	}
 
-	promptForRestaurant := promptui.Prompt{
-		Label: "> What restaurant?",
-		Validate: func(input string) error {
-			if utf8.RuneCountInString(input) == 0 {
-				return errors.New("Please enter restaurant.")
-			}
-			if strings.TrimSpace(input) == "" {
-				return errors.New("Restaurant cannot be only whitespace.")
-			}
-			if strings.Contains(input, " ") {
-				return errors.New("Restaurant cannot contain whitespace.")
-			}
-			return nil
-		},
-		Templates: ui.DefaultPromptTemplate(),
+	genreMap := make(map[string]model.Genre)
+	options := make([]string, 0, len(genreList))
+	for _, v := range genreList {
+		genreMap[v.Name] = v
+		options = append(options, v.Name)
 	}
-	restaurant, err := promptForRestaurant.Run()
+
+	promptForGenre := promptui.Select{
+		Label: "> What genre?",
+		Items: options,
+	}
+	_, genre, err := promptForGenre.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
 		return searchRestaurantInput{}
 	}
 
-	return searchRestaurantInput{city: strings.TrimSpace(city), food: strings.TrimSpace(restaurant)}
+	return searchRestaurantInput{city: strings.TrimSpace(city), genre: strings.TrimSpace(genreMap[genre].Code)}
 }
 
 type selectRestaurantResult struct {

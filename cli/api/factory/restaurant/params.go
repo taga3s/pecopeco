@@ -3,8 +3,8 @@ package restaurant
 import "github.com/Seiya-Tagami/pecopeco-cli/api/model"
 
 type ListRestaurantsParams struct {
-	City string
-	Food string
+	City  string
+	Genre string
 }
 
 type NotifyRestaurantToLINEParams struct {
