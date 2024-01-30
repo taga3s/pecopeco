@@ -27,14 +27,14 @@ func (f *factory) ListGenres() ([]model.Genre, error) {
 		return []model.Genre{}, err
 	}
 
-	genresList := make([]model.Genre, 0, res.Results.ResultsAvailable)
+	genreList := make([]model.Genre, 0, len(res.Results.Genre))
 
 	for _, v := range res.Results.Genre {
 		genre := model.Genre{
 			Name: v.Name,
 			Code: v.Code,
 		}
-		genresList = append(genresList, genre)
+		genreList = append(genreList, genre)
 	}
-	return genresList, nil
+	return genreList, nil
 }
