@@ -1,0 +1,91 @@
+<mxfile host="65bd71144e" pages="2">
+    <diagram name="ユースケース図" id="tOKyb1BA799nCUgFGto5">
+        <mxGraphModel dx="1183" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2AUcbc0PFQlhFHuj2qgG-1" value="ユーザ―" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="300" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-1" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;レストランをLINEに通知する&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="410" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-3" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;レストランをお気に入りに登録する&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="475" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-4" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;レストランをお気に入りから閲覧する&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="540" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-5" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;レストランを検索する&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="350" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-6" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;レストランをお気に入りから削除する&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="600" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-8" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;レストラン&lt;/font&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="320" width="180" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-11" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="EzI4XSMVb9gn4CknsYPK-5" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="270" y="330" as="sourcePoint"/>
+                        <mxPoint x="430" y="329.63" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-12" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="EzI4XSMVb9gn4CknsYPK-1" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="270" y="330" as="sourcePoint"/>
+                        <mxPoint x="330" y="391.9999999999999" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-13" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="EzI4XSMVb9gn4CknsYPK-3" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="270" y="330" as="sourcePoint"/>
+                        <mxPoint x="330" y="465" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-14" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="270" y="330" as="sourcePoint"/>
+                        <mxPoint x="370" y="565" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-15" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="270" y="330" as="sourcePoint"/>
+                        <mxPoint x="370" y="625" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-16" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;ユーザー管理&lt;/font&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="40" width="180" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-17" value="ログインする" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="145" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-18" value="ログアウトする" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="210" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-19" value="ユーザー情報を確認する" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="80" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-20" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="270" y="330" as="sourcePoint"/>
+                        <mxPoint x="370" y="234.70999999999998" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-22" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="270" y="330" as="sourcePoint"/>
+                        <mxPoint x="370" y="170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="EzI4XSMVb9gn4CknsYPK-23" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="270" y="330" as="sourcePoint"/>
+                        <mxPoint x="370" y="104.70999999999998" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
