@@ -21,7 +21,7 @@ func New() Repository {
 
 func (r *repository) List(request ListRequest) (ListResponse, error) {
 	listResponse := ListResponse{}
-	if err := hotpepper.HttpClient("GET", fmt.Sprintf("&keyword=%s,%s&count=100&format=json", request.City, request.Food), &listResponse); err != nil {
+	if err := hotpepper.HttpClient("GET", "/gourmet/v1/", fmt.Sprintf("&keyword=%s&genre=%s&count=100&format=json", request.City, request.Genre), &listResponse); err != nil {
 		return ListResponse{}, err
 	}
 	return listResponse, nil

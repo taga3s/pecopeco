@@ -1,8 +1,8 @@
 package restaurant
 
 type ListRequest struct {
-	City string
-	Food string
+	City  string
+	Genre string
 }
 
 type NotifyToLINERequest struct {
