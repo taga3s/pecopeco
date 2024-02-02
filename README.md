@@ -1,5 +1,7 @@
 # pecopeco
 
+<img src='/docs/img/pecopeco-logo.png'/>
+
 ## 技術選定
 
 ### 言語
