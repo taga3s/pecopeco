@@ -1,26 +1,26 @@
 package config
 
 import (
+	"log"
 	"os"
 
 	"github.com/spf13/viper"
 )
 
-func Load() error {
+func Load() {
 	configFilename := "config.yaml"
 	// ファイルが存在しない場合、config.yamlを生成する。
 	if !fileExists(configFilename) {
 		if err := initConfigFile(configFilename); err != nil {
-			return err
+			log.Fatal(err)
 		}
 	}
 
 	viper.AddConfigPath(".")
 
 	if err := viper.ReadInConfig(); err != nil {
-		return err
+		log.Fatal(err)
 	}
-	return nil
 }
 
 func initConfigFile(configFilename string) error {

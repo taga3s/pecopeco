@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Seiya-Tagami/pecopeco-cli/config"
 	"github.com/spf13/cobra"
 )
 
@@ -18,4 +19,9 @@ func Execute() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func init() {
+	// Runの前に必ず実行される
+	cobra.OnInitialize(config.Load)
 }
