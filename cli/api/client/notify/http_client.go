@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"mime/multipart"
 	"net/http"
+	"net/url"
 	"os"
 	"time"
 
@@ -20,23 +20,15 @@ func HttpClient(method string, message string, response interface{}) error {
 		return err
 	}
 
-	var reqBody bytes.Buffer
-	multipartWriter := multipart.NewWriter(&reqBody)
-	err = multipartWriter.WriteField("message", message)
-	if err != nil {
-		return err
-	}
-
-	err = multipartWriter.Close()
-	if err != nil {
-		return err
-	}
+	form := url.Values{}
+	form.Add("message", message)
+	reqBody := bytes.NewReader([]byte(form.Encode()))
 
 	accessToken := viper.GetString(config.LINE_NOTIFY_API_TOKEN)
 
 	req.Header.Set("Authorization", "Bearer "+accessToken)
-	req.Header.Set("Content-Type", multipartWriter.FormDataContentType())
-	req.Body = io.NopCloser(&reqBody)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Body = io.NopCloser(reqBody)
 
 	client := http.Client{Timeout: 30 * time.Second}
 	res, err := client.Do(req)
