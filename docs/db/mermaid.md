@@ -1,7 +1,7 @@
 ```mermaid
 erDiagram
   users {
-    int id PK
+    varchar id PK
     varchar name "ユーザー名"
     datetime created_at
   }
