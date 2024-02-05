@@ -1,6 +1,6 @@
-# pecopeco
-
-<img src='/docs/img/pecopeco-logo.png' width='500px'/>
+<p align="center">
+  <img src='/docs/logo/pecopeco.png' width="640px"/>
+</p>
 
 ## 技術選定
 
