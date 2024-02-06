@@ -128,7 +128,7 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 		oauth2.SetAuthURLParam("code_challenge_method", "S256"),
 	)
 
-	fmt.Printf("Logging into your Google account...\n\nOpening a URL: %v\n", url)
+	fmt.Printf("Logging into your Google account...\n\nClick following a URL: %v\n", url)
 
 	authCode, err := s.getAuthCode()
 	if err != nil {
