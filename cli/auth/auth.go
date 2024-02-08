@@ -110,11 +110,13 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 		s.ListenAndServe()
 	}()
 
-	codeVerifier, err := util.GenerateRandomBytes(128)
+	const randomBytesLength = 128
+
+	codeVerifier, err := util.GenerateRandomBytes(randomBytesLength)
 	if err != nil {
 		return err
 	}
-	b, err := util.GenerateRandomBytes(128)
+	b, err := util.GenerateRandomBytes(randomBytesLength)
 	if err != nil {
 		return err
 	}
@@ -129,6 +131,9 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 	)
 
 	fmt.Printf("Logging into your Google account...\n\nClick following a URL: %v\n", url)
+	if err = util.OpenBrowser(url); err != nil {
+		fmt.Println(err)
+	}
 
 	authCode, err := s.getAuthCode()
 	if err != nil {
