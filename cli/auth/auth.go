@@ -107,7 +107,9 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 	s := newServer()
 	defer s.Shutdown(context.Background())
 	go func() {
-		s.ListenAndServe()
+		if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			panic(err)
+		}
 	}()
 
 	const randomBytesLength = 128
