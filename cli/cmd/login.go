@@ -2,8 +2,6 @@ package cmd
 
 import (
 	"context"
-	"crypto/sha256"
-	"encoding/base64"
 	"fmt"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/auth"
@@ -29,6 +27,7 @@ func login() {
 		return
 	}
 
+	// OAuthによる処理
 	oauth := auth.NewOAuth(
 		id,
 		secret,
@@ -43,17 +42,15 @@ func login() {
 		return
 	}
 
-	oauthUser, err := userinfo.Get(ctx, oauth)
+	userinfo, err := userinfo.Get(ctx, oauth)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Printf("[ID] %s\n[Name] %s\n[Email] %s\n", oauthUser.ID, oauthUser.Name, oauthUser.Email)
-}
+	fmt.Printf("[ID] %s\n[Name] %s\n[Email] %s\n", userinfo.ID, userinfo.Name, userinfo.Email)
 
-func generateCodeChallenge(codeVerifier string) string {
-	hash := sha256.Sum256([]byte(codeVerifier))
-	return base64.RawURLEncoding.EncodeToString(hash[:])
+	// ログイン処理
+	// ...
 }
 
 func init() {
