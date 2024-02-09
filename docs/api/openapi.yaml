@@ -1,0 +1,231 @@
+openapi: "3.0.3"
+
+info:
+  title: "pecopeco API"
+  description: "pecopecoのAPIです。"
+  version: "1.0"
+
+servers:
+  - url: "http://localhost:8080/v1"
+    description: "ローカル環境"
+  - url: "http://example.com"
+    description: "本番環境"
+
+tags:
+  - name: "restaurants"
+    description: "レストランの操作"
+  - name: "users"
+    description: "ユーザ―の操作"
+
+paths:
+  "/restaurants":
+    get:
+      summary: "レストラン一覧の取得"
+      tags: ["restaurants"]
+      deprecated: false
+      parameters:
+        - $ref: "#/components/parameters/JWT"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RestaurantListResponse"
+        "401":
+          description: "認証エラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      summary: "レストランの作成"
+      tags: ["restaurants"]
+      deprecated: false
+      parameters:
+        - $ref: "#/components/parameters/JWT"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RestaurantRequest"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RestaurantResponse"
+        "401":
+          description: "認証エラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  "/restaurants/:id":
+    delete:
+      summary: "レストランの削除"
+      tags: ["restaurants"]
+      deprecated: false
+      parameters:
+        - $ref: "#/components/parameters/JWT"
+      responses:
+        "204":
+          description: "成功"
+        "401":
+          description: "認証エラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  "/users/currently-logged-in":
+    get:
+      summary: "ログインユーザーの取得"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+        - $ref: "#/components/parameters/JWT"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "401":
+          description: "認証エラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  "/users/login":
+    post:
+      summary: "ログイン処理"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+        - $ref: "#/components/parameters/JWT"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "401":
+          description: "認証エラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  parameters:
+    JWT:
+      in: header
+      name: JWT
+      description: "ペイロードにユーザーIDを含む"
+      schema:
+        type: string
+        example: "token"
+  schemas:
+    RestaurantRequest:
+      type: object
+      properties:
+        name: { type: string, example: "ステーキ屋" }
+        address: { type: string, example: "東京都渋谷区xxxxxxxx" }
+        nearest_station: { type: string, example: "渋谷" }
+        genre: { type: string, example: "洋食" }
+        url: { type: string, example: "https://www.hotpepper.jp/xxxxxxxx" }
+      required:
+        - name
+        - address
+        - nearest_station
+        - genre
+        - url
+    RestaurantResponse:
+      type: object
+      properties:
+        id: { type: string, example: "xxxxxxid" }
+        name: { type: string, example: "ステーキ屋" }
+        address: { type: string, example: "東京都渋谷区xxxxxxxx" }
+        nearest_station: { type: string, example: "渋谷" }
+        genre: { type: string, example: "洋食" }
+        url: { type: string, example: "https://www.hotpepper.jp/xxxxxxxx" }
+        created_at: { type: string, example: "2023-04-01 12:00:00+09:00" }
+      required:
+        - id
+        - name
+        - address
+        - nearest_station
+        - genre
+        - url
+        - created_at
+    RestaurantListResponse:
+      type: object
+      properties:
+        restaurants:
+          type: array
+          items:
+            $ref: "#/components/schemas/RestaurantResponse"
+    UserRequest:
+      type: object
+      properties:
+        id: { type: number, example: 11111111111 }
+        name: { type: string, example: "peco" }
+        email: { type: string, example: "example@gmail.com" }
+      required:
+        - id
+        - name
+        - email
+    UserResponse:
+      type: object
+      properties:
+        id: { type: number, example: 11111111111 }
+        name: { type: string, example: "peco" }
+        email: { type: string, example: "example@gmail.com" }
+      required:
+        - id
+        - name
+        - email
+    ErrorResponse:
+      type: object
+      properties:
+        message: { type: string, example: "errorMsg" }
+        documentation_url: { type: string, example: "https://github.com/Seiya-Tagami/pecopeco" }
+      required:
+        - message
