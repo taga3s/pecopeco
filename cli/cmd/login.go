@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/auth"
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/api/userinfo"
@@ -37,6 +38,9 @@ func login() {
 	)
 
 	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
+	defer cancel()
+
 	if err := oauth.Authorization(ctx); err != nil {
 		fmt.Println(err)
 		return
