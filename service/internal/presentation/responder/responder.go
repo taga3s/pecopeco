@@ -25,7 +25,7 @@ func ReturnStatusBadRequest(w http.ResponseWriter, err error) {
 	returnResponse[ErrorResponse](w, response, http.StatusBadRequest)
 }
 
-// 403
+// 401
 func ReturnStatusUnauthorized(w http.ResponseWriter, err error) {
 	response := ErrorResponse{
 		Message: err.Error(),
