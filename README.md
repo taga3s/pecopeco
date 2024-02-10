@@ -2,6 +2,11 @@
   <img src='/docs/logo/pecopeco.png' width="640px"/>
 </p>
 
+## docs
+
+- API 定義はこちら
+  - [pecopeco-api-docs](https://seiya-tagami.github.io/pecopeco/)
+
 ## 技術選定
 
 ### 言語

@@ -96,9 +96,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  "/users/currently-logged-in":
+  "/users/:id":
     get:
-      summary: "ログインユーザーの取得"
+      summary: "ユーザーの取得"
       tags: ["users"]
       deprecated: false
       parameters:
