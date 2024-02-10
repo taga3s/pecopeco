@@ -34,7 +34,7 @@ func (ur *userRepository) SaveWithTx(ctx context.Context, tx *sql.Tx, user *user
 	return nil
 }
 
-func (ur *userRepository) FindById(ctx context.Context, id int) (*user.User, error) {
+func (ur *userRepository) FindById(ctx context.Context, id string) (*user.User, error) {
 	fields := []string{
 		"id",
 		"name",
@@ -61,7 +61,7 @@ func (ur *userRepository) FindById(ctx context.Context, id int) (*user.User, err
 	return user, nil
 }
 
-func (ur *userRepository) CountById(ctx context.Context, id int) (int, error) {
+func (ur *userRepository) CountById(ctx context.Context, id string) (int, error) {
 	query := "select count(*) from users where id = ?"
 
 	rows, err := ur.db.QueryContext(ctx, query, id)

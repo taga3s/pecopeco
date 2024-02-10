@@ -6,7 +6,7 @@ use peco_db;
 -- ユーザーテーブル
 drop table if exists users;
 create table users (
-  id int not null primary key,
+  id varchar(256) not null primary key,
   name varchar(256) not null,
   email varchar(256) not null
 ) charset=utf8;

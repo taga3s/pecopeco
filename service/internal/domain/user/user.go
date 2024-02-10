@@ -9,13 +9,13 @@ import (
 )
 
 type User struct {
-	ID    int
+	ID    string
 	Name  string
 	Email string
 }
 
 func NewUser(
-	id int,
+	id string,
 	name string,
 	email string,
 ) (*User, error) {
@@ -26,7 +26,7 @@ func NewUser(
 	)
 }
 
-func newUser(id int, name string, email string) (*User, error) {
+func newUser(id string, name string, email string) (*User, error) {
 	// 名前のバリデーション
 	if utf8.RuneCountInString(name) < nameLengthMin || utf8.RuneCountInString(name) > nameLengthMax {
 		return nil, errDomain.NewError("名前の値が不正です。")

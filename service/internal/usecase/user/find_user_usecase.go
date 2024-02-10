@@ -19,7 +19,7 @@ func NewFindUserUseCase(
 }
 
 type FindUserUseCaseDto struct {
-	ID    int
+	ID    string
 	Name  string
 	Email string
 }

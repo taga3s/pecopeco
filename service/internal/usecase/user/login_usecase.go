@@ -23,7 +23,7 @@ func NewLoginUsecase(
 }
 
 type LoginUseCaseDto struct {
-	ID    int
+	ID    string
 	Name  string
 	Email string
 }
@@ -31,6 +31,7 @@ type LoginUseCaseDto struct {
 func (uc *LoginUsecase) Run(ctx context.Context, dto LoginUseCaseDto) (*userDomain.User, error) {
 	user, err := userDomain.NewUser(dto.ID, dto.Name, dto.Email)
 
+	// 既存のユーザーかどうかチェックする
 	exists, err := uc.userDomainService.Exists(ctx, user)
 	if err != nil {
 		return nil, err

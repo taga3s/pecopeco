@@ -12,9 +12,9 @@ import (
 
 var jwtSecret = os.Getenv("JWT_SECRET")
 
-func Generate(userID int) (string, error) {
+func Generate(userID string) (string, error) {
 	claims := jwt.MapClaims{
-		"user_id": float64(userID),
+		"user_id": userID,
 		"exp":     time.Now().Add(time.Hour * 72).Unix(),
 	}
 

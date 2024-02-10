@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/Seiya-Tagami/pecopeco-service/internal/presentation/responder"
@@ -79,11 +78,7 @@ func (h *handler) FindUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
 
-	id, err := strconv.Atoi(chi.URLParam(r, "id"))
-	if err != nil {
-		responder.ReturnStatusInternalServerError(w, err)
-		return
-	}
+	id := chi.URLParam(r, "id")
 
 	dto := userUsecase.FindUserUseCaseDto{
 		ID: id,
