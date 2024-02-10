@@ -22,6 +22,9 @@ jobs:
           output: swagger-ui
           spec-file: docs/api/openapi.yaml
 
+      - name: Validate OpenAPI definition
+        run: go run github.com/getkin/kin-openapi/cmd/validate@latest -- docs/api/openapi.yaml
+
       - name: Upload Documents
         uses: actions/upload-pages-artifact@v1
         with:
