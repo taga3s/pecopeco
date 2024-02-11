@@ -6,7 +6,6 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/util"
@@ -141,8 +140,6 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	// XXX: For Dev
-	log.Println("Received code & state")
 
 	if authCode.state != state {
 		return errors.New("Failed to authorize. Invalid state")
@@ -158,8 +155,7 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	// XXX: For Dev
-	log.Println("Exchange token")
+
 	o.Token = token
 
 	return nil

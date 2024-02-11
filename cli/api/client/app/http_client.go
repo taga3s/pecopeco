@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/Seiya-Tagami/pecopeco-cli/config"
 )
 
 func HttpClient(method string, endpoint string, request interface{}, response interface{}) error {
@@ -16,6 +18,10 @@ func HttpClient(method string, endpoint string, request interface{}, response in
 		return err
 	}
 
+	// jwtトークンをセットする
+	accessToken := config.Get(config.PECOPECO_API_TOKEN)
+	req.Header.Set("Authorization", accessToken)
+
 	if request != nil {
 		req.Header.Set("Content-Type", "application/json")
 		reqBody, err := json.Marshal(request)
@@ -23,10 +29,16 @@ func HttpClient(method string, endpoint string, request interface{}, response in
 			return err
 		}
 		req.Body = io.NopCloser(bytes.NewBuffer(reqBody))
+		req.ContentLength = int64(len(reqBody))
 	}
 
 	client := http.Client{Timeout: 30 * time.Second}
 	res, err := client.Do(req)
+
+	// jwtトークンを保存する
+	accessToken = res.Header.Get("Authorization")
+	config.Save(config.PECOPECO_API_TOKEN, accessToken)
+
 	if err != nil {
 		return err
 	}
