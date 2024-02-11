@@ -46,7 +46,11 @@ func (uc *LoginUsecase) Run(ctx context.Context, dto LoginUseCaseInputDto) (*Log
 		return nil, err
 	}
 	if exists {
-		return nil, nil
+		return &LoginUseCaseOutputDto{
+			ID:    user.ID,
+			Name:  user.Name,
+			Email: user.Email,
+		}, nil
 	}
 
 	tx, err := db.GetDB().Begin()
@@ -67,6 +71,6 @@ func (uc *LoginUsecase) Run(ctx context.Context, dto LoginUseCaseInputDto) (*Log
 	return &LoginUseCaseOutputDto{
 		ID:    user.ID,
 		Name:  user.Name,
-		Email: user.ID,
+		Email: user.Email,
 	}, nil
 }
