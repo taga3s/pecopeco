@@ -19,8 +19,5 @@ func (ds *userDomainService) Exists(ctx context.Context, user *User) (bool, erro
 	if err != nil {
 		return false, err
 	}
-	if count == 0 {
-		return false, nil
-	}
-	return true, nil
+	return count > 0, nil
 }

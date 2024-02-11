@@ -19,14 +19,6 @@ func NewUser(
 	name string,
 	email string,
 ) (*User, error) {
-	return newUser(
-		id,
-		name,
-		email,
-	)
-}
-
-func newUser(id string, name string, email string) (*User, error) {
 	// 名前のバリデーション
 	if utf8.RuneCountInString(name) < nameLengthMin || utf8.RuneCountInString(name) > nameLengthMax {
 		return nil, errDomain.NewError("名前の値が不正です。")
