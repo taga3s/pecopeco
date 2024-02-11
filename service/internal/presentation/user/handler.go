@@ -84,16 +84,16 @@ func (h *handler) FindUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Dto, err := h.findUserUsecase.Run(ctx, userID)
+	dto, err := h.findUserUsecase.Run(ctx, userID)
 	if err != nil {
 		responder.ReturnStatusInternalServerError(w, err)
 		return
 	}
 
 	response := LoginResponse{
-		ID:    Dto.ID,
-		Name:  Dto.Name,
-		Email: Dto.Email,
+		ID:    dto.ID,
+		Name:  dto.Name,
+		Email: dto.Email,
 	}
 	responder.ReturnStatusOK(w, response)
 }
