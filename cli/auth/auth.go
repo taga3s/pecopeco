@@ -7,10 +7,9 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/util"
-	"github.com/briandowns/spinner"
+	"github.com/Seiya-Tagami/pecopeco-cli/ui"
 	"github.com/go-chi/chi/v5"
 	"golang.org/x/oauth2"
 )
@@ -138,9 +137,7 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 		fmt.Println(err)
 	}
 
-	sp := spinner.New(spinner.CharSets[21], 100*time.Millisecond)
-	sp.Color("green")
-	sp.Suffix = " Waiting for authentication..."
+	sp := ui.DefaultSpinner("Waiting for authentication...")
 	sp.Start()
 
 	authCode, err := s.getAuthCode()

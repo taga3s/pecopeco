@@ -11,7 +11,6 @@ import (
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/secret"
 	"github.com/Seiya-Tagami/pecopeco-cli/config"
 	"github.com/Seiya-Tagami/pecopeco-cli/ui"
-	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 	"golang.org/x/oauth2/google"
 )
@@ -68,9 +67,7 @@ func login() {
 
 	ui.TextGreen().Printf("Authentication complete.\n\n")
 
-	sp := spinner.New(spinner.CharSets[21], 100*time.Millisecond)
-	sp.Color("green")
-	sp.Suffix = " Logging in..."
+	sp := ui.DefaultSpinner("Logging in...")
 	sp.Start()
 
 	userinfo, err := userinfo.Get(ctx, oauth)
