@@ -17,11 +17,12 @@ var userCmd = &cobra.Command{
 }
 
 func printLoggedInUser() {
-	factory := user.CreateFactory()
 	if !config.IsLogin() {
 		ui.TextBlue().Println(errorMsg)
 		return
 	}
+
+	factory := user.CreateFactory()
 	user, err := factory.FindUser()
 	if err != nil {
 		ui.TextBlue().Println(errorMsg)
