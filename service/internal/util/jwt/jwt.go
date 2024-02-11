@@ -44,13 +44,17 @@ func Verify(tokenString string) (*jwt.Token, error) {
 	return token, nil
 }
 
-func UserIDFromToken(token *jwt.Token) (int, error) {
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		userID, ok := claims["user_id"].(float64)
-		if !ok {
-			return 0, errors.New("user_id field not found or not a string")
-		}
-		return int(userID), nil
+func UserIDFromToken(tokenString string) (string, error) {
+	token, err := Verify(tokenString)
+	if err != nil {
+		return "", err
 	}
-	return 0, errors.New("invalid token")
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		userID, ok := claims["user_id"].(string)
+		if !ok {
+			return "", errors.New("user_id field not found or not a string")
+		}
+		return userID, nil
+	}
+	return "", errors.New("invalid token")
 }

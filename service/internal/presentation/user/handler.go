@@ -10,7 +10,6 @@ import (
 	userUsecase "github.com/Seiya-Tagami/pecopeco-service/internal/usecase/user"
 	"github.com/Seiya-Tagami/pecopeco-service/internal/util/jwt"
 	"github.com/Seiya-Tagami/pecopeco-service/pkg/validator"
-	"github.com/go-chi/chi/v5"
 )
 
 type handler struct {
@@ -78,10 +77,15 @@ func (h *handler) FindUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
 
-	id := chi.URLParam(r, "id")
+	accessToken := r.Header.Get("Authorization")
+	userID, err := jwt.UserIDFromToken(accessToken)
+	if err != nil {
+		responder.ReturnStatusUnauthorized(w, err)
+		return
+	}
 
 	dto := userUsecase.FindUserUseCaseDto{
-		ID: id,
+		ID: userID,
 	}
 	ud, err := h.findUserUsecase.Run(ctx, dto)
 	if err != nil {

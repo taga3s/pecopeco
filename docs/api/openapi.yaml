@@ -102,9 +102,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  "/users/:id":
+  "/users/login-user":
     get:
-      summary: "ユーザーの取得"
+      summary: "ログインユーザーの取得"
       tags: ["users"]
       deprecated: false
       parameters:
@@ -227,7 +227,7 @@ components:
     UserResponse:
       type: object
       properties:
-        id: { type: number, example: 11111111111 }
+        id: { type: string, example: "11111111111" }
         name: { type: string, example: "peco" }
         email: { type: string, example: "example@gmail.com" }
       required:

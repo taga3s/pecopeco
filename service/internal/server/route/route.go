@@ -36,6 +36,6 @@ func userRoute(r chi.Router) chi.Router {
 	)
 	return r.Route("/users", func(r chi.Router) {
 		r.Post("/login", h.Login)
-		r.With(mymiddleware.Auth).Get("/{id}", h.FindUser)
+		r.With(mymiddleware.Auth).Get("/login-user", h.FindUser)
 	})
 }
