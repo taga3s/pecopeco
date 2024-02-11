@@ -17,6 +17,11 @@ func ReturnStatusOK[T any](w http.ResponseWriter, body T) {
 	returnResponse[T](w, body, http.StatusOK)
 }
 
+// 204
+func ReturnStatusNoContent(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // 400
 func ReturnStatusBadRequest(w http.ResponseWriter, err error) {
 	response := ErrorResponse{
