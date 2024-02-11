@@ -21,7 +21,7 @@ func OpenBrowser(url string) error {
 		err = fmt.Errorf("unsupported platform.")
 	}
 	if err != nil {
-		return errors.New("\nSorry, could not open a browser. Open the link above in your browser to manually complete authentication.")
+		return errors.New("Sorry, could not open a browser. Open the link above in your browser to manually complete authentication.\n")
 	}
 	return nil
 }

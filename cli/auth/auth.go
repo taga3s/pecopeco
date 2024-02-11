@@ -6,10 +6,10 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/util"
+	"github.com/Seiya-Tagami/pecopeco-cli/ui"
 	"github.com/go-chi/chi/v5"
 	"golang.org/x/oauth2"
 )
@@ -132,17 +132,18 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 		oauth2.SetAuthURLParam("code_challenge_method", "S256"),
 	)
 
-	fmt.Printf("Logging into your Google account...\n\nClick following a URL: %v\n", url)
+	fmt.Printf("\nLogging into your Google account...\n\nPlease click following a URL: %v\n\n", url)
 	if err = util.OpenBrowser(url); err != nil {
 		fmt.Println(err)
 	}
+
+	sp := ui.DefaultSpinner("Waiting for authentication...")
+	sp.Start()
 
 	authCode, err := s.getAuthCode()
 	if err != nil {
 		return err
 	}
-	// XXX: For Dev
-	log.Println("Received code & state")
 
 	if authCode.state != state {
 		return errors.New("Failed to authorize. Invalid state")
@@ -158,9 +159,10 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	// XXX: For Dev
-	log.Println("Exchange token")
+
 	o.Token = token
+
+	sp.Stop()
 
 	return nil
 }
