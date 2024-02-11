@@ -39,6 +39,10 @@ func NewMySQL() error {
 	return nil
 }
 
+func GetDB() *sql.DB {
+	return sqlDB
+}
+
 func CloseDB() {
 	sqlDB.Close()
 }

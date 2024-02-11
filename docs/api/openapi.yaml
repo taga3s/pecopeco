@@ -62,6 +62,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RestaurantResponse"
+        "400":
+          description: "クライアントエラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: "認証エラー"
           content:
@@ -96,9 +102,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  "/users/:id":
+  "/users/me":
     get:
-      summary: "ユーザーの取得"
+      summary: "ログインユーザーの取得"
       tags: ["users"]
       deprecated: false
       parameters:
@@ -141,6 +147,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserResponse"
+        "400":
+          description: "クライアントエラー"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: "認証エラー"
           content:
@@ -215,7 +227,7 @@ components:
     UserResponse:
       type: object
       properties:
-        id: { type: number, example: 11111111111 }
+        id: { type: string, example: "11111111111" }
         name: { type: string, example: "peco" }
         email: { type: string, example: "example@gmail.com" }
       required:

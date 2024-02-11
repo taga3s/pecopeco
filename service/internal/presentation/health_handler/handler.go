@@ -10,17 +10,12 @@ import (
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	err := db.CheckConnection()
 	if err != nil {
-		res := HealthResponse{
-			Status:  http.StatusServiceUnavailable,
-			Message: "failed to get connection database",
-			Detail:  err.Error(),
-		}
-		responder.RespondJson(w, res, res.Status)
+		responder.ReturnStatusInternalServerError(w, err)
 		return
 	}
 	res := HealthResponse{
 		Status:  http.StatusOK,
 		Message: "success to connect database",
 	}
-	responder.RespondJson(w, res, res.Status)
+	responder.ReturnStatusOK(w, res)
 }
