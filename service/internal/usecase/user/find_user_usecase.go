@@ -24,10 +24,14 @@ type FindUserUseCaseDto struct {
 	Email string
 }
 
-func (uc *FindUserUseCase) Run(ctx context.Context, dto FindUserUseCaseDto) (*userDomain.User, error) {
-	user, err := uc.userRepo.FindById(ctx, dto.ID)
+func (uc *FindUserUseCase) Run(ctx context.Context, id string) (*FindUserUseCaseDto, error) {
+	user, err := uc.userRepo.FindById(ctx, id)
 	if err != nil {
 		return nil, err
 	}
-	return user, nil
+	return &FindUserUseCaseDto{
+		ID:    user.ID,
+		Name:  user.Name,
+		Email: user.Email,
+	}, nil
 }

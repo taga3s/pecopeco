@@ -22,14 +22,23 @@ func NewLoginUsecase(
 	}
 }
 
-type LoginUseCaseDto struct {
+type LoginUseCaseInputDto struct {
 	ID    string
 	Name  string
 	Email string
 }
 
-func (uc *LoginUsecase) Run(ctx context.Context, dto LoginUseCaseDto) (*userDomain.User, error) {
+type LoginUseCaseOutputDto struct {
+	ID    string
+	Name  string
+	Email string
+}
+
+func (uc *LoginUsecase) Run(ctx context.Context, dto LoginUseCaseInputDto) (*LoginUseCaseOutputDto, error) {
 	user, err := userDomain.NewUser(dto.ID, dto.Name, dto.Email)
+	if err != nil {
+		return nil, err
+	}
 
 	// 既存のユーザーかどうかチェックする
 	exists, err := uc.userDomainService.Exists(ctx, user)
@@ -37,7 +46,7 @@ func (uc *LoginUsecase) Run(ctx context.Context, dto LoginUseCaseDto) (*userDoma
 		return nil, err
 	}
 	if exists {
-		return user, nil
+		return nil, nil
 	}
 
 	tx, err := db.GetDB().Begin()
@@ -46,6 +55,7 @@ func (uc *LoginUsecase) Run(ctx context.Context, dto LoginUseCaseDto) (*userDoma
 	}
 
 	if err := uc.userRepo.SaveWithTx(ctx, tx, user); err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 
@@ -53,5 +63,10 @@ func (uc *LoginUsecase) Run(ctx context.Context, dto LoginUseCaseDto) (*userDoma
 		tx.Rollback()
 		return nil, err
 	}
-	return user, nil
+
+	return &LoginUseCaseOutputDto{
+		ID:    user.ID,
+		Name:  user.Name,
+		Email: user.ID,
+	}, nil
 }

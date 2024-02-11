@@ -44,25 +44,25 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dto := userUsecase.LoginUseCaseDto{
+	inputDto := userUsecase.LoginUseCaseInputDto{
 		ID:    params.ID,
 		Name:  params.Name,
 		Email: params.Email,
 	}
-	ud, err := h.loginUsecase.Run(ctx, dto)
+	outputDto, err := h.loginUsecase.Run(ctx, inputDto)
 	if err != nil {
 		responder.ReturnStatusInternalServerError(w, err)
 		return
 	}
 
 	response := LoginResponse{
-		ID:    ud.ID,
-		Name:  ud.Name,
-		Email: ud.Email,
+		ID:    outputDto.ID,
+		Name:  outputDto.Name,
+		Email: outputDto.Email,
 	}
 
 	// jwtの生成
-	accessToken, err := jwt.Generate(ud.ID)
+	accessToken, err := jwt.Generate(outputDto.ID)
 	if err != nil {
 		responder.ReturnStatusInternalServerError(w, err)
 		return
@@ -84,19 +84,16 @@ func (h *handler) FindUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dto := userUsecase.FindUserUseCaseDto{
-		ID: userID,
-	}
-	ud, err := h.findUserUsecase.Run(ctx, dto)
+	Dto, err := h.findUserUsecase.Run(ctx, userID)
 	if err != nil {
 		responder.ReturnStatusInternalServerError(w, err)
 		return
 	}
 
 	response := LoginResponse{
-		ID:    ud.ID,
-		Name:  ud.Name,
-		Email: ud.Email,
+		ID:    Dto.ID,
+		Name:  Dto.Name,
+		Email: Dto.Email,
 	}
 	responder.ReturnStatusOK(w, response)
 }

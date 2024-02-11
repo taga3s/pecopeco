@@ -22,7 +22,7 @@ func Generate(userID string) (string, error) {
 
 	accessToken, err := token.SignedString([]byte(jwtSecret))
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 	return accessToken, nil
 }

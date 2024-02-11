@@ -78,5 +78,7 @@ func (ur *userRepository) CountById(ctx context.Context, id string) (int, error)
 		}
 	}
 
+	defer rows.Close()
+
 	return count, nil
 }
