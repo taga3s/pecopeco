@@ -1,13 +1,13 @@
 ```mermaid
 erDiagram
   users {
-    int id PK
+    varchar id PK
     varchar name "ユーザー名"
     varchar email "メールアドレス"
     datetime created_at
   }
   restaurants {
-    string id PK
+    varchar id PK
     varchar name "店舗名"
     varchar genre "ジャンル"
     varchar address "住所"

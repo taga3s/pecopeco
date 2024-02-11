@@ -20,6 +20,7 @@ create table restaurants (
   nearest_station varchar(256) not null,
   address varchar(256) not null,
   url varchar(256) not null,
-  user_id int not null,
+  created_at datetime not null,
+  user_id varchar(256) not null,
   foreign key (user_id) references users (id)
 ) charset=utf8;
