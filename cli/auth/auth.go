@@ -7,8 +7,10 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/util"
+	"github.com/briandowns/spinner"
 	"github.com/go-chi/chi/v5"
 	"golang.org/x/oauth2"
 )
@@ -131,10 +133,15 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 		oauth2.SetAuthURLParam("code_challenge_method", "S256"),
 	)
 
-	fmt.Printf("Logging into your Google account...\n\nClick following a URL: %v\n", url)
+	fmt.Printf("\nLogging into your Google account...\n\nPlease click following a URL: %v\n\n", url)
 	if err = util.OpenBrowser(url); err != nil {
 		fmt.Println(err)
 	}
+
+	sp := spinner.New(spinner.CharSets[21], 100*time.Millisecond)
+	sp.Color("green")
+	sp.Suffix = " Waiting for authentication..."
+	sp.Start()
 
 	authCode, err := s.getAuthCode()
 	if err != nil {
@@ -157,6 +164,8 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 	}
 
 	o.Token = token
+
+	sp.Stop()
 
 	return nil
 }

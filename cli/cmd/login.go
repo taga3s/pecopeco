@@ -11,6 +11,7 @@ import (
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/secret"
 	"github.com/Seiya-Tagami/pecopeco-cli/config"
 	"github.com/Seiya-Tagami/pecopeco-cli/ui"
+	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 	"golang.org/x/oauth2/google"
 )
@@ -26,7 +27,6 @@ var loginCmd = &cobra.Command{
 
 func login() {
 	factory := user.CreateFactory()
-
 	// 既にログインしていた場合は処理をはじく。
 	if config.IsLogin() {
 		user, err := factory.FindUser()
@@ -66,6 +66,13 @@ func login() {
 		return
 	}
 
+	ui.TextGreen().Printf("Authentication complete.\n\n")
+
+	sp := spinner.New(spinner.CharSets[21], 100*time.Millisecond)
+	sp.Color("green")
+	sp.Suffix = " Logging in..."
+	sp.Start()
+
 	userinfo, err := userinfo.Get(ctx, oauth)
 	if err != nil {
 		fmt.Println(err)
@@ -84,6 +91,8 @@ func login() {
 		fmt.Println(err)
 		return
 	}
+
+	sp.Stop()
 	ui.TextGreen().Printf("Successfully login as %s, %s\n", response.Name, response.Email)
 }
 
