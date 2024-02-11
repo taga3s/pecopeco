@@ -44,7 +44,7 @@ func Verify(tokenString string) (*jwt.Token, error) {
 	return token, nil
 }
 
-func UserIDFromToken(tokenString string) (string, error) {
+func GetUserIDFromToken(tokenString string) (string, error) {
 	token, err := Verify(tokenString)
 	if err != nil {
 		return "", err

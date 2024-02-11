@@ -8,7 +8,7 @@ var (
 	validate *validator.Validate
 )
 
-func GetValidator() *validator.Validate {
+func Get() *validator.Validate {
 	if validate == nil {
 		validate = validator.New()
 	}

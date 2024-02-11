@@ -38,7 +38,7 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validate := validator.GetValidator()
+	validate := validator.Get()
 	if err := validate.Struct(&params); err != nil {
 		responder.ReturnStatusBadRequest(w, err)
 		return
@@ -78,7 +78,7 @@ func (h *handler) FindUser(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	accessToken := r.Header.Get("Authorization")
-	userID, err := jwt.UserIDFromToken(accessToken)
+	userID, err := jwt.GetUserIDFromToken(accessToken)
 	if err != nil {
 		responder.ReturnStatusUnauthorized(w, err)
 		return
