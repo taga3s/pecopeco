@@ -113,7 +113,7 @@ func (h *handler) SaveRestaurant(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := PostRestaurantResponse{
-		ID:             outputDto.Name,
+		ID:             outputDto.ID,
 		Name:           outputDto.Name,
 		Genre:          outputDto.Genre,
 		NearestStation: outputDto.NearestStation,
