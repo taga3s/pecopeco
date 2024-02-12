@@ -88,6 +88,8 @@ paths:
       parameters:
         - $ref: "#/components/parameters/JWT"
       responses:
+        "204":
+          description: "成功"
         "401":
           description: "認証エラー"
           content:
