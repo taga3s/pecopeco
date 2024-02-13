@@ -1,0 +1,152 @@
+package search
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+	"unicode/utf8"
+
+	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
+	"github.com/Seiya-Tagami/pecopeco-cli/config"
+	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
+	"github.com/manifoldco/promptui"
+	"github.com/spf13/viper"
+)
+
+type searchRestaurantInput struct {
+	City  string
+	Genre string
+}
+
+func GetSearchRestaurantInput(genreList []model.Genre) searchRestaurantInput {
+	promptForCity := promptui.Prompt{
+		Label: "> Which city? (Japanese only, ex.渋谷)",
+		Validate: func(input string) error {
+			if utf8.RuneCountInString(input) == 0 {
+				return errors.New("Please enter a city.")
+			}
+			if strings.TrimSpace(input) == "" {
+				return errors.New("City cannot be only whitespace.")
+			}
+			if strings.Contains(input, " ") {
+				return errors.New("City cannot contain whitespace.")
+			}
+			return nil
+		},
+		Templates: uiutil.DefaultPromptTemplate(),
+	}
+	city, err := promptForCity.Run()
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		return searchRestaurantInput{}
+	}
+
+	genreMap := make(map[string]model.Genre)
+	options := make([]string, 0, len(genreList))
+	for _, v := range genreList {
+		genreMap[v.Name] = v
+		options = append(options, v.Name)
+	}
+
+	promptForGenre := promptui.Select{
+		Label: "> What genre?",
+		Items: options,
+	}
+	_, genre, err := promptForGenre.Run()
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		return searchRestaurantInput{}
+	}
+
+	return searchRestaurantInput{City: strings.TrimSpace(city), Genre: strings.TrimSpace(genreMap[genre].Code)}
+}
+
+type selectRestaurantResult struct {
+	Restaurant     model.Restaurant
+	AddToFavorites bool
+	Notify         bool
+}
+
+func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult, error) {
+	restaurantMap := map[string]model.Restaurant{}
+	options := make([]string, 0, len(restaurantList))
+
+	for _, v := range restaurantList {
+		restaurantMap[v.Name] = v
+		options = append(options, v.Name)
+	}
+
+	promptForOptions := promptui.Select{
+		Label: "Please select following restaurants",
+		Items: options,
+	}
+
+	_, option, err := promptForOptions.Run()
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		return selectRestaurantResult{}, err
+	}
+
+	restaurant := restaurantMap[option]
+	uiutil.TextGreen().Printf("---------------------\n[店名] %s\n[住所] %s\n[最寄り駅] %s\n[ジャンル] %s\n[URL] %s\n---------------------\n",
+		restaurant.Name,
+		restaurant.Address,
+		restaurant.StationName,
+		restaurant.GenreName,
+		restaurant.URL,
+	)
+
+	promptForDecision := promptui.Select{
+		Label: "Select this restaurant?",
+		Items: []string{"Yes", "No"},
+	}
+
+	_, decision, err := promptForDecision.Run()
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		return selectRestaurantResult{}, err
+	}
+
+	if decision == "Yes" {
+		result := selectRestaurantResult{}
+		result.Restaurant = restaurant
+
+		promptForAddToFavorites := promptui.Select{
+			Label: "Add to favorites?",
+			Items: []string{"Yes", "No"},
+		}
+		_, addToFavorites, err := promptForAddToFavorites.Run()
+		if err != nil {
+			fmt.Printf("Prompt failed %v\n", err)
+			return selectRestaurantResult{}, err
+		}
+		if addToFavorites == "Yes" {
+			if config.IsLogin() {
+				result.AddToFavorites = true
+			} else {
+				uiutil.TextBlue().Println("Sorry, to add to favorites, you have to login first. Please login with following command.\n> pecopeco login")
+			}
+		}
+
+		promptForNotify := promptui.Select{
+			Label: "Notify your LINE app?",
+			Items: []string{"Yes", "No"},
+		}
+		_, notify, err := promptForNotify.Run()
+		if err != nil {
+			fmt.Printf("Prompt failed %v\n", err)
+			return selectRestaurantResult{}, err
+		}
+		if notify == "Yes" {
+			// トークンがセットされていない場合、ここで弾くようにする。
+			if viper.GetString(config.LINE_NOTIFY_API_TOKEN) == "" {
+				uiutil.TextBlue().Println("Sorry, you have not set your personal token to notify your line app yet. To notify your line app, you can use following command.\n> pecopeco config --token <your personal token>\nFor more info, you can reach https://github.com/Seiya-Tagami/pecopeco")
+			} else {
+				result.Notify = true
+			}
+		}
+		return result, nil
+	} else {
+		return SelectRestaurant(restaurantList)
+	}
+}

@@ -10,3 +10,15 @@ type ListRestaurantsParams struct {
 type NotifyRestaurantToLINEParams struct {
 	Restaurant model.Restaurant
 }
+
+type PostRestaurantParams struct {
+	Name        string
+	Address     string
+	StationName string
+	GenreName   string
+	URL         string
+}
+
+type DeleteRestaurantParams struct {
+	ID string
+}
