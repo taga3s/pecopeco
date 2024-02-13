@@ -90,7 +90,7 @@ func searchRestaurants() {
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			uiutil.TextGreen().Println("Added to favorites!")
+			uiutil.TextGreen().Println("Added to Favorites!")
 		}
 	}
 	// LINEへ通知処理
@@ -102,7 +102,7 @@ func searchRestaurants() {
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			uiutil.TextGreen().Println("Notify to your line app!")
+			uiutil.TextGreen().Println("Notify to your LINE app!")
 		}
 	}
 
@@ -114,7 +114,7 @@ func searchRestaurants() {
 // -- お気に入り機能
 func showFavorites() {
 	if !config.IsLogin() {
-		uiutil.TextBlue().Println("Sorry, to add to favorites, you have to login first. Please login with following command.\n> pecopeco login")
+		uiutil.TextBlue().Println("Sorry, to add to Favorites, you have to login first. Please login with following command.\n\n```\n> pecopeco login\n```")
 		time.Sleep(time.Second * 1)
 		run()
 		return
@@ -128,7 +128,7 @@ func showFavorites() {
 	}
 
 	if len(restaurantList) == 0 {
-		uiutil.TextBlue().Println("Sorry, there is no data. Please try to add restaurants by searching.")
+		uiutil.TextBlue().Println("Sorry, there is no data. Please add favorite restaurants by searching.")
 		time.Sleep(time.Second * 1)
 		run()
 		return
@@ -149,7 +149,7 @@ func showFavorites() {
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			uiutil.TextGreen().Println("Notify to your line app!")
+			uiutil.TextGreen().Println("Notify to your LINE app!")
 		}
 	}
 

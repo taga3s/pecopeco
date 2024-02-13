@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"time"
+
 	"github.com/Seiya-Tagami/pecopeco-cli/api/factory/user"
 	"github.com/Seiya-Tagami/pecopeco-cli/config"
 	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
@@ -19,6 +21,7 @@ var userCmd = &cobra.Command{
 func printLoggedInUser() {
 	if !config.IsLogin() {
 		uiutil.TextBlue().Println(errorMsg)
+		time.Sleep(time.Second * 1)
 		return
 	}
 
@@ -26,12 +29,13 @@ func printLoggedInUser() {
 	user, err := factory.FindUser()
 	if err != nil {
 		uiutil.TextBlue().Println(errorMsg)
+		time.Sleep(time.Second * 1)
 		return
 	}
 	uiutil.TextGreen().Printf("Logged in as %s, %s\n", user.Name, user.Email)
 }
 
-const errorMsg = "Sorry, you may have not logged in yet. Please login with following command.\n> pecopeco login"
+const errorMsg = "Sorry, you may have not logged in yet. Please login with following command.\n\n```\n> pecopeco login\n```"
 
 func init() {
 	rootCmd.AddCommand(userCmd)

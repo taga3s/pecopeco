@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 	"unicode/utf8"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
@@ -112,7 +113,7 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 		result.Restaurant = restaurant
 
 		promptForAddToFavorites := promptui.Select{
-			Label: "Add to favorites?",
+			Label: "Add to Favorites?",
 			Items: []string{"Yes", "No"},
 		}
 		_, addToFavorites, err := promptForAddToFavorites.Run()
@@ -124,7 +125,8 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 			if config.IsLogin() {
 				result.AddToFavorites = true
 			} else {
-				uiutil.TextBlue().Println("Sorry, to add to favorites, you have to login first. Please login with following command.\n> pecopeco login")
+				uiutil.TextBlue().Println("Sorry, to add to Favorites, you have to login first. Please login with following command.\n\n```\n> pecopeco login\n```")
+				time.Sleep(time.Second * 1)
 			}
 		}
 
@@ -140,7 +142,8 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 		if notify == "Yes" {
 			// トークンがセットされていない場合、ここで弾くようにする。
 			if viper.GetString(config.LINE_NOTIFY_API_TOKEN) == "" {
-				uiutil.TextBlue().Println("Sorry, you have not set your personal token to notify your line app yet. To notify your line app, you can use following command.\n> pecopeco config --token <your personal token>\nFor more info, you can reach https://github.com/Seiya-Tagami/pecopeco")
+				uiutil.TextBlue().Println("Sorry, you have not set your personal token to notify your LINE app yet. To notify your LINE app, you can use following command.\n\n```\n> pecopeco config --token <your personal token>\n```")
+				time.Sleep(time.Second * 1)
 			} else {
 				result.Notify = true
 			}
