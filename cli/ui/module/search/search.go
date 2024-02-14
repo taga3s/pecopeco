@@ -92,8 +92,8 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 	uiutil.TextGreen().Printf("---------------------\n[店名] %s\n[住所] %s\n[最寄り駅] %s\n[ジャンル] %s\n[URL] %s\n---------------------\n",
 		restaurant.Name,
 		restaurant.Address,
-		restaurant.StationName,
-		restaurant.GenreName,
+		restaurant.NearestStation,
+		restaurant.Genre,
 		restaurant.URL,
 	)
 
