@@ -19,8 +19,6 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version-file: cli/go.mod
-        working-directory: cli
-        cache: true
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
@@ -28,4 +26,3 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        working-directory: cli
