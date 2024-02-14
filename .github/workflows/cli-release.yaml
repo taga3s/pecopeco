@@ -23,18 +23,20 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version-file: cli/go.mod
-        env:
-          GO_ENV: ${{ secrets.GO_ENV }}
-          API_URL: ${{ secrets.API_URL }}
-          HOTPEPPER_API_URL: ${{ secrets.HOTPEPPER_API_URL }}
-          HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
-          LINE_NOTIFY_API_URL: ${{ secrets.LINE_NOTIFY_API_URL }}
-          OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
-          OAUTH_CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
-          OAUTH_SCOPE_1: ${{ secrets.OAUTH_SCOPE_1 }}
-          OAUTH_SCOPE_2: ${{ secrets.OAUTH_SCOPE_2 }}
-          OAUTH_SCOPE_3: ${{ secrets.OAUTH_SCOPE_3 }}
-          OAUTH_REDIRECT_URL: ${{ secrets.OAUTH_REDIRECT_URL }}
+
+      - name: Create .env
+        run: |
+          echo "GO_ENV=${{ secrets.GO_ENV }}" >> cli/.env
+          echo "API_URL=${{ secrets.API_URL }}" >> cli/.env
+          echo "HOTPEPPER_API_URL=${{ secrets.HOTPEPPER_API_URL }}" >> cli/.env
+          echo "HOTPEPPER_API_KEY=${{ secrets.HOTPEPPER_API_KEY }}" >> cli/.env
+          echo "LINE_NOTIFY_API_URL=${{ secrets.LINE_NOTIFY_API_URL }}" >> cli/.env
+          echo "OAUTH_CLIENT_ID=${{ secrets.OAUTH_CLIENT_ID }}" >> cli/.env
+          echo "OAUTH_CLIENT_SECRET=${{ secrets.OAUTH_CLIENT_SECRET }}" >> cli/.env
+          echo "OAUTH_SCOPE_1=${{ secrets.OAUTH_SCOPE_1 }}" >> cli/.env
+          echo "OAUTH_SCOPE_2=${{ secrets.OAUTH_SCOPE_2 }}" >> cli/.env
+          echo "OAUTH_SCOPE_3=${{ secrets.OAUTH_SCOPE_3 }}" >> cli/.env
+          echo "OAUTH_REDIRECT_URL=${{ secrets.OAUTH_REDIRECT_URL }}" >> cli/.env
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
