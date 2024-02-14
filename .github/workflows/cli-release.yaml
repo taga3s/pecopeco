@@ -5,18 +5,15 @@ on:
     tags:
       - "v*"
 
-defaults:
-  run:
-    working-directory: cli
-
 jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
+          sparse-checkout: cli
           fetch-depth: 0
 
       - uses: actions/setup-go@v3
@@ -26,6 +23,6 @@ jobs:
 
       - uses: goreleaser/goreleaser-action@v4
         with:
-          args: release --rm-dist
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
