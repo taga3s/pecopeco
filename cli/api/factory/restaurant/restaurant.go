@@ -45,11 +45,11 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 
 	for _, v := range res.Results.Shop {
 		restaurant := model.Restaurant{
-			Name:        v.Name,
-			Address:     v.Address,
-			StationName: v.StationName,
-			GenreName:   v.Genre.Name,
-			URL:         v.URLs.PC,
+			Name:           v.Name,
+			Address:        v.Address,
+			NearestStation: v.NearestStation,
+			Genre:          v.Genre.Name,
+			URL:            v.URLs.PC,
 		}
 		restaurantList = append(restaurantList, restaurant)
 	}
@@ -58,11 +58,11 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 
 func (f *factory) NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) error {
 	request := outerRestaurant.NotifyToLINERequest{
-		Name:        params.Restaurant.Name,
-		Address:     params.Restaurant.Address,
-		StationName: params.Restaurant.StationName,
-		GenreName:   params.Restaurant.GenreName,
-		URL:         params.Restaurant.URL,
+		Name:           params.Restaurant.Name,
+		Address:        params.Restaurant.Address,
+		NearestStation: params.Restaurant.NearestStation,
+		Genre:          params.Restaurant.Genre,
+		URL:            params.Restaurant.URL,
 	}
 	err := f.outerRepository.NotifyToLINE(request)
 	if err != nil {
@@ -83,12 +83,12 @@ func (f *factory) ListFavorites() ([]model.Restaurant, error) {
 
 	for _, v := range res.Restaurants {
 		restaurant := model.Restaurant{
-			ID:          v.ID,
-			Name:        v.Name,
-			Address:     v.Address,
-			StationName: v.NearestStation,
-			GenreName:   v.Genre,
-			URL:         v.URL,
+			ID:             v.ID,
+			Name:           v.Name,
+			Address:        v.Address,
+			NearestStation: v.NearestStation,
+			Genre:          v.Genre,
+			URL:            v.URL,
 		}
 		restaurantList = append(restaurantList, restaurant)
 	}
@@ -97,11 +97,11 @@ func (f *factory) ListFavorites() ([]model.Restaurant, error) {
 
 func (f *factory) PostRestaurant(params PostRestaurantParams) (model.Restaurant, error) {
 	request := innerRestaurant.PostRequest{
-		Name:        params.Name,
-		Address:     params.Address,
-		StationName: params.StationName,
-		GenreName:   params.GenreName,
-		URL:         params.URL,
+		Name:           params.Name,
+		Address:        params.Address,
+		NearestStation: params.NearestStation,
+		Genre:          params.Genre,
+		URL:            params.URL,
 	}
 	res, err := f.innerRepository.Post(request)
 	if err != nil {
@@ -109,12 +109,12 @@ func (f *factory) PostRestaurant(params PostRestaurantParams) (model.Restaurant,
 		return model.Restaurant{}, err
 	}
 	return model.Restaurant{
-		ID:          res.ID,
-		Name:        res.Name,
-		Address:     res.Address,
-		StationName: res.NearestStation,
-		GenreName:   res.Genre,
-		URL:         res.URL,
+		ID:             res.ID,
+		Name:           res.Name,
+		Address:        res.Address,
+		NearestStation: res.NearestStation,
+		Genre:          res.Genre,
+		URL:            res.URL,
 	}, nil
 }
 

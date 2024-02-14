@@ -12,11 +12,11 @@ type NotifyRestaurantToLINEParams struct {
 }
 
 type PostRestaurantParams struct {
-	Name        string
-	Address     string
-	StationName string
-	GenreName   string
-	URL         string
+	Name           string
+	Address        string
+	NearestStation string
+	Genre          string
+	URL            string
 }
 
 type DeleteRestaurantParams struct {

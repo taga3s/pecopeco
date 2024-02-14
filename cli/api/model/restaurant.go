@@ -1,10 +1,10 @@
 package model
 
 type Restaurant struct {
-	ID          string
-	Name        string
-	Address     string
-	StationName string
-	GenreName   string
-	URL         string
+	ID             string
+	Name           string
+	Address        string
+	NearestStation string
+	Genre          string
+	URL            string
 }

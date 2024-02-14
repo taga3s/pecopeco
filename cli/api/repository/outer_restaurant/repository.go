@@ -33,8 +33,8 @@ func (r *repository) NotifyToLINE(request NotifyToLINERequest) error {
 		"\n---------------------\n[店名] %s\n[住所] %s\n[最寄り駅] %s\n[ジャンル] %s\n[URL] %s\n---------------------\n",
 		request.Name,
 		request.Address,
-		request.StationName,
-		request.GenreName,
+		request.NearestStation,
+		request.Genre,
 		request.URL,
 	), &notifyToLINEResponse); err != nil {
 		return err

@@ -80,11 +80,11 @@ func searchRestaurants() {
 	// お気に入り登録処理
 	if selectRestaurantResult.AddToFavorites {
 		params := restaurantfactory.PostRestaurantParams{
-			Name:        selectRestaurantResult.Restaurant.Name,
-			Address:     selectRestaurantResult.Restaurant.Address,
-			StationName: selectRestaurantResult.Restaurant.StationName,
-			GenreName:   selectRestaurantResult.Restaurant.GenreName,
-			URL:         selectRestaurantResult.Restaurant.URL,
+			Name:           selectRestaurantResult.Restaurant.Name,
+			Address:        selectRestaurantResult.Restaurant.Address,
+			NearestStation: selectRestaurantResult.Restaurant.NearestStation,
+			Genre:          selectRestaurantResult.Restaurant.Genre,
+			URL:            selectRestaurantResult.Restaurant.URL,
 		}
 		_, err := restaurantFactory.PostRestaurant(params)
 		if err != nil {
