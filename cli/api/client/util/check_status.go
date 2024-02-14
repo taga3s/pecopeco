@@ -11,7 +11,7 @@ func CheckStatus(status int) error {
 	case 400:
 		return errors.New("Bad request")
 	case 401:
-		return errors.New("Invalid access token")
+		return errors.New("Invalid access. Please try to Login again for security purposes.")
 	case 500:
 		return errors.New("Server-side error occurred")
 	default:
