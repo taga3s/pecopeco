@@ -28,7 +28,7 @@ func printLoggedInUser() {
 	factory := user.CreateFactory()
 	user, err := factory.FindUser()
 	if err != nil {
-		uiutil.TextBlue().Println(errorMsg)
+		uiutil.TextBlue().Println(err)
 		time.Sleep(time.Second * 1)
 		return
 	}

@@ -26,21 +26,6 @@ var loginCmd = &cobra.Command{
 
 func login() {
 	factory := user.CreateFactory()
-	// 既にログインしていた場合は処理をはじく。
-	if config.IsLogin() {
-		user, err := factory.FindUser()
-		if err != nil {
-			uiutil.TextBlue().Println(errorMsg)
-			return
-		}
-		uiutil.TextBlue().Printf(
-			"You have already logged in as %s, %s.\nTo log in to another account, please log out of your current account first.\n",
-			user.Name,
-			user.Email,
-		)
-		return
-	}
-
 	id, secret, scopes, redirectURL, err := secret.Load()
 	if err != nil {
 		fmt.Println(err)

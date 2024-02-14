@@ -37,7 +37,7 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 	}
 	res, err := f.outerRepository.List(request)
 	if err != nil {
-		err := fmt.Errorf("Failed to implement List: %v", err)
+		err := fmt.Errorf("Error: %v", err)
 		return []model.Restaurant{}, err
 	}
 
@@ -66,7 +66,7 @@ func (f *factory) NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) er
 	}
 	err := f.outerRepository.NotifyToLINE(request)
 	if err != nil {
-		err := fmt.Errorf("Failed to implement NotifyToLINE: %v", err)
+		err := fmt.Errorf("Error: %v", err)
 		return err
 	}
 	return nil
@@ -75,7 +75,7 @@ func (f *factory) NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) er
 func (f *factory) ListFavorites() ([]model.Restaurant, error) {
 	res, err := f.innerRepository.List()
 	if err != nil {
-		err := fmt.Errorf("Failed to implement List: %v", err)
+		err := fmt.Errorf("Error: %v", err)
 		return []model.Restaurant{}, err
 	}
 
@@ -105,7 +105,7 @@ func (f *factory) PostRestaurant(params PostRestaurantParams) (model.Restaurant,
 	}
 	res, err := f.innerRepository.Post(request)
 	if err != nil {
-		err := fmt.Errorf("Failed to implement List: %v", err)
+		err := fmt.Errorf("Error: %v", err)
 		return model.Restaurant{}, err
 	}
 	return model.Restaurant{
