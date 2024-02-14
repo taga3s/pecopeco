@@ -4,7 +4,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "pecopeco"
+app = "pecopeco-crimson-moon-1095"
 primary_region = "nrt"
 
 [build]
@@ -14,7 +14,7 @@ primary_region = "nrt"
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
-  min_machines_running = 2
+  min_machines_running = 0
   processes = ["app"]
 
 [[vm]]
