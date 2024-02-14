@@ -24,21 +24,6 @@ jobs:
         with:
           go-version-file: cli/go.mod
 
-      - name: Create .env
-        run: |
-          touch .env
-          echo "GO_ENV=${{ secrets.GO_ENV }}" >> .env
-          echo "API_URL=${{ secrets.API_URL }}" >> .env
-          echo "HOTPEPPER_API_URL=${{ secrets.HOTPEPPER_API_URL }}" >> .env
-          echo "HOTPEPPER_API_KEY=${{ secrets.HOTPEPPER_API_KEY }}" >> .env
-          echo "LINE_NOTIFY_API_URL=${{ secrets.LINE_NOTIFY_API_URL }}" >> .env
-          echo "OAUTH_CLIENT_ID=${{ secrets.OAUTH_CLIENT_ID }}" >> .env
-          echo "OAUTH_CLIENT_SECRET=${{ secrets.OAUTH_CLIENT_SECRET }}" >> .env
-          echo "OAUTH_SCOPE_1=${{ secrets.OAUTH_SCOPE_1 }}" >> .env
-          echo "OAUTH_SCOPE_2=${{ secrets.OAUTH_SCOPE_2 }}" >> .env
-          echo "OAUTH_SCOPE_3=${{ secrets.OAUTH_SCOPE_3 }}" >> .env
-          echo "OAUTH_REDIRECT_URL=${{ secrets.OAUTH_REDIRECT_URL }}" >> .env
-
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
         with:
