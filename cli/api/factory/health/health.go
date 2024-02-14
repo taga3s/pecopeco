@@ -23,7 +23,7 @@ func CreateFactory() HealthFactory {
 func (f *factory) HealthCheck() (model.Health, error) {
 	res, err := f.repository.HealthCheck()
 	if err != nil {
-		err := fmt.Errorf("Failed to implement health check: %v", err)
+		err := fmt.Errorf("Error: %v", err)
 		return model.Health{}, err
 	}
 	health := model.Health{

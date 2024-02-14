@@ -23,7 +23,7 @@ func CreateFactory() GenreFactory {
 func (f *factory) ListGenres() ([]model.Genre, error) {
 	res, err := f.repository.List()
 	if err != nil {
-		err := fmt.Errorf("Failed to implement List: %v", err)
+		err := fmt.Errorf("Error: %v", err)
 		return []model.Genre{}, err
 	}
 
