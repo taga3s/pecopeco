@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - "v*"
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -16,13 +15,17 @@ jobs:
           sparse-checkout: cli
           fetch-depth: 0
 
-      - uses: actions/setup-go@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
         with:
-          go-version-file: go.mod
-          cache: true
+          go-version-file: cli/go.mod
+        working-directory: cli
+        cache: true
 
-      - uses: goreleaser/goreleaser-action@v4
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v4
         with:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: cli
