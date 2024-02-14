@@ -4,6 +4,10 @@ on:
   push:
     tags:
       - "v*"
+defaults:
+  run:
+    working-directory: cli
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -12,7 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: cli
           fetch-depth: 0
 
       - name: Set up Go
