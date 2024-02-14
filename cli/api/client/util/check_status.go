@@ -6,6 +6,8 @@ func CheckStatus(status int) error {
 	switch status {
 	case 200:
 		return nil
+	case 204:
+		return nil
 	case 400:
 		return errors.New("Bad request")
 	case 401:

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/config"
-	"github.com/Seiya-Tagami/pecopeco-cli/ui"
+	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +21,7 @@ func logout() {
 	if err := config.Revoke(config.PECOPECO_API_TOKEN); err != nil {
 		fmt.Println(err)
 	}
-	ui.TextGreen().Println("Successfully logout!")
+	uiutil.TextGreen().Println("Successfully logout!")
 }
 
 func init() {

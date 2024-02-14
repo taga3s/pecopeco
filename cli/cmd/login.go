@@ -10,7 +10,7 @@ import (
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/api/userinfo"
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/secret"
 	"github.com/Seiya-Tagami/pecopeco-cli/config"
-	"github.com/Seiya-Tagami/pecopeco-cli/ui"
+	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
 	"golang.org/x/oauth2/google"
 )
@@ -30,10 +30,10 @@ func login() {
 	if config.IsLogin() {
 		user, err := factory.FindUser()
 		if err != nil {
-			ui.TextBlue().Println(errorMsg)
+			uiutil.TextBlue().Println(errorMsg)
 			return
 		}
-		ui.TextBlue().Printf(
+		uiutil.TextBlue().Printf(
 			"You have already logged in as %s, %s.\nTo log in to another account, please log out of your current account first.\n",
 			user.Name,
 			user.Email,
@@ -65,9 +65,9 @@ func login() {
 		return
 	}
 
-	ui.TextGreen().Printf("Authentication complete.\n\n")
+	uiutil.TextGreen().Printf("Authentication complete.\n\n")
 
-	sp := ui.DefaultSpinner("Logging in...")
+	sp := uiutil.DefaultSpinner("Logging in...")
 	sp.Start()
 
 	userinfo, err := userinfo.Get(ctx, oauth)
@@ -90,7 +90,7 @@ func login() {
 	}
 
 	sp.Stop()
-	ui.TextGreen().Printf("Successfully login as %s, %s\n", response.Name, response.Email)
+	uiutil.TextGreen().Printf("Successfully login as %s, %s\n", response.Name, response.Email)
 }
 
 func init() {

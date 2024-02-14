@@ -9,7 +9,7 @@ import (
 	"net/http"
 
 	"github.com/Seiya-Tagami/pecopeco-cli/auth/util"
-	"github.com/Seiya-Tagami/pecopeco-cli/ui"
+	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
 	"github.com/go-chi/chi/v5"
 	"golang.org/x/oauth2"
 )
@@ -137,7 +137,7 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 		fmt.Println(err)
 	}
 
-	sp := ui.DefaultSpinner("Waiting for authentication...")
+	sp := uiutil.DefaultSpinner("Waiting for authentication...")
 	sp.Start()
 
 	authCode, err := s.getAuthCode()
