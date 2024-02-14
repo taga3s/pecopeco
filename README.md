@@ -1,6 +1,16 @@
 <p align="center">
-  <img src='/docs/logo/pecopeco.png' width="640px"/>
+  <img src='docs/logo/pecopeco.png' width="640px"/>
 </p>
+
+#### CA Tech Accel
+
+## アプリ概要
+
+エンジニアとして活動している人たちが、何かご飯を食べたいと思った時に、ブラウザを開かずともすぐさま CLI 上で飲食店を検索できるアプリです。以下の機能を提供しています。
+
+- 飲食店検索機能
+- 飲食店お気に入り管理機能
+- OAuth2 による認可・認証機能
 
 ## docs
 
