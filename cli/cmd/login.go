@@ -76,6 +76,9 @@ func login() {
 		return
 	}
 
+	// id_tokenを保存する
+	config.Save(config.PECOPECO_API_TOKEN, oauth.ID_Token)
+
 	// ログイン処理
 	params := user.LoginParams{
 		ID:    userinfo.ID,

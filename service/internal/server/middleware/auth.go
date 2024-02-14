@@ -9,8 +9,9 @@ import (
 
 func Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		tokenString := r.Header.Get("Authorization")
-		_, err := jwt.Verify(tokenString)
+		ctx := r.Context()
+		rawIDToken := r.Header.Get("Authorization")
+		_, err := jwt.Verify(ctx, rawIDToken)
 		if err != nil {
 			responder.ReturnStatusUnauthorized(w, err)
 			return

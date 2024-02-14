@@ -86,8 +86,9 @@ func (s *codeReceiver) getAuthCode() (authCode, error) {
 }
 
 type OAuth struct {
-	Config *oauth2.Config
-	Token  *oauth2.Token
+	Config   *oauth2.Config
+	Token    *oauth2.Token
+	ID_Token string
 }
 
 func NewOAuth(id, secret string, scopes []string, endpoint oauth2.Endpoint, redirectURL string) OAuth {
@@ -160,7 +161,10 @@ func (o *OAuth) Authorization(ctx context.Context) error {
 		return err
 	}
 
+	idToken := token.Extra("id_token").(string)
+
 	o.Token = token
+	o.ID_Token = idToken
 
 	sp.Stop()
 

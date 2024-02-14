@@ -58,9 +58,5 @@ func HttpClient(method string, endpoint string, request interface{}, response in
 		return err
 	}
 
-	// jwtトークンを保存する
-	accessToken = res.Header.Get("Authorization")
-	config.Save(config.PECOPECO_API_TOKEN, accessToken)
-
 	return nil
 }

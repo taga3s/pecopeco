@@ -37,7 +37,7 @@ func (h *handler) ListRestaurants(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	accessToken := r.Header.Get("Authorization")
-	userID, err := jwt.GetUserIDFromToken(accessToken)
+	userID, err := jwt.GetUserIDFromToken(ctx, accessToken)
 	if err != nil {
 		responder.ReturnStatusUnauthorized(w, err)
 		return
@@ -79,7 +79,7 @@ func (h *handler) SaveRestaurant(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	accessToken := r.Header.Get("Authorization")
-	userID, err := jwt.GetUserIDFromToken(accessToken)
+	userID, err := jwt.GetUserIDFromToken(ctx, accessToken)
 	if err != nil {
 		responder.ReturnStatusUnauthorized(w, err)
 		return

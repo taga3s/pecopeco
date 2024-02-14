@@ -1,60 +1,44 @@
 package jwt
 
 import (
-	"errors"
-	"fmt"
+	"context"
 	"net/http"
 	"os"
-	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/Seiya-Tagami/pecopeco-service/internal/config"
+	"github.com/coreos/go-oidc/v3/oidc"
 )
 
 var jwtSecret = os.Getenv("JWT_SECRET")
-
-func Generate(userID string) (string, error) {
-	claims := jwt.MapClaims{
-		"user_id": userID,
-		"exp":     time.Now().Add(time.Hour * 72).Unix(),
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	accessToken, err := token.SignedString([]byte(jwtSecret))
-	if err != nil {
-		return "", err
-	}
-	return accessToken, nil
-}
 
 func SetHttpHeader(w http.ResponseWriter, accessToken string) {
 	w.Header().Set("Authorization", accessToken)
 }
 
-func Verify(tokenString string) (*jwt.Token, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		return []byte(jwtSecret), nil
-	})
+func Verify(ctx context.Context, tokenString string) (*oidc.IDToken, error) {
+	provider, err := oidc.NewProvider(ctx, "https://accounts.google.com")
 	if err != nil {
-		return token, err
+		return &oidc.IDToken{}, err
 	}
-	return token, nil
+	clientID := config.GetOIDC().ClientID
+	verifier := provider.Verifier(&oidc.Config{ClientID: clientID})
+
+	idToken, err := verifier.Verify(ctx, tokenString)
+	if err != nil {
+		return &oidc.IDToken{}, err
+	}
+	return idToken, nil
 }
 
-func GetUserIDFromToken(tokenString string) (string, error) {
-	token, err := Verify(tokenString)
+func GetUserIDFromToken(ctx context.Context, tokenString string) (string, error) {
+	idToken, err := Verify(ctx, tokenString)
 	if err != nil {
 		return "", err
 	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		userID, ok := claims["user_id"].(string)
-		if !ok {
-			return "", errors.New("user_id field not found or not a string")
-		}
-		return userID, nil
+	idTokenClaims := map[string]interface{}{}
+	if err := idToken.Claims(&idTokenClaims); err != nil {
+		return "", err
 	}
-	return "", errors.New("invalid token")
+	userID := idTokenClaims["sub"].(string)
+	return userID, nil
 }

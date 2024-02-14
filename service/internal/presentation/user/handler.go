@@ -61,14 +61,6 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 		Email: outputDto.Email,
 	}
 
-	// jwtの生成
-	accessToken, err := jwt.Generate(outputDto.ID)
-	if err != nil {
-		responder.ReturnStatusInternalServerError(w, err)
-		return
-	}
-	jwt.SetHttpHeader(w, accessToken)
-
 	responder.ReturnStatusOK(w, response)
 }
 
@@ -78,7 +70,7 @@ func (h *handler) FindUser(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	accessToken := r.Header.Get("Authorization")
-	userID, err := jwt.GetUserIDFromToken(accessToken)
+	userID, err := jwt.GetUserIDFromToken(ctx, accessToken)
 	if err != nil {
 		responder.ReturnStatusUnauthorized(w, err)
 		return
