@@ -1,14 +1,15 @@
 <p align="center">
-  <img src='docs/logo/pecopeco.png' width="640px"/>
+  <img src='/docs/logo/pecopeco.png' width="640px"/>
 </p>
 
-#### CA Tech Accel
+### CA Tech Accel
 
 ## アプリ概要
 
 エンジニアとして活動している人たちが、何かご飯を食べたいと思った時に、ブラウザを開かずともすぐさま CLI 上で飲食店を検索できるアプリです。以下の機能を提供しています。
 
 - 飲食店検索機能
+- 飲食店 LINE 通知機能
 - 飲食店お気に入り管理機能
 - OAuth2 による認可・認証機能
 
@@ -63,6 +64,10 @@ API に、REST API を利用する。以下の 2 つのポイントから選定�
 
 1. ホットペッパー API は、多くの飲食店情報を提供する。
 2. LINE Notify API を利用することで、ユーザーがトークンを発行し、任意のグループ等と連携を行うことで、LINE に通知することができる。他の LINE Messaging API や LINE ミニアプリの作成と比較したが、通知を送れればよいという要件や、LINE ミニアプリの作成の場合の認証周りの実装の大変さや審査に時間がかかることを踏まえれば、これが適切だと判断した。
+
+## システム構成図
+
+<img src="docs/system-structure.png" width="600" />
 
 ### 開発環境
 
