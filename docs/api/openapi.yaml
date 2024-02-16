@@ -238,6 +238,6 @@ components:
       type: object
       properties:
         message: { type: string, example: "errorMsg" }
-        documentation_url: { type: string, example: "https://github.com/Seiya-Tagami/pecopeco" }
+        documentation_url: { type: string, example: "https://github.com/ayanami77/pecopeco" }
       required:
         - message

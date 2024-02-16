@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/config"
+	"github.com/ayanami77/pecopeco-cli/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

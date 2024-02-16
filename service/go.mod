@@ -1,4 +1,4 @@
-module github.com/Seiya-Tagami/pecopeco-service
+module github.com/ayanami77/pecopeco-service
 
 go 1.21.1
 

@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/auth/util"
-	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
+	"github.com/ayanami77/pecopeco-cli/auth/util"
+	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/go-chi/chi/v5"
 	"golang.org/x/oauth2"
 )

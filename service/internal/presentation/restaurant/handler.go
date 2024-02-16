@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Seiya-Tagami/pecopeco-service/internal/presentation/responder"
-	"github.com/Seiya-Tagami/pecopeco-service/internal/presentation/util/httputil"
-	restaurantUseCase "github.com/Seiya-Tagami/pecopeco-service/internal/usecase/restaurant"
-	"github.com/Seiya-Tagami/pecopeco-service/internal/util/jwt"
-	"github.com/Seiya-Tagami/pecopeco-service/pkg/validator"
+	"github.com/ayanami77/pecopeco-service/internal/presentation/responder"
+	"github.com/ayanami77/pecopeco-service/internal/presentation/util/httputil"
+	restaurantUseCase "github.com/ayanami77/pecopeco-service/internal/usecase/restaurant"
+	"github.com/ayanami77/pecopeco-service/internal/util/jwt"
+	"github.com/ayanami77/pecopeco-service/pkg/validator"
 	"github.com/go-chi/chi/v5"
 )
 

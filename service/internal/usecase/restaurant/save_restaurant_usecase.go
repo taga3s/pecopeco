@@ -3,8 +3,8 @@ package restaurant
 import (
 	"context"
 
-	"github.com/Seiya-Tagami/pecopeco-service/internal/db"
-	restaurantDomain "github.com/Seiya-Tagami/pecopeco-service/internal/domain/restaurant"
+	"github.com/ayanami77/pecopeco-service/internal/db"
+	restaurantDomain "github.com/ayanami77/pecopeco-service/internal/domain/restaurant"
 )
 
 type SaveRestaurantUseCase struct {

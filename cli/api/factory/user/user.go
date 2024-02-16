@@ -3,8 +3,8 @@ package user
 import (
 	"fmt"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
-	"github.com/Seiya-Tagami/pecopeco-cli/api/repository/user"
+	"github.com/ayanami77/pecopeco-cli/api/model"
+	"github.com/ayanami77/pecopeco-cli/api/repository/user"
 )
 
 type UserFactory interface {

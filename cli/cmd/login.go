@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/factory/user"
-	"github.com/Seiya-Tagami/pecopeco-cli/auth"
-	"github.com/Seiya-Tagami/pecopeco-cli/auth/api/userinfo"
-	"github.com/Seiya-Tagami/pecopeco-cli/auth/secret"
-	"github.com/Seiya-Tagami/pecopeco-cli/config"
-	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
+	"github.com/ayanami77/pecopeco-cli/api/factory/user"
+	"github.com/ayanami77/pecopeco-cli/auth"
+	"github.com/ayanami77/pecopeco-cli/auth/api/userinfo"
+	"github.com/ayanami77/pecopeco-cli/auth/secret"
+	"github.com/ayanami77/pecopeco-cli/config"
+	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
 	"golang.org/x/oauth2/google"
 )

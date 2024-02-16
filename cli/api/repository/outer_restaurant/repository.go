@@ -3,9 +3,9 @@ package restaurant
 import (
 	"fmt"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/client/hotpepper"
-	"github.com/Seiya-Tagami/pecopeco-cli/api/client/notify"
-	"github.com/Seiya-Tagami/pecopeco-cli/api/client/util"
+	"github.com/ayanami77/pecopeco-cli/api/client/hotpepper"
+	"github.com/ayanami77/pecopeco-cli/api/client/notify"
+	"github.com/ayanami77/pecopeco-cli/api/client/util"
 )
 
 type Repository interface {

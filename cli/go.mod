@@ -1,4 +1,4 @@
-module github.com/Seiya-Tagami/pecopeco-cli
+module github.com/ayanami77/pecopeco-cli
 
 go 1.21.1
 

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Seiya-Tagami/pecopeco-service/internal/domain/user"
+	"github.com/ayanami77/pecopeco-service/internal/domain/user"
 )
 
 type userRepository struct {

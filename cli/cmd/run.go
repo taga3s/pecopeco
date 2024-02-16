@@ -5,12 +5,12 @@ import (
 	"os"
 	"time"
 
-	genrefactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/genre"
-	restaurantfactory "github.com/Seiya-Tagami/pecopeco-cli/api/factory/restaurant"
-	"github.com/Seiya-Tagami/pecopeco-cli/config"
-	"github.com/Seiya-Tagami/pecopeco-cli/ui/module/favorites"
-	"github.com/Seiya-Tagami/pecopeco-cli/ui/module/search"
-	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
+	genrefactory "github.com/ayanami77/pecopeco-cli/api/factory/genre"
+	restaurantfactory "github.com/ayanami77/pecopeco-cli/api/factory/restaurant"
+	"github.com/ayanami77/pecopeco-cli/config"
+	"github.com/ayanami77/pecopeco-cli/ui/module/favorites"
+	"github.com/ayanami77/pecopeco-cli/ui/module/search"
+	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )

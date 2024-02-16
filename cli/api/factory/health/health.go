@@ -3,8 +3,8 @@ package health
 import (
 	"fmt"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
-	"github.com/Seiya-Tagami/pecopeco-cli/api/repository/health"
+	"github.com/ayanami77/pecopeco-cli/api/model"
+	"github.com/ayanami77/pecopeco-cli/api/repository/health"
 )
 
 type HealthFactory interface {

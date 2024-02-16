@@ -47,6 +47,6 @@ changelog:
 
 brews:
   - repository:
-      owner: Seiya-Tagami
+      owner: ayanami77
       name: homebrew-pecopeco
       token: "{{ .Env.TAP_GITHUB_TOKEN }}"

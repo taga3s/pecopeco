@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/Seiya-Tagami/pecopeco-service/internal/config"
+	"github.com/ayanami77/pecopeco-service/internal/config"
 	_ "github.com/go-sql-driver/mysql"
 )
 

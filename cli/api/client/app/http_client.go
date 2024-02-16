@@ -8,8 +8,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/client/util"
-	"github.com/Seiya-Tagami/pecopeco-cli/config"
+	"github.com/ayanami77/pecopeco-cli/api/client/util"
+	"github.com/ayanami77/pecopeco-cli/config"
 )
 
 func HttpClient(method string, endpoint string, request interface{}, response interface{}) error {

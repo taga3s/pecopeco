@@ -3,9 +3,9 @@ package restaurant
 import (
 	"fmt"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
-	innerRestaurant "github.com/Seiya-Tagami/pecopeco-cli/api/repository/inner_restaurant"
-	outerRestaurant "github.com/Seiya-Tagami/pecopeco-cli/api/repository/outer_restaurant"
+	"github.com/ayanami77/pecopeco-cli/api/model"
+	innerRestaurant "github.com/ayanami77/pecopeco-cli/api/repository/inner_restaurant"
+	outerRestaurant "github.com/ayanami77/pecopeco-cli/api/repository/outer_restaurant"
 )
 
 type RestaurantFactory interface {

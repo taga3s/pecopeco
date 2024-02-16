@@ -3,8 +3,8 @@ package healthhandler
 import (
 	"net/http"
 
-	"github.com/Seiya-Tagami/pecopeco-service/internal/db"
-	"github.com/Seiya-Tagami/pecopeco-service/internal/presentation/responder"
+	"github.com/ayanami77/pecopeco-service/internal/db"
+	"github.com/ayanami77/pecopeco-service/internal/presentation/responder"
 )
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {

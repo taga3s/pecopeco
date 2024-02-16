@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/factory/health"
-	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
+	"github.com/ayanami77/pecopeco-cli/api/factory/health"
+	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
 )
 

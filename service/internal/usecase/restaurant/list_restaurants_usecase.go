@@ -3,7 +3,7 @@ package restaurant
 import (
 	"context"
 
-	restaurantDomain "github.com/Seiya-Tagami/pecopeco-service/internal/domain/restaurant"
+	restaurantDomain "github.com/ayanami77/pecopeco-service/internal/domain/restaurant"
 )
 
 type ListRestaurantsUseCase struct {

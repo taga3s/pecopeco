@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/config"
-	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
+	"github.com/ayanami77/pecopeco-cli/config"
+	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
 )
 

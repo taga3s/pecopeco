@@ -3,7 +3,7 @@ package restaurant
 import (
 	"fmt"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/client/app"
+	"github.com/ayanami77/pecopeco-cli/api/client/app"
 )
 
 type Repository interface {

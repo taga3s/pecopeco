@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Seiya-Tagami/pecopeco-service/internal/config"
-	"github.com/Seiya-Tagami/pecopeco-service/internal/server/route"
+	"github.com/ayanami77/pecopeco-service/internal/config"
+	"github.com/ayanami77/pecopeco-service/internal/server/route"
 	"github.com/go-chi/chi/v5"
 )
 

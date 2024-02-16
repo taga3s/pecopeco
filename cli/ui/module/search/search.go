@@ -7,9 +7,9 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/api/model"
-	"github.com/Seiya-Tagami/pecopeco-cli/config"
-	uiutil "github.com/Seiya-Tagami/pecopeco-cli/ui/util"
+	"github.com/ayanami77/pecopeco-cli/api/model"
+	"github.com/ayanami77/pecopeco-cli/config"
+	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/viper"
 )

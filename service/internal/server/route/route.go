@@ -1,15 +1,15 @@
 package route
 
 import (
-	"github.com/Seiya-Tagami/pecopeco-service/internal/db"
-	"github.com/Seiya-Tagami/pecopeco-service/internal/domain/user"
-	"github.com/Seiya-Tagami/pecopeco-service/internal/infrastructure/repository"
-	hh "github.com/Seiya-Tagami/pecopeco-service/internal/presentation/health_handler"
-	rh "github.com/Seiya-Tagami/pecopeco-service/internal/presentation/restaurant"
-	uh "github.com/Seiya-Tagami/pecopeco-service/internal/presentation/user"
-	mymiddleware "github.com/Seiya-Tagami/pecopeco-service/internal/server/middleware"
-	ru "github.com/Seiya-Tagami/pecopeco-service/internal/usecase/restaurant"
-	uu "github.com/Seiya-Tagami/pecopeco-service/internal/usecase/user"
+	"github.com/ayanami77/pecopeco-service/internal/db"
+	"github.com/ayanami77/pecopeco-service/internal/domain/user"
+	"github.com/ayanami77/pecopeco-service/internal/infrastructure/repository"
+	hh "github.com/ayanami77/pecopeco-service/internal/presentation/health_handler"
+	rh "github.com/ayanami77/pecopeco-service/internal/presentation/restaurant"
+	uh "github.com/ayanami77/pecopeco-service/internal/presentation/user"
+	mymiddleware "github.com/ayanami77/pecopeco-service/internal/server/middleware"
+	ru "github.com/ayanami77/pecopeco-service/internal/usecase/restaurant"
+	uu "github.com/ayanami77/pecopeco-service/internal/usecase/user"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )

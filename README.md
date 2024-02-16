@@ -1,5 +1,5 @@
 <p align="center">
-  <img src='/docs/logo/pecopeco.png' width="640px"/>
+  <img src='docs/logo/pecopeco.png' width="640px"/>
 </p>
 
 ### CA Tech Accel
@@ -16,7 +16,7 @@
 ## docs
 
 - API 定義はこちら
-  - [pecopeco-api-docs](https://seiya-tagami.github.io/pecopeco/)
+  - [pecopeco-api-docs](https://ayanami77.github.io/pecopeco/)
 
 ## 技術選定
 

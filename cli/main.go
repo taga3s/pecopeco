@@ -2,9 +2,8 @@ package main
 
 import (
 	"log"
-	"os"
 
-	"github.com/Seiya-Tagami/pecopeco-cli/cmd"
+	"github.com/ayanami77/pecopeco-cli/cmd"
 	"github.com/joho/godotenv"
 )
 
@@ -14,9 +13,7 @@ func main() {
 }
 
 func loadEnv() {
-	if os.Getenv("GO_ENV") == "dev" {
-		if err := godotenv.Load(".env"); err != nil {
-			log.Fatal(err)
-		}
+	if err := godotenv.Load(".env"); err != nil {
+		log.Fatal(err)
 	}
 }
