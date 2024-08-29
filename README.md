@@ -2,27 +2,27 @@
   <img src='docs/logo/pecopeco.png' width="100%"/>
 </p>
 
-## アプリ概要
+## About this app
 
-エンジニアとして活動している人たちが、何かご飯を食べたいと思った時に、ブラウザを開かずともすぐさま飲食店を検索できるCLIアプリです。以下の機能を提供しています。
+エンジニアとして活動している人たちが、何かご飯を食べたいと思った時に、ブラウザを開かずともすぐさま飲食店を検索できるCLIアプリです。現在、以下のような機能があります。
 
 - 飲食店検索機能
 - 飲食店 LINE 通知機能
 - 飲食店お気に入り管理機能
 - OAuth2 による認可・認証機能
 
-## docs
+## Docs
 
 - API 定義はこちら
   - [pecopeco-api-docs](https://taga3s.github.io/pecopeco/)
 
-## 技術選定
+## Tech Stacks
 
-### 言語
+### Language
 
 - [Go](https://go.dev/)
 
-### フレームワーク
+### Frameworks
 
 - [Cobra](https://cobra.dev/)
 - [Viper](https://github.com/spf13/viper)
@@ -52,7 +52,7 @@ API に、REST API を利用する。以下の 2 つのポイントから選定�
 - HTTP ベースで、JSON を用いるといった主流な Web 技術を利用するためシンプルに構築できる。
 - gRPC も型安全に開発を行える点で検討したが、学習コストが高いことや、今回マイクロサービスの実装を行わないため不採用にした。
 
-### 外部 API
+### External APIs
 
 - [ホットペッパー API](https://webservice.recruit.co.jp/doc/hotpepper/reference.html)
 - [LINE Notify API](https://notify-bot.line.me/doc/ja/)
@@ -63,17 +63,17 @@ API に、REST API を利用する。以下の 2 つのポイントから選定�
 1. ホットペッパー API は、多くの飲食店情報を提供する。
 2. LINE Notify API を利用することで、ユーザーがトークンを発行し、任意のグループ等と連携を行うことで、LINE に通知することができる。他の LINE Messaging API や LINE ミニアプリの作成と比較したが、通知を送れればよいという要件や、LINE ミニアプリの作成の場合の認証周りの実装の大変さや審査に時間がかかることを踏まえれば、これが適切だと判断した。
 
-## システム構成図
+## System
 
 <img src="docs/system-structure.png" width="600" />
 
-### 開発環境
+### Dev Environment
 
 - [Docker](https://docs.docker.com/)
 
-## 環境構築
+## Setup
 
-### 共通事項
+### 共通
 
 1.  `/cli`と`/service`にある`.env.example`をそれぞれコピーして、`.env`として配置します。
 
