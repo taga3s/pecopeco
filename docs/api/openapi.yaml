@@ -1,4 +1,4 @@
-openapi: "3.0.3"
+openapi: "3.1.0"
 
 info:
   title: "pecopeco API"
@@ -238,6 +238,6 @@ components:
       type: object
       properties:
         message: { type: string, example: "errorMsg" }
-        documentation_url: { type: string, example: "https://github.com/ayanami77/pecopeco" }
+        documentation_url: { type: string, example: "https://github.com/taga3s/pecopeco" }
       required:
         - message
