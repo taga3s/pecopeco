@@ -3,8 +3,8 @@ package user
 import (
 	"fmt"
 
-	"github.com/ayanami77/pecopeco-cli/api/model"
-	"github.com/ayanami77/pecopeco-cli/api/repository/user"
+	"github.com/taga3s/pecopeco-cli/api/model"
+	"github.com/taga3s/pecopeco-cli/api/repository/user"
 )
 
 type UserFactory interface {

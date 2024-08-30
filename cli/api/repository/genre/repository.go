@@ -1,7 +1,7 @@
 package genre
 
 import (
-	"github.com/ayanami77/pecopeco-cli/api/client/hotpepper"
+	"github.com/taga3s/pecopeco-cli/api/client/hotpepper"
 )
 
 type Repository interface {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/ayanami77/pecopeco-cli/auth"
-	"github.com/ayanami77/pecopeco-cli/auth/api/model"
+	"github.com/taga3s/pecopeco-cli/auth"
+	"github.com/taga3s/pecopeco-cli/auth/api/model"
 	api "google.golang.org/api/oauth2/v2"
 	"google.golang.org/api/option"
 )

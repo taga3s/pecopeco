@@ -3,8 +3,8 @@ package genre
 import (
 	"fmt"
 
-	"github.com/ayanami77/pecopeco-cli/api/model"
-	"github.com/ayanami77/pecopeco-cli/api/repository/genre"
+	"github.com/taga3s/pecopeco-cli/api/model"
+	"github.com/taga3s/pecopeco-cli/api/repository/genre"
 )
 
 type GenreFactory interface {

@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ayanami77/pecopeco-cli/api/factory/user"
-	"github.com/ayanami77/pecopeco-cli/auth"
-	"github.com/ayanami77/pecopeco-cli/auth/api/userinfo"
-	"github.com/ayanami77/pecopeco-cli/auth/secret"
-	"github.com/ayanami77/pecopeco-cli/config"
-	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
+	"github.com/taga3s/pecopeco-cli/api/factory/user"
+	"github.com/taga3s/pecopeco-cli/auth"
+	"github.com/taga3s/pecopeco-cli/auth/api/userinfo"
+	"github.com/taga3s/pecopeco-cli/auth/secret"
+	"github.com/taga3s/pecopeco-cli/config"
+	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 	"golang.org/x/oauth2/google"
 )
 

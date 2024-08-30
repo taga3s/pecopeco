@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/ayanami77/pecopeco-service/internal/config"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/taga3s/pecopeco-service/internal/config"
 )
 
 var sqlDB *sql.DB

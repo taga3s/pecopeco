@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 
-	userDomain "github.com/ayanami77/pecopeco-service/internal/domain/user"
+	userDomain "github.com/taga3s/pecopeco-service/internal/domain/user"
 )
 
 type FindUserUseCase struct {

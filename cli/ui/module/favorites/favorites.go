@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ayanami77/pecopeco-cli/api/model"
-	"github.com/ayanami77/pecopeco-cli/config"
-	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/viper"
+	"github.com/taga3s/pecopeco-cli/api/model"
+	"github.com/taga3s/pecopeco-cli/config"
+	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
 
 type selectRestaurantResult struct {

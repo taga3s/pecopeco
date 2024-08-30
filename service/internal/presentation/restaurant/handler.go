@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ayanami77/pecopeco-service/internal/presentation/responder"
-	"github.com/ayanami77/pecopeco-service/internal/presentation/util/httputil"
-	restaurantUseCase "github.com/ayanami77/pecopeco-service/internal/usecase/restaurant"
-	"github.com/ayanami77/pecopeco-service/internal/util/jwt"
-	"github.com/ayanami77/pecopeco-service/pkg/validator"
 	"github.com/go-chi/chi/v5"
+	"github.com/taga3s/pecopeco-service/internal/presentation/responder"
+	"github.com/taga3s/pecopeco-service/internal/presentation/util/httputil"
+	restaurantUseCase "github.com/taga3s/pecopeco-service/internal/usecase/restaurant"
+	"github.com/taga3s/pecopeco-service/internal/util/jwt"
+	"github.com/taga3s/pecopeco-service/pkg/validator"
 )
 
 type handler struct {

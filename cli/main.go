@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/ayanami77/pecopeco-cli/cmd"
 	"github.com/joho/godotenv"
+	"github.com/taga3s/pecopeco-cli/cmd"
 )
 
 func main() {

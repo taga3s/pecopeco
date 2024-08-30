@@ -9,8 +9,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/ayanami77/pecopeco-cli/config"
 	"github.com/spf13/viper"
+	"github.com/taga3s/pecopeco-cli/config"
 )
 
 func HttpClient(method string, message string, response interface{}) error {

@@ -3,9 +3,9 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/ayanami77/pecopeco-cli/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/taga3s/pecopeco-cli/config"
 )
 
 var configCmd = &cobra.Command{

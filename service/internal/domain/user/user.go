@@ -5,7 +5,7 @@ import (
 	"net/mail"
 	"unicode/utf8"
 
-	errDomain "github.com/ayanami77/pecopeco-service/internal/domain/error"
+	errDomain "github.com/taga3s/pecopeco-service/internal/domain/error"
 )
 
 type User struct {

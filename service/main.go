@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ayanami77/pecopeco-service/internal/db"
-	"github.com/ayanami77/pecopeco-service/internal/server"
+	"github.com/taga3s/pecopeco-service/internal/db"
+	"github.com/taga3s/pecopeco-service/internal/server"
 )
 
 func main() {

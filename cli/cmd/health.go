@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ayanami77/pecopeco-cli/api/factory/health"
-	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
+	"github.com/taga3s/pecopeco-cli/api/factory/health"
+	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
 
 var healthCmd = &cobra.Command{

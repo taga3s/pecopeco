@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ayanami77/pecopeco-cli/auth/util"
-	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/go-chi/chi/v5"
+	"github.com/taga3s/pecopeco-cli/auth/util"
+	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 	"golang.org/x/oauth2"
 )
 

@@ -1,6 +1,6 @@
-module github.com/ayanami77/pecopeco-cli
+module github.com/taga3s/pecopeco-cli
 
-go 1.21.1
+go 1.23.0
 
 require (
 	github.com/briandowns/spinner v1.23.0

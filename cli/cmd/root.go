@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ayanami77/pecopeco-cli/config"
 	"github.com/spf13/cobra"
+	"github.com/taga3s/pecopeco-cli/config"
 )
 
 var rootCmd = &cobra.Command{

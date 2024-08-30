@@ -3,8 +3,8 @@ package restaurant
 import (
 	"context"
 
-	"github.com/ayanami77/pecopeco-service/internal/db"
-	"github.com/ayanami77/pecopeco-service/internal/domain/restaurant"
+	"github.com/taga3s/pecopeco-service/internal/db"
+	"github.com/taga3s/pecopeco-service/internal/domain/restaurant"
 )
 
 type DeleteRestaurantUseCase struct {

@@ -3,10 +3,10 @@ package cmd
 import (
 	"time"
 
-	"github.com/ayanami77/pecopeco-cli/api/factory/user"
-	"github.com/ayanami77/pecopeco-cli/config"
-	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
+	"github.com/taga3s/pecopeco-cli/api/factory/user"
+	"github.com/taga3s/pecopeco-cli/config"
+	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
 
 var userCmd = &cobra.Command{

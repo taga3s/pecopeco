@@ -3,9 +3,9 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/ayanami77/pecopeco-cli/config"
-	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/spf13/cobra"
+	"github.com/taga3s/pecopeco-cli/config"
+	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
 
 var logoutCmd = &cobra.Command{

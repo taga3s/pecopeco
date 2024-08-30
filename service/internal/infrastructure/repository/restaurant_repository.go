@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ayanami77/pecopeco-service/internal/domain/restaurant"
-	restaurantDomain "github.com/ayanami77/pecopeco-service/internal/domain/restaurant"
+	"github.com/taga3s/pecopeco-service/internal/domain/restaurant"
+	restaurantDomain "github.com/taga3s/pecopeco-service/internal/domain/restaurant"
 )
 
 type restaurantRepository struct {

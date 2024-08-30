@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/ayanami77/pecopeco-cli/api/client/app"
+	"github.com/taga3s/pecopeco-cli/api/client/app"
 )
 
 type Repository interface {

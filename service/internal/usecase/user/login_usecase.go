@@ -3,8 +3,8 @@ package user
 import (
 	"context"
 
-	"github.com/ayanami77/pecopeco-service/internal/db"
-	userDomain "github.com/ayanami77/pecopeco-service/internal/domain/user"
+	"github.com/taga3s/pecopeco-service/internal/db"
+	userDomain "github.com/taga3s/pecopeco-service/internal/domain/user"
 )
 
 type LoginUsecase struct {

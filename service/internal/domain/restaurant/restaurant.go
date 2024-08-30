@@ -4,8 +4,8 @@ import (
 	urlpkg "net/url"
 	"unicode/utf8"
 
-	errDomain "github.com/ayanami77/pecopeco-service/internal/domain/error"
-	ulid "github.com/ayanami77/pecopeco-service/pkg/uild"
+	errDomain "github.com/taga3s/pecopeco-service/internal/domain/error"
+	ulid "github.com/taga3s/pecopeco-service/pkg/uild"
 )
 
 type Restaurant struct {

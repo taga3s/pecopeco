@@ -1,6 +1,6 @@
 package restaurant
 
-import "github.com/ayanami77/pecopeco-cli/api/model"
+import "github.com/taga3s/pecopeco-cli/api/model"
 
 type ListRestaurantsParams struct {
 	City  string

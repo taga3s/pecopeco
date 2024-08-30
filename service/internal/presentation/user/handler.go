@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ayanami77/pecopeco-service/internal/presentation/responder"
-	"github.com/ayanami77/pecopeco-service/internal/presentation/util/httputil"
-	userUsecase "github.com/ayanami77/pecopeco-service/internal/usecase/user"
-	"github.com/ayanami77/pecopeco-service/internal/util/jwt"
-	"github.com/ayanami77/pecopeco-service/pkg/validator"
+	"github.com/taga3s/pecopeco-service/internal/presentation/responder"
+	"github.com/taga3s/pecopeco-service/internal/presentation/util/httputil"
+	userUsecase "github.com/taga3s/pecopeco-service/internal/usecase/user"
+	"github.com/taga3s/pecopeco-service/internal/util/jwt"
+	"github.com/taga3s/pecopeco-service/pkg/validator"
 )
 
 type handler struct {

@@ -3,8 +3,8 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/ayanami77/pecopeco-service/internal/presentation/responder"
-	"github.com/ayanami77/pecopeco-service/internal/util/jwt"
+	"github.com/taga3s/pecopeco-service/internal/presentation/responder"
+	"github.com/taga3s/pecopeco-service/internal/util/jwt"
 )
 
 func Auth(next http.Handler) http.Handler {

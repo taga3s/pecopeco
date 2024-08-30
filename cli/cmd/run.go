@@ -5,14 +5,14 @@ import (
 	"os"
 	"time"
 
-	genrefactory "github.com/ayanami77/pecopeco-cli/api/factory/genre"
-	restaurantfactory "github.com/ayanami77/pecopeco-cli/api/factory/restaurant"
-	"github.com/ayanami77/pecopeco-cli/config"
-	"github.com/ayanami77/pecopeco-cli/ui/module/favorites"
-	"github.com/ayanami77/pecopeco-cli/ui/module/search"
-	uiutil "github.com/ayanami77/pecopeco-cli/ui/util"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	genrefactory "github.com/taga3s/pecopeco-cli/api/factory/genre"
+	restaurantfactory "github.com/taga3s/pecopeco-cli/api/factory/restaurant"
+	"github.com/taga3s/pecopeco-cli/config"
+	"github.com/taga3s/pecopeco-cli/ui/module/favorites"
+	"github.com/taga3s/pecopeco-cli/ui/module/search"
+	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
 
 var runCmd = &cobra.Command{

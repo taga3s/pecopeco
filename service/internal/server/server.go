@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/ayanami77/pecopeco-service/internal/config"
-	"github.com/ayanami77/pecopeco-service/internal/server/route"
 	"github.com/go-chi/chi/v5"
+	"github.com/taga3s/pecopeco-service/internal/config"
+	"github.com/taga3s/pecopeco-service/internal/server/route"
 )
 
 func Run(ctx context.Context) {
