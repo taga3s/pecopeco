@@ -4,60 +4,32 @@ import (
 	"fmt"
 
 	"github.com/taga3s/pecopeco-cli/api/model"
-	innerRestaurant "github.com/taga3s/pecopeco-cli/api/repository/inner_restaurant"
-	outerRestaurant "github.com/taga3s/pecopeco-cli/api/repository/outer_restaurant"
+	notifyToLine "github.com/taga3s/pecopeco-cli/api/repository/notify_to_line"
+	restaurant "github.com/taga3s/pecopeco-cli/api/repository/restaurant"
 )
 
 type RestaurantFactory interface {
-	ListRestaurants(params ListRestaurantsParams) ([]model.Restaurant, error)
 	NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) error
 	ListSharedRestaurants() ([]model.Restaurant, error)
 	PostSharedRestaurant(params PostRestaurantParams) (model.Restaurant, error)
 }
 
 type factory struct {
-	innerRepository innerRestaurant.Repository
-	outerRepository outerRestaurant.Repository
+	innerRepository restaurant.Repository
+	outerRepository notifyToLine.Repository
 }
 
 func CreateFactory() RestaurantFactory {
-	innerRepository := innerRestaurant.New()
-	outerRepository := outerRestaurant.New()
+	innerRepository := restaurant.New()
+	outerRepository := notifyToLine.New()
 	return &factory{
 		innerRepository: innerRepository,
 		outerRepository: outerRepository,
 	}
 }
 
-func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaurant, error) {
-	request := outerRestaurant.ListRequest{
-		City:  params.City,
-		Genre: params.Genre,
-	}
-	res, err := f.outerRepository.List(request)
-	if err != nil {
-		err := fmt.Errorf("error: %v", err)
-		return []model.Restaurant{}, err
-	}
-
-	restaurantList := make([]model.Restaurant, 0, len(res.Results.Shop))
-
-	for _, v := range res.Results.Shop {
-		restaurant := model.Restaurant{
-			Name:           v.Name,
-			Address:        v.Address,
-			NearestStation: v.NearestStation,
-			Genre:          v.Genre.Name,
-			URL:            v.URLs.PC,
-		}
-		restaurantList = append(restaurantList, restaurant)
-	}
-
-	return restaurantList, nil
-}
-
 func (f *factory) NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) error {
-	request := outerRestaurant.NotifyToLINERequest{
+	request := notifyToLine.NotifyToLINERequest{
 		Name:           params.Restaurant.Name,
 		Address:        params.Restaurant.Address,
 		NearestStation: params.Restaurant.NearestStation,
@@ -97,7 +69,7 @@ func (f *factory) ListSharedRestaurants() ([]model.Restaurant, error) {
 }
 
 func (f *factory) PostSharedRestaurant(params PostRestaurantParams) (model.Restaurant, error) {
-	request := innerRestaurant.PostRequest{
+	request := restaurant.PostRequest{
 		Name:           params.Name,
 		Address:        params.Address,
 		NearestStation: params.NearestStation,

@@ -1,9 +1,4 @@
-package restaurant
-
-type ListRequest struct {
-	City  string
-	Genre string
-}
+package notifytoline
 
 type NotifyToLINERequest struct {
 	Name           string
