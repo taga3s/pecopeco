@@ -108,10 +108,11 @@ func searchRestaurants() {
 
 	// 退出処理
 	time.Sleep(time.Second * 1)
+	uiutil.Clear()
 	run()
 }
 
-// // -- レストランシェア掲示板
+// -- レストランシェア掲示板
 func showSharedRestaurants() {
 	restaurantFactory := restaurantfactory.CreateFactory()
 	restaurantList, err := restaurantFactory.ListSharedRestaurants()
@@ -148,6 +149,7 @@ func showSharedRestaurants() {
 
 	// 退出処理
 	if selectedSharedRestaurant.Exit {
+		uiutil.Clear()
 		run()
 		return
 	}

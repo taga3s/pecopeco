@@ -36,7 +36,7 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 	}
 	res, err := f.outerRepository.List(request)
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return []model.Restaurant{}, err
 	}
 
@@ -52,6 +52,7 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 		}
 		restaurantList = append(restaurantList, restaurant)
 	}
+
 	return restaurantList, nil
 }
 
@@ -65,7 +66,7 @@ func (f *factory) NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) er
 	}
 	err := f.outerRepository.NotifyToLINE(request)
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return err
 	}
 	return nil
@@ -74,7 +75,7 @@ func (f *factory) NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) er
 func (f *factory) ListSharedRestaurants() ([]model.Restaurant, error) {
 	res, err := f.innerRepository.List()
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return []model.Restaurant{}, err
 	}
 
@@ -88,6 +89,7 @@ func (f *factory) ListSharedRestaurants() ([]model.Restaurant, error) {
 			NearestStation: v.NearestStation,
 			Genre:          v.Genre,
 			URL:            v.URL,
+			PostedAt:       v.PostedAt,
 		}
 		restaurantList = append(restaurantList, restaurant)
 	}
@@ -104,7 +106,7 @@ func (f *factory) PostSharedRestaurant(params PostRestaurantParams) (model.Resta
 	}
 	res, err := f.innerRepository.Post(request)
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return model.Restaurant{}, err
 	}
 	return model.Restaurant{
