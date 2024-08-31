@@ -8,7 +8,7 @@
 
 - 飲食店検索機能
 - 飲食店 LINE 通知機能
-- 飲食店シェア掲示板機能（in development）
+- 飲食店シェア掲示板機能
 
 ## Docs
 
@@ -49,6 +49,18 @@
 ### Dev Environment
 
 - [Docker](https://docs.docker.com/)
+
+## Usage
+
+- run app
+```
+$ pecopeco run
+```
+
+- configure `LINE_NOTIFY_API_TOKEN`
+```
+$ pecopeco config --token <LINE_NOTIFY_API_TOKEN>
+```
 
 ## Setup
 
