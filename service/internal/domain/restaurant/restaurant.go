@@ -15,7 +15,6 @@ type Restaurant struct {
 	NearestStation string
 	Address        string
 	URL            string
-	UserID         string
 }
 
 func NewRestaurant(
@@ -24,7 +23,6 @@ func NewRestaurant(
 	nearestStation string,
 	address string,
 	url string,
-	userID string,
 ) (*Restaurant, error) {
 	// 店舗名のバリデーション
 	if utf8.RuneCountInString(name) < nameLengthMin || utf8.RuneCountInString(name) > nameLengthMax {
@@ -53,7 +51,6 @@ func NewRestaurant(
 		NearestStation: nearestStation,
 		Address:        address,
 		URL:            url,
-		UserID:         userID,
 	}, nil
 }
 

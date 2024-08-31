@@ -7,6 +7,6 @@ import (
 
 type RestaurantRepository interface {
 	SaveWithTx(ctx context.Context, tx *sql.Tx, restaurant *Restaurant) error
-	ListByUserID(ctx context.Context, userID string) ([]*Restaurant, error)
+	List(ctx context.Context) ([]*Restaurant, error)
 	DeleteByIDWithTx(ctx context.Context, tx *sql.Tx, id string) error
 }

@@ -25,11 +25,10 @@ type ListRestaurantsUseCaseDto struct {
 	NearestStation string
 	Address        string
 	URL            string
-	UserID         string
 }
 
-func (uc *ListRestaurantsUseCase) Run(ctx context.Context, userID string) ([]*ListRestaurantsUseCaseDto, error) {
-	restaurants, err := uc.restaurantRepo.ListByUserID(ctx, userID)
+func (uc *ListRestaurantsUseCase) Run(ctx context.Context) ([]*ListRestaurantsUseCaseDto, error) {
+	restaurants, err := uc.restaurantRepo.List(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +43,6 @@ func (uc *ListRestaurantsUseCase) Run(ctx context.Context, userID string) ([]*Li
 			NearestStation: v.NearestStation,
 			Address:        v.Address,
 			URL:            v.URL,
-			UserID:         v.UserID,
 		})
 	}
 	return dtos, nil
