@@ -9,6 +9,7 @@ import (
 
 func Load() {
 	configFilename := "config.yaml"
+
 	// ファイルが存在しない場合、config.yamlを生成する。
 	if !fileExists(configFilename) {
 		if err := initConfigFile(configFilename); err != nil {
@@ -26,7 +27,6 @@ func Load() {
 func initConfigFile(configFilename string) error {
 	viper.SetConfigType("yaml")
 	viper.Set(LINE_NOTIFY_API_TOKEN, "")
-	viper.Set(PECOPECO_API_TOKEN, "")
 
 	err := viper.WriteConfigAs(configFilename)
 	if err != nil {

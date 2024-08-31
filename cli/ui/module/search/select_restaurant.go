@@ -1,11 +1,8 @@
 package search
 
 import (
-	"errors"
 	"fmt"
-	"strings"
 	"time"
-	"unicode/utf8"
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/viper"
@@ -14,55 +11,10 @@ import (
 	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
 
-type searchRestaurantInput struct {
-	City  string
-	Genre string
-}
-
-func GetSearchRestaurantInput(genreList []model.Genre) searchRestaurantInput {
-	promptForCity := promptui.Prompt{
-		Label: "> Which city? (Japanese only, ex.渋谷)",
-		Validate: func(input string) error {
-			if utf8.RuneCountInString(input) == 0 {
-				return errors.New("please enter a city")
-			}
-			if strings.TrimSpace(input) == "" || strings.Contains(input, " ") {
-				return errors.New("city cannot be only whitespace")
-			}
-			return nil
-		},
-		Templates: uiutil.DefaultPromptTemplate(),
-	}
-	city, err := promptForCity.Run()
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		return searchRestaurantInput{}
-	}
-
-	genreMap := make(map[string]model.Genre)
-	options := make([]string, 0, len(genreList))
-	for _, v := range genreList {
-		genreMap[v.Name] = v
-		options = append(options, v.Name)
-	}
-
-	promptForGenre := promptui.Select{
-		Label: "> What genre?",
-		Items: options,
-	}
-	_, genre, err := promptForGenre.Run()
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		return searchRestaurantInput{}
-	}
-
-	return searchRestaurantInput{City: strings.TrimSpace(city), Genre: strings.TrimSpace(genreMap[genre].Code)}
-}
-
 type selectRestaurantResult struct {
-	Restaurant     model.Restaurant
-	AddToFavorites bool
-	Notify         bool
+	Restaurant model.Restaurant
+	Share      bool
+	Notify     bool
 }
 
 func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult, error) {
@@ -109,23 +61,18 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 		result := selectRestaurantResult{}
 		result.Restaurant = restaurant
 
-		// promptForAddToFavorites := promptui.Select{
-		// 	Label: "Add to Favorites?",
-		// 	Items: []string{"Yes", "No"},
-		// }
-		// _, addToFavorites, err := promptForAddToFavorites.Run()
-		// if err != nil {
-		// 	fmt.Printf("Prompt failed %v\n", err)
-		// 	return selectRestaurantResult{}, err
-		// }
-		// if addToFavorites == "Yes" {
-		// 	if config.IsLogin() {
-		// 		result.AddToFavorites = true
-		// 	} else {
-		// 		uiutil.TextBlue().Println("Sorry, to add to Favorites, you have to login first. Please login with following command.\n\n```\n> pecopeco login\n```")
-		// 		time.Sleep(time.Second * 1)
-		// 	}
-		// }
+		promptForShare := promptui.Select{
+			Label: "Want to share for other users?",
+			Items: []string{"Yes", "No"},
+		}
+		_, share, err := promptForShare.Run()
+		if err != nil {
+			fmt.Printf("Prompt failed %v\n", err)
+			return selectRestaurantResult{}, err
+		}
+		if share == "Yes" {
+			result.Share = true
+		}
 
 		promptForNotify := promptui.Select{
 			Label: "Notify your LINE app?",

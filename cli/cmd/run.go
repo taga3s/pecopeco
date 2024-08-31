@@ -10,6 +10,7 @@ import (
 	genrefactory "github.com/taga3s/pecopeco-cli/api/factory/genre"
 	restaurantfactory "github.com/taga3s/pecopeco-cli/api/factory/restaurant"
 	"github.com/taga3s/pecopeco-cli/ui/module/search"
+	"github.com/taga3s/pecopeco-cli/ui/module/share"
 	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
 
@@ -25,7 +26,7 @@ var runCmd = &cobra.Command{
 func run() {
 	promptForMode := promptui.Select{
 		Label: "What would you like to do?",
-		Items: []string{"Search Restaurants", "Exit"},
+		Items: []string{"Search Restaurants", "Check Shared Restaurants", "Exit"},
 	}
 
 	_, mode, err := promptForMode.Run()
@@ -36,8 +37,8 @@ func run() {
 	switch mode {
 	case "Search Restaurants":
 		searchRestaurants()
-	// case "Show Favorites":
-	// 	showFavorites()
+	case "Check Shared Restaurants":
+		showSharedRestaurants()
 	case "Exit":
 		fmt.Print("Bye!\n")
 		os.Exit(1)
@@ -54,7 +55,7 @@ func searchRestaurants() {
 		fmt.Println(err)
 		return
 	}
-	searchRestaurantInput := search.GetSearchRestaurantInput(genreList)
+	searchRestaurantInput := search.GetConditionInput(genreList)
 	params := restaurantfactory.ListRestaurantsParams{
 		City:  searchRestaurantInput.City,
 		Genre: searchRestaurantInput.Genre,
@@ -75,8 +76,8 @@ func searchRestaurants() {
 		fmt.Println(err)
 		return
 	}
-	// お気に入り登録処理
-	if selectRestaurantResult.AddToFavorites {
+	// レストラン共有掲示板への追加
+	if selectRestaurantResult.Share {
 		params := restaurantfactory.PostRestaurantParams{
 			Name:           selectRestaurantResult.Restaurant.Name,
 			Address:        selectRestaurantResult.Restaurant.Address,
@@ -84,13 +85,14 @@ func searchRestaurants() {
 			Genre:          selectRestaurantResult.Restaurant.Genre,
 			URL:            selectRestaurantResult.Restaurant.URL,
 		}
-		_, err := restaurantFactory.PostRestaurant(params)
+		_, err := restaurantFactory.PostSharedRestaurant(params)
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			uiutil.TextGreen().Println("Added to Favorites!")
+			uiutil.TextGreen().Println("Successfully shared the restaurant!")
 		}
 	}
+
 	// LINEへ通知処理
 	if selectRestaurantResult.Notify {
 		params := restaurantfactory.NotifyRestaurantToLINEParams{
@@ -109,70 +111,51 @@ func searchRestaurants() {
 	run()
 }
 
-// // -- お気に入り機能
-// func showFavorites() {
-// 	if !config.IsLogin() {
-// 		uiutil.TextBlue().Println("Sorry, to add to Favorites, you have to login first. Please login with following command.\n\n```\n> pecopeco login\n```")
-// 		time.Sleep(time.Second * 1)
-// 		run()
-// 		return
-// 	}
+// // -- レストランシェア掲示板
+func showSharedRestaurants() {
+	restaurantFactory := restaurantfactory.CreateFactory()
+	restaurantList, err := restaurantFactory.ListSharedRestaurants()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-// 	restaurantFactory := restaurantfactory.CreateFactory()
-// 	restaurantList, err := restaurantFactory.ListFavorites()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+	if len(restaurantList) == 0 {
+		uiutil.TextBlue().Println("Sorry, there is no data.")
+		time.Sleep(time.Second * 1)
+		run()
+		return
+	}
 
-// 	if len(restaurantList) == 0 {
-// 		uiutil.TextBlue().Println("Sorry, there is no data. Please add favorite restaurants by searching.")
-// 		time.Sleep(time.Second * 1)
-// 		run()
-// 		return
-// 	}
+	selectedSharedRestaurant, err := share.SelectRestaurant(restaurantList)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-// 	selectedRestaurant, err := favorites.SelectRestaurant(restaurantList)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+	// LINEへ通知処理
+	if selectedSharedRestaurant.Notify {
+		params := restaurantfactory.NotifyRestaurantToLINEParams{
+			Restaurant: selectedSharedRestaurant.Restaurant,
+		}
+		err := restaurantFactory.NotifyRestaurantToLINE(params)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			uiutil.TextGreen().Println("Notify to your LINE app!")
+		}
+	}
 
-// 	// LINEへ通知処理
-// 	if selectedRestaurant.Notify {
-// 		params := restaurantfactory.NotifyRestaurantToLINEParams{
-// 			Restaurant: selectedRestaurant.Restaurant,
-// 		}
-// 		err := restaurantFactory.NotifyRestaurantToLINE(params)
-// 		if err != nil {
-// 			fmt.Println(err)
-// 		} else {
-// 			uiutil.TextGreen().Println("Notify to your LINE app!")
-// 		}
-// 	}
+	// 退出処理
+	if selectedSharedRestaurant.Exit {
+		run()
+		return
+	}
 
-// 	// 削除処理
-// 	if selectedRestaurant.Delete {
-// 		params := restaurantfactory.DeleteRestaurantParams{
-// 			ID: selectedRestaurant.Restaurant.ID,
-// 		}
-// 		err := restaurantFactory.DeleteRestaurant(params)
-// 		if err != nil {
-// 			fmt.Println(err)
-// 		} else {
-// 			uiutil.TextGreen().Println("Securely delete from Favorites.")
-// 		}
-// 	}
+	// 退出処理がない限り、再度レストランシェア掲示板を表示
+	showSharedRestaurants()
+}
 
-// 	// 退出処理
-// 	if selectedRestaurant.Exit {
-// 		run()
-// 		return
-// 	}
-
-//		// 退出処理がない限り、基本お気に入りリストを表示し続ける
-//		showFavorites()
-//	}
 func init() {
 	rootCmd.AddCommand(runCmd)
 }
