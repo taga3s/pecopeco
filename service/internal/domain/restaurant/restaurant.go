@@ -2,6 +2,7 @@ package restaurant
 
 import (
 	urlpkg "net/url"
+	"time"
 	"unicode/utf8"
 
 	errDomain "github.com/taga3s/pecopeco-service/internal/domain/error"
@@ -15,7 +16,7 @@ type Restaurant struct {
 	NearestStation string
 	Address        string
 	URL            string
-	UserID         string
+	CreatedAt      time.Time
 }
 
 func NewRestaurant(
@@ -24,7 +25,7 @@ func NewRestaurant(
 	nearestStation string,
 	address string,
 	url string,
-	userID string,
+	createdAt time.Time,
 ) (*Restaurant, error) {
 	// 店舗名のバリデーション
 	if utf8.RuneCountInString(name) < nameLengthMin || utf8.RuneCountInString(name) > nameLengthMax {
@@ -53,7 +54,7 @@ func NewRestaurant(
 		NearestStation: nearestStation,
 		Address:        address,
 		URL:            url,
-		UserID:         userID,
+		CreatedAt:      createdAt,
 	}, nil
 }
 

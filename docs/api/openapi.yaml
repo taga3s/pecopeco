@@ -23,8 +23,6 @@ paths:
       summary: "レストラン一覧の取得"
       tags: ["restaurants"]
       deprecated: false
-      parameters:
-        - $ref: "#/components/parameters/JWT"
       responses:
         "200":
           description: "成功"
@@ -48,8 +46,6 @@ paths:
       summary: "レストランの作成"
       tags: ["restaurants"]
       deprecated: false
-      parameters:
-        - $ref: "#/components/parameters/JWT"
       requestBody:
         content:
           application/json:

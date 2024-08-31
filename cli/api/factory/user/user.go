@@ -24,7 +24,7 @@ func CreateFactory() UserFactory {
 func (f *factory) FindUser() (model.User, error) {
 	response, err := f.repository.Get()
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return model.User{}, err
 	}
 	user := model.User{
@@ -43,7 +43,7 @@ func (f *factory) Login(params LoginParams) (model.User, error) {
 	}
 	response, err := f.repository.Create(request)
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return model.User{}, err
 	}
 	user := model.User{

@@ -1,4 +1,4 @@
-package favorites
+package share
 
 import (
 	"fmt"
@@ -11,36 +11,35 @@ import (
 	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
 
-type selectRestaurantResult struct {
+type selectSharedRestaurantResult struct {
 	Restaurant model.Restaurant
 	Notify     bool
-	Delete     bool
 	Exit       bool
 }
 
-func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult, error) {
+func SelectRestaurant(restaurantList []model.Restaurant) (selectSharedRestaurantResult, error) {
 	restaurantMap := map[string]model.Restaurant{}
 	options := make([]string, 0, len(restaurantList)+1)
 
 	for _, v := range restaurantList {
 		restaurantMap[v.Name] = v
-		options = append(options, v.Name)
+		options = append(options, fmt.Sprintf("%s by %s, posted at %s", v.Name, "nanashi", v.PostedAt.Format("2006-01-02")))
 	}
 	options = append(options, "Back to Menu")
 
 	promptForOptions := promptui.Select{
-		Label: "Your favorite restaurants. Please select to show details",
+		Label: "Shared Restaurants from users. Please select to show details",
 		Items: options,
 	}
 
 	_, option, err := promptForOptions.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return selectRestaurantResult{}, err
+		return selectSharedRestaurantResult{}, err
 	}
 
 	if option == "Back to Menu" {
-		result := selectRestaurantResult{
+		result := selectSharedRestaurantResult{
 			Exit: true,
 		}
 		return result, nil
@@ -57,16 +56,16 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 
 	promptForDecision := promptui.Select{
 		Label: "What would you like to do?",
-		Items: []string{"Notify your LINE app", "Delete from Favorites", "Back to Favorites"},
+		Items: []string{"Notify your LINE app", "Back to Shared Restaurants"},
 	}
 
 	_, decision, err := promptForDecision.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return selectRestaurantResult{}, err
+		return selectSharedRestaurantResult{}, err
 	}
 
-	result := selectRestaurantResult{}
+	result := selectSharedRestaurantResult{}
 	result.Restaurant = restaurant
 
 	if decision == "Notify your LINE app" {
@@ -80,19 +79,5 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 		return result, nil
 	}
 
-	if decision == "Delete from Favorites" {
-		promptForConfirm := promptui.Select{
-			Label: "Do you confirm?",
-			Items: []string{"Yes", "No"},
-		}
-		_, answer, err := promptForConfirm.Run()
-		if err != nil {
-			return result, err
-		}
-		if answer == "Yes" {
-			result.Delete = true
-		}
-		return result, nil
-	}
 	return result, nil
 }

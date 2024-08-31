@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/taga3s/pecopeco-service/internal/domain/restaurant"
-	restaurantDomain "github.com/taga3s/pecopeco-service/internal/domain/restaurant"
 )
 
 type restaurantRepository struct {
@@ -18,7 +17,7 @@ func NewRestaurantRepository(db *sql.DB) restaurant.RestaurantRepository {
 	return &restaurantRepository{db: db}
 }
 
-func (rr *restaurantRepository) ListByUserID(ctx context.Context, userID string) ([]*restaurantDomain.Restaurant, error) {
+func (rr *restaurantRepository) List(ctx context.Context) ([]*restaurant.Restaurant, error) {
 	fields := []string{
 		"id",
 		"name",
@@ -26,22 +25,23 @@ func (rr *restaurantRepository) ListByUserID(ctx context.Context, userID string)
 		"nearest_station",
 		"address",
 		"url",
-		"user_id",
+		"created_at",
 	}
+
 	query := fmt.Sprintf(
-		"select %s from restaurants where user_id = ?",
+		"select %s from restaurants",
 		strings.Join(fields, ", "),
 	)
 
-	rows, err := rr.db.QueryContext(ctx, query, userID)
+	rows, err := rr.db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
 	}
 
-	restaurants := []*restaurantDomain.Restaurant{}
+	restaurants := []*restaurant.Restaurant{}
 
 	for rows.Next() {
-		restaurant := &restaurantDomain.Restaurant{}
+		restaurant := &restaurant.Restaurant{}
 		err = rows.Scan(
 			&restaurant.ID,
 			&restaurant.Name,
@@ -49,7 +49,7 @@ func (rr *restaurantRepository) ListByUserID(ctx context.Context, userID string)
 			&restaurant.NearestStation,
 			&restaurant.Address,
 			&restaurant.URL,
-			&restaurant.UserID,
+			&restaurant.CreatedAt,
 		)
 		if err != nil {
 			break
@@ -73,10 +73,9 @@ func (rr *restaurantRepository) SaveWithTx(ctx context.Context, tx *sql.Tx, rest
 		"nearest_station",
 		"address",
 		"url",
-		"user_id",
 	}
 	query := fmt.Sprintf(
-		"insert into restaurants (%s) values (?, ?, ?, ?, ?, ?, ?)",
+		"insert into restaurants (%s) values (?, ?, ?, ?, ?, ?)",
 		strings.Join(fields, ", "),
 	)
 	_, err := tx.ExecContext(
@@ -88,11 +87,11 @@ func (rr *restaurantRepository) SaveWithTx(ctx context.Context, tx *sql.Tx, rest
 		restaurant.NearestStation,
 		restaurant.Address,
 		restaurant.URL,
-		restaurant.UserID,
 	)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 

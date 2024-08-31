@@ -9,7 +9,6 @@ import (
 	"github.com/taga3s/pecopeco-service/internal/presentation/responder"
 	"github.com/taga3s/pecopeco-service/internal/presentation/util/httputil"
 	restaurantUseCase "github.com/taga3s/pecopeco-service/internal/usecase/restaurant"
-	"github.com/taga3s/pecopeco-service/internal/util/jwt"
 	"github.com/taga3s/pecopeco-service/pkg/validator"
 )
 
@@ -36,14 +35,7 @@ func (h *handler) ListRestaurants(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
 
-	accessToken := r.Header.Get("Authorization")
-	userID, err := jwt.GetUserIDFromToken(accessToken)
-	if err != nil {
-		responder.ReturnStatusUnauthorized(w, err)
-		return
-	}
-
-	dtos, err := h.listRestaurantsUseCase.Run(ctx, userID)
+	dtos, err := h.listRestaurantsUseCase.Run(ctx)
 	if err != nil {
 		responder.ReturnStatusInternalServerError(w, err)
 		return
@@ -67,6 +59,7 @@ func (h *handler) ListRestaurants(w http.ResponseWriter, r *http.Request) {
 				NearestStation: v.NearestStation,
 				Address:        v.Address,
 				URL:            v.URL,
+				CreatedAt:      v.CreatedAt,
 			},
 		)
 	}
@@ -77,13 +70,6 @@ func (h *handler) SaveRestaurant(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
-
-	accessToken := r.Header.Get("Authorization")
-	userID, err := jwt.GetUserIDFromToken(accessToken)
-	if err != nil {
-		responder.ReturnStatusUnauthorized(w, err)
-		return
-	}
 
 	params := PostRestaurantParams{}
 	if err := httputil.ParseJSONRequestBody(r, &params); err != nil {
@@ -103,7 +89,6 @@ func (h *handler) SaveRestaurant(w http.ResponseWriter, r *http.Request) {
 		NearestStation: params.NearestStation,
 		Address:        params.Address,
 		URL:            params.URL,
-		UserID:         userID,
 	}
 
 	outputDto, err := h.saveRestaurantUsecase.Run(ctx, inputDto)

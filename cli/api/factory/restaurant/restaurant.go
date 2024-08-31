@@ -11,9 +11,8 @@ import (
 type RestaurantFactory interface {
 	ListRestaurants(params ListRestaurantsParams) ([]model.Restaurant, error)
 	NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) error
-	ListFavorites() ([]model.Restaurant, error)
-	PostRestaurant(params PostRestaurantParams) (model.Restaurant, error)
-	DeleteRestaurant(params DeleteRestaurantParams) error
+	ListSharedRestaurants() ([]model.Restaurant, error)
+	PostSharedRestaurant(params PostRestaurantParams) (model.Restaurant, error)
 }
 
 type factory struct {
@@ -37,7 +36,7 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 	}
 	res, err := f.outerRepository.List(request)
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return []model.Restaurant{}, err
 	}
 
@@ -53,6 +52,7 @@ func (f *factory) ListRestaurants(params ListRestaurantsParams) ([]model.Restaur
 		}
 		restaurantList = append(restaurantList, restaurant)
 	}
+
 	return restaurantList, nil
 }
 
@@ -66,16 +66,16 @@ func (f *factory) NotifyRestaurantToLINE(params NotifyRestaurantToLINEParams) er
 	}
 	err := f.outerRepository.NotifyToLINE(request)
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return err
 	}
 	return nil
 }
 
-func (f *factory) ListFavorites() ([]model.Restaurant, error) {
+func (f *factory) ListSharedRestaurants() ([]model.Restaurant, error) {
 	res, err := f.innerRepository.List()
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return []model.Restaurant{}, err
 	}
 
@@ -89,13 +89,14 @@ func (f *factory) ListFavorites() ([]model.Restaurant, error) {
 			NearestStation: v.NearestStation,
 			Genre:          v.Genre,
 			URL:            v.URL,
+			PostedAt:       v.PostedAt,
 		}
 		restaurantList = append(restaurantList, restaurant)
 	}
 	return restaurantList, nil
 }
 
-func (f *factory) PostRestaurant(params PostRestaurantParams) (model.Restaurant, error) {
+func (f *factory) PostSharedRestaurant(params PostRestaurantParams) (model.Restaurant, error) {
 	request := innerRestaurant.PostRequest{
 		Name:           params.Name,
 		Address:        params.Address,
@@ -105,7 +106,7 @@ func (f *factory) PostRestaurant(params PostRestaurantParams) (model.Restaurant,
 	}
 	res, err := f.innerRepository.Post(request)
 	if err != nil {
-		err := fmt.Errorf("Error: %v", err)
+		err := fmt.Errorf("error: %v", err)
 		return model.Restaurant{}, err
 	}
 	return model.Restaurant{
@@ -116,15 +117,4 @@ func (f *factory) PostRestaurant(params PostRestaurantParams) (model.Restaurant,
 		Genre:          res.Genre,
 		URL:            res.URL,
 	}, nil
-}
-
-func (f *factory) DeleteRestaurant(params DeleteRestaurantParams) error {
-	request := innerRestaurant.DeleteRequest{
-		ID: params.ID,
-	}
-	err := f.innerRepository.Delete(request)
-	if err != nil {
-		return err
-	}
-	return err
 }

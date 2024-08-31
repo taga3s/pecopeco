@@ -1,15 +1,12 @@
 package restaurant
 
 import (
-	"fmt"
-
 	"github.com/taga3s/pecopeco-cli/api/client/app"
 )
 
 type Repository interface {
 	List() (ListResponse, error)
 	Post(request PostRequest) (PostResponse, error)
-	Delete(request DeleteRequest) error
 }
 
 type repository struct{}
@@ -32,11 +29,4 @@ func (r *repository) Post(request PostRequest) (PostResponse, error) {
 		return PostResponse{}, err
 	}
 	return response, nil
-}
-
-func (r *repository) Delete(request DeleteRequest) error {
-	if err := app.HttpClient("DELETE", fmt.Sprintf("/restaurants/%s", request.ID), nil, nil); err != nil {
-		return err
-	}
-	return nil
 }

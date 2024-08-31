@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/taga3s/pecopeco-cli/config"
+	"github.com/taga3s/pecopeco-cli/ui/util"
 )
 
 var rootCmd = &cobra.Command{
@@ -21,7 +22,8 @@ func Execute() {
 	}
 }
 
+// Runの前に必ず実行される
 func init() {
-	// Runの前に必ず実行される
+	util.Clear()
 	cobra.OnInitialize(config.Load)
 }
