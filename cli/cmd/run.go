@@ -9,8 +9,6 @@ import (
 	"github.com/spf13/cobra"
 	genrefactory "github.com/taga3s/pecopeco-cli/api/factory/genre"
 	restaurantfactory "github.com/taga3s/pecopeco-cli/api/factory/restaurant"
-	"github.com/taga3s/pecopeco-cli/config"
-	"github.com/taga3s/pecopeco-cli/ui/module/favorites"
 	"github.com/taga3s/pecopeco-cli/ui/module/search"
 	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
 )
@@ -27,7 +25,7 @@ var runCmd = &cobra.Command{
 func run() {
 	promptForMode := promptui.Select{
 		Label: "What would you like to do?",
-		Items: []string{"Search Restaurants", "Show Favorites", "Exit"},
+		Items: []string{"Search Restaurants", "Exit"},
 	}
 
 	_, mode, err := promptForMode.Run()
@@ -38,8 +36,8 @@ func run() {
 	switch mode {
 	case "Search Restaurants":
 		searchRestaurants()
-	case "Show Favorites":
-		showFavorites()
+	// case "Show Favorites":
+	// 	showFavorites()
 	case "Exit":
 		fmt.Print("Bye!\n")
 		os.Exit(1)
@@ -111,70 +109,70 @@ func searchRestaurants() {
 	run()
 }
 
-// -- お気に入り機能
-func showFavorites() {
-	if !config.IsLogin() {
-		uiutil.TextBlue().Println("Sorry, to add to Favorites, you have to login first. Please login with following command.\n\n```\n> pecopeco login\n```")
-		time.Sleep(time.Second * 1)
-		run()
-		return
-	}
+// // -- お気に入り機能
+// func showFavorites() {
+// 	if !config.IsLogin() {
+// 		uiutil.TextBlue().Println("Sorry, to add to Favorites, you have to login first. Please login with following command.\n\n```\n> pecopeco login\n```")
+// 		time.Sleep(time.Second * 1)
+// 		run()
+// 		return
+// 	}
 
-	restaurantFactory := restaurantfactory.CreateFactory()
-	restaurantList, err := restaurantFactory.ListFavorites()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+// 	restaurantFactory := restaurantfactory.CreateFactory()
+// 	restaurantList, err := restaurantFactory.ListFavorites()
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return
+// 	}
 
-	if len(restaurantList) == 0 {
-		uiutil.TextBlue().Println("Sorry, there is no data. Please add favorite restaurants by searching.")
-		time.Sleep(time.Second * 1)
-		run()
-		return
-	}
+// 	if len(restaurantList) == 0 {
+// 		uiutil.TextBlue().Println("Sorry, there is no data. Please add favorite restaurants by searching.")
+// 		time.Sleep(time.Second * 1)
+// 		run()
+// 		return
+// 	}
 
-	selectedRestaurant, err := favorites.SelectRestaurant(restaurantList)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+// 	selectedRestaurant, err := favorites.SelectRestaurant(restaurantList)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return
+// 	}
 
-	// LINEへ通知処理
-	if selectedRestaurant.Notify {
-		params := restaurantfactory.NotifyRestaurantToLINEParams{
-			Restaurant: selectedRestaurant.Restaurant,
-		}
-		err := restaurantFactory.NotifyRestaurantToLINE(params)
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			uiutil.TextGreen().Println("Notify to your LINE app!")
-		}
-	}
+// 	// LINEへ通知処理
+// 	if selectedRestaurant.Notify {
+// 		params := restaurantfactory.NotifyRestaurantToLINEParams{
+// 			Restaurant: selectedRestaurant.Restaurant,
+// 		}
+// 		err := restaurantFactory.NotifyRestaurantToLINE(params)
+// 		if err != nil {
+// 			fmt.Println(err)
+// 		} else {
+// 			uiutil.TextGreen().Println("Notify to your LINE app!")
+// 		}
+// 	}
 
-	// 削除処理
-	if selectedRestaurant.Delete {
-		params := restaurantfactory.DeleteRestaurantParams{
-			ID: selectedRestaurant.Restaurant.ID,
-		}
-		err := restaurantFactory.DeleteRestaurant(params)
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			uiutil.TextGreen().Println("Securely delete from Favorites.")
-		}
-	}
+// 	// 削除処理
+// 	if selectedRestaurant.Delete {
+// 		params := restaurantfactory.DeleteRestaurantParams{
+// 			ID: selectedRestaurant.Restaurant.ID,
+// 		}
+// 		err := restaurantFactory.DeleteRestaurant(params)
+// 		if err != nil {
+// 			fmt.Println(err)
+// 		} else {
+// 			uiutil.TextGreen().Println("Securely delete from Favorites.")
+// 		}
+// 	}
 
-	// 退出処理
-	if selectedRestaurant.Exit {
-		run()
-		return
-	}
+// 	// 退出処理
+// 	if selectedRestaurant.Exit {
+// 		run()
+// 		return
+// 	}
 
-	// 退出処理がない限り、基本お気に入りリストを表示し続ける
-	showFavorites()
-}
+//		// 退出処理がない限り、基本お気に入りリストを表示し続ける
+//		showFavorites()
+//	}
 func init() {
 	rootCmd.AddCommand(runCmd)
 }

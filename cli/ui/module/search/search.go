@@ -24,13 +24,10 @@ func GetSearchRestaurantInput(genreList []model.Genre) searchRestaurantInput {
 		Label: "> Which city? (Japanese only, ex.渋谷)",
 		Validate: func(input string) error {
 			if utf8.RuneCountInString(input) == 0 {
-				return errors.New("Please enter a city.")
+				return errors.New("please enter a city")
 			}
-			if strings.TrimSpace(input) == "" {
-				return errors.New("City cannot be only whitespace.")
-			}
-			if strings.Contains(input, " ") {
-				return errors.New("City cannot contain whitespace.")
+			if strings.TrimSpace(input) == "" || strings.Contains(input, " ") {
+				return errors.New("city cannot be only whitespace")
 			}
 			return nil
 		},
@@ -112,23 +109,23 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectRestaurantResult
 		result := selectRestaurantResult{}
 		result.Restaurant = restaurant
 
-		promptForAddToFavorites := promptui.Select{
-			Label: "Add to Favorites?",
-			Items: []string{"Yes", "No"},
-		}
-		_, addToFavorites, err := promptForAddToFavorites.Run()
-		if err != nil {
-			fmt.Printf("Prompt failed %v\n", err)
-			return selectRestaurantResult{}, err
-		}
-		if addToFavorites == "Yes" {
-			if config.IsLogin() {
-				result.AddToFavorites = true
-			} else {
-				uiutil.TextBlue().Println("Sorry, to add to Favorites, you have to login first. Please login with following command.\n\n```\n> pecopeco login\n```")
-				time.Sleep(time.Second * 1)
-			}
-		}
+		// promptForAddToFavorites := promptui.Select{
+		// 	Label: "Add to Favorites?",
+		// 	Items: []string{"Yes", "No"},
+		// }
+		// _, addToFavorites, err := promptForAddToFavorites.Run()
+		// if err != nil {
+		// 	fmt.Printf("Prompt failed %v\n", err)
+		// 	return selectRestaurantResult{}, err
+		// }
+		// if addToFavorites == "Yes" {
+		// 	if config.IsLogin() {
+		// 		result.AddToFavorites = true
+		// 	} else {
+		// 		uiutil.TextBlue().Println("Sorry, to add to Favorites, you have to login first. Please login with following command.\n\n```\n> pecopeco login\n```")
+		// 		time.Sleep(time.Second * 1)
+		// 	}
+		// }
 
 		promptForNotify := promptui.Select{
 			Label: "Notify your LINE app?",
