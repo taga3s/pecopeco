@@ -7,8 +7,8 @@ import (
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
-	genrefactory "github.com/taga3s/pecopeco-cli/api/factory/genre"
 	restaurantfactory "github.com/taga3s/pecopeco-cli/api/factory/restaurant"
+	searchfactory "github.com/taga3s/pecopeco-cli/api/factory/search"
 	"github.com/taga3s/pecopeco-cli/ui/module/search"
 	"github.com/taga3s/pecopeco-cli/ui/module/share"
 	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
@@ -47,20 +47,20 @@ func run() {
 
 // -- 検索機能
 func searchRestaurants() {
-	genreFactory := genrefactory.CreateFactory()
 	restaurantFactory := restaurantfactory.CreateFactory()
+	searchFactory := searchfactory.CreateFactory()
 
-	genreList, err := genreFactory.ListGenres()
+	genreList, err := searchFactory.ListGenres()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	searchRestaurantInput := search.GetConditionInput(genreList)
-	params := restaurantfactory.ListRestaurantsParams{
+	params := searchfactory.ListRestaurantsByCityAndGenreParams{
 		City:  searchRestaurantInput.City,
 		Genre: searchRestaurantInput.Genre,
 	}
-	restaurantList, err := restaurantFactory.ListRestaurants(params)
+	restaurantList, err := searchFactory.ListRestaurantsByCityAndGenre(params)
 	if err != nil {
 		fmt.Println(err)
 		return
