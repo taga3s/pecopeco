@@ -25,6 +25,7 @@ func (rr *restaurantRepository) List(ctx context.Context) ([]*restaurant.Restaur
 		"nearest_station",
 		"address",
 		"url",
+		"created_at",
 	}
 
 	query := fmt.Sprintf(
@@ -48,6 +49,7 @@ func (rr *restaurantRepository) List(ctx context.Context) ([]*restaurant.Restaur
 			&restaurant.NearestStation,
 			&restaurant.Address,
 			&restaurant.URL,
+			&restaurant.CreatedAt,
 		)
 		if err != nil {
 			break

@@ -2,6 +2,7 @@ package restaurant
 
 import (
 	"context"
+	"time"
 
 	"github.com/taga3s/pecopeco-service/internal/db"
 	restaurantDomain "github.com/taga3s/pecopeco-service/internal/domain/restaurant"
@@ -37,7 +38,7 @@ type SaveRestaurantUseCaseOutputDto struct {
 }
 
 func (uc *SaveRestaurantUseCase) Run(ctx context.Context, dto SaveRestaurantUseCaseInputDto) (*SaveRestaurantUseCaseOutputDto, error) {
-	restaurant, err := restaurantDomain.NewRestaurant(dto.Name, dto.Genre, dto.NearestStation, dto.Address, dto.URL)
+	restaurant, err := restaurantDomain.NewRestaurant(dto.Name, dto.Genre, dto.NearestStation, dto.Address, dto.URL, time.Now())
 	if err != nil {
 		return nil, err
 	}

@@ -2,6 +2,7 @@ package restaurant
 
 import (
 	"context"
+	"time"
 
 	restaurantDomain "github.com/taga3s/pecopeco-service/internal/domain/restaurant"
 )
@@ -25,6 +26,7 @@ type ListRestaurantsUseCaseDto struct {
 	NearestStation string
 	Address        string
 	URL            string
+	CreatedAt      time.Time
 }
 
 func (uc *ListRestaurantsUseCase) Run(ctx context.Context) ([]*ListRestaurantsUseCaseDto, error) {
@@ -43,6 +45,7 @@ func (uc *ListRestaurantsUseCase) Run(ctx context.Context) ([]*ListRestaurantsUs
 			NearestStation: v.NearestStation,
 			Address:        v.Address,
 			URL:            v.URL,
+			CreatedAt:      v.CreatedAt,
 		})
 	}
 	return dtos, nil

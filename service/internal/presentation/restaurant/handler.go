@@ -59,6 +59,7 @@ func (h *handler) ListRestaurants(w http.ResponseWriter, r *http.Request) {
 				NearestStation: v.NearestStation,
 				Address:        v.Address,
 				URL:            v.URL,
+				CreatedAt:      v.CreatedAt,
 			},
 		)
 	}
