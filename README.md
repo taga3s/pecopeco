@@ -1,5 +1,5 @@
 <p align="center">
-  <img src='docs/logo/pecopeco.png' width="100%"/>
+  <img src='assets/pecopeco.png' width="100%"/>
 </p>
 
 ## About this app
@@ -42,13 +42,13 @@
 1. ホットペッパー API は、多くの飲食店情報を提供する。
 2. LINE Notify API を利用することで、ユーザーがトークンを発行し、任意のグループ等と連携を行うことで、LINE に通知することができる。
 
-## System
-
-- 準備中
-
 ### Dev Environment
 
 - [Docker](https://docs.docker.com/)
+
+## System
+
+- 準備中
 
 ## Usage
 
