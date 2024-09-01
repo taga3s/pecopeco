@@ -17,8 +17,9 @@ import (
 var runCmd = &cobra.Command{
 	Use:   "run",
 	Short: "Run pecopeco CLI",
-	Long:  "",
+	Long:  "Run pecopeco CLI",
 	Run: func(cmd *cobra.Command, args []string) {
+		uiutil.Clear()
 		run()
 	},
 }

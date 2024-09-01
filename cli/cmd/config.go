@@ -20,14 +20,14 @@ var configCmd = &cobra.Command{
 		}
 		viper.Set(config.LINE_NOTIFY_API_TOKEN, token)
 		if err := viper.WriteConfig(); err != nil {
-			fmt.Printf("Error writing config file: %s\n", err)
+			fmt.Println("Error writing config file:", err)
 			return
 		}
-		fmt.Println("Updated line_notify_api_token:", viper.GetString(config.LINE_NOTIFY_API_TOKEN))
+		fmt.Println("Updated LINE Notify API Token:", viper.GetString(config.LINE_NOTIFY_API_TOKEN))
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(configCmd)
-	configCmd.Flags().StringP("token", "t", "", "LINE notify token")
+	configCmd.Flags().StringP("token", "t", "", "LINE Notify API Token")
 }
