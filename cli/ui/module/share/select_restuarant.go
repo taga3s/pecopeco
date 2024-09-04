@@ -23,7 +23,7 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectSharedRestaurant
 
 	for _, v := range restaurantList {
 		restaurantMap[v.Name] = v
-		options = append(options, fmt.Sprintf("%s by %s, posted at %s", v.Name, "nanashi", v.PostedAt.Format("2006-01-02")))
+		options = append(options, fmt.Sprintf("%s by %s, posted at %s", v.Name, v.PostedBy, v.PostedAt.Format("2006-01-02")))
 	}
 	options = append(options, "Back to Menu")
 

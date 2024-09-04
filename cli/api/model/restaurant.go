@@ -9,5 +9,6 @@ type Restaurant struct {
 	NearestStation string
 	Genre          string
 	URL            string
+	PostedBy       string
 	PostedAt       time.Time
 }

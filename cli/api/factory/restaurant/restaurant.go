@@ -61,6 +61,7 @@ func (f *factory) ListSharedRestaurants() ([]model.Restaurant, error) {
 			NearestStation: v.NearestStation,
 			Genre:          v.Genre,
 			URL:            v.URL,
+			PostedBy:       v.PostedBy,
 			PostedAt:       v.PostedAt,
 		}
 		restaurantList = append(restaurantList, restaurant)
@@ -75,6 +76,7 @@ func (f *factory) PostSharedRestaurant(params PostRestaurantParams) (model.Resta
 		NearestStation: params.NearestStation,
 		Genre:          params.Genre,
 		URL:            params.URL,
+		PostedBy:       params.PostedBy,
 	}
 	res, err := f.innerRepository.Post(request)
 	if err != nil {

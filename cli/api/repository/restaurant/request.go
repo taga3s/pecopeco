@@ -6,6 +6,7 @@ type PostRequest struct {
 	NearestStation string `json:"nearest_station"`
 	Genre          string `json:"genre"`
 	URL            string `json:"url"`
+	PostedBy       string `json:"posted_by"`
 }
 
 type DeleteRequest struct {
