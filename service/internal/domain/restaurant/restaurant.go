@@ -16,6 +16,7 @@ type Restaurant struct {
 	NearestStation string
 	Address        string
 	URL            string
+	PostedBy       string
 	CreatedAt      time.Time
 }
 
@@ -25,6 +26,7 @@ func NewRestaurant(
 	nearestStation string,
 	address string,
 	url string,
+	postedBy string,
 	createdAt time.Time,
 ) (*Restaurant, error) {
 	// 店舗名のバリデーション
@@ -54,6 +56,7 @@ func NewRestaurant(
 		NearestStation: nearestStation,
 		Address:        address,
 		URL:            url,
+		PostedBy:       postedBy,
 		CreatedAt:      createdAt,
 	}, nil
 }

@@ -26,6 +26,7 @@ type ListRestaurantsUseCaseDto struct {
 	NearestStation string
 	Address        string
 	URL            string
+	PostedBy       string
 	CreatedAt      time.Time
 }
 
@@ -45,6 +46,7 @@ func (uc *ListRestaurantsUseCase) Run(ctx context.Context) ([]*ListRestaurantsUs
 			NearestStation: v.NearestStation,
 			Address:        v.Address,
 			URL:            v.URL,
+			PostedBy:       v.PostedBy,
 			CreatedAt:      v.CreatedAt,
 		})
 	}
