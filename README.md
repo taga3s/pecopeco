@@ -46,9 +46,9 @@
 
 - [Docker](https://docs.docker.com/)
 
-## System
+## System Structure
 
-- 準備中
+<img src="docs/system-structure.png" width="100%"/>
 
 ## Usage
 
