@@ -19,11 +19,16 @@ type selectSharedRestaurantResult struct {
 
 func SelectRestaurant(restaurantList []model.Restaurant) (selectSharedRestaurantResult, error) {
 	restaurantMap := map[string]model.Restaurant{}
+	optionMap := map[string]string{}
 	options := make([]string, 0, len(restaurantList)+1)
 
 	for _, v := range restaurantList {
 		restaurantMap[v.Name] = v
-		options = append(options, fmt.Sprintf("%s by %s, posted at %s", v.Name, v.PostedBy, v.PostedAt.Format("2006-01-02")))
+		optionMap[fmt.Sprintf("%s by %s, posted at %s", v.Name, v.PostedBy, v.PostedAt.Format("2006-01-02"))] = v.Name
+	}
+
+	for k := range optionMap {
+		options = append(options, k)
 	}
 	options = append(options, "Back to Menu")
 
@@ -45,7 +50,7 @@ func SelectRestaurant(restaurantList []model.Restaurant) (selectSharedRestaurant
 		return result, nil
 	}
 
-	restaurant := restaurantMap[option]
+	restaurant := restaurantMap[optionMap[option]]
 	uiutil.TextGreen().Printf("---------------------\n[店名] %s\n[住所] %s\n[最寄り駅] %s\n[ジャンル] %s\n[URL] %s\n---------------------\n",
 		restaurant.Name,
 		restaurant.Address,
