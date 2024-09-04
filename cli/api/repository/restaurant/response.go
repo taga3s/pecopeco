@@ -10,6 +10,7 @@ type ListResponse struct {
 		NearestStation string    `json:"nearest_station"`
 		Address        string    `json:"address"`
 		URL            string    `json:"url"`
+		PostedBy       string    `json:"posted_by"`
 		PostedAt       time.Time `json:"created_at"`
 	} `json:"restaurants"`
 }
@@ -21,4 +22,5 @@ type PostResponse struct {
 	NearestStation string `json:"nearest_station"`
 	Address        string `json:"address"`
 	URL            string `json:"url"`
+	PostedBy       string `json:"posted_by"`
 }

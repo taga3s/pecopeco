@@ -179,12 +179,14 @@ components:
         nearest_station: { type: string, example: "渋谷" }
         genre: { type: string, example: "洋食" }
         url: { type: string, example: "https://www.hotpepper.jp/xxxxxxxx" }
+        posted_by: { type: string, example: "nanashi" }
       required:
         - name
         - address
         - nearest_station
         - genre
         - url
+        - posted_by
     RestaurantResponse:
       type: object
       properties:
@@ -194,6 +196,7 @@ components:
         nearest_station: { type: string, example: "渋谷" }
         genre: { type: string, example: "洋食" }
         url: { type: string, example: "https://www.hotpepper.jp/xxxxxxxx" }
+        posted_by: { type: string, example: "nanashi" }
         created_at: { type: string, example: "2023-04-01 12:00:00+09:00" }
       required:
         - id
@@ -202,6 +205,7 @@ components:
         - nearest_station
         - genre
         - url
+        - posted_by
         - created_at
     RestaurantListResponse:
       type: object

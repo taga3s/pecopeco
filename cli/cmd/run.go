@@ -7,8 +7,10 @@ import (
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	restaurantfactory "github.com/taga3s/pecopeco-cli/api/factory/restaurant"
 	searchfactory "github.com/taga3s/pecopeco-cli/api/factory/search"
+	"github.com/taga3s/pecopeco-cli/config"
 	"github.com/taga3s/pecopeco-cli/ui/module/search"
 	"github.com/taga3s/pecopeco-cli/ui/module/share"
 	uiutil "github.com/taga3s/pecopeco-cli/ui/util"
@@ -85,6 +87,7 @@ func searchRestaurants() {
 			NearestStation: selectRestaurantResult.Restaurant.NearestStation,
 			Genre:          selectRestaurantResult.Restaurant.Genre,
 			URL:            selectRestaurantResult.Restaurant.URL,
+			PostedBy:       viper.GetString(config.USERNAME),
 		}
 		_, err := restaurantFactory.PostSharedRestaurant(params)
 		if err != nil {

@@ -17,6 +17,7 @@ type PostRestaurantParams struct {
 	NearestStation string
 	Genre          string
 	URL            string
+	PostedBy       string
 }
 
 type DeleteRestaurantParams struct {

@@ -12,5 +12,6 @@ create table restaurants (
   nearest_station varchar(256) not null,
   address varchar(256) not null,
   url varchar(256) not null,
+  posted_by varchar(256) not null,
   created_at datetime not null default now()
 ) charset=utf8;

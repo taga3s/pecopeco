@@ -25,6 +25,7 @@ func (rr *restaurantRepository) List(ctx context.Context) ([]*restaurant.Restaur
 		"nearest_station",
 		"address",
 		"url",
+		"posted_by",
 		"created_at",
 	}
 
@@ -49,6 +50,7 @@ func (rr *restaurantRepository) List(ctx context.Context) ([]*restaurant.Restaur
 			&restaurant.NearestStation,
 			&restaurant.Address,
 			&restaurant.URL,
+			&restaurant.PostedBy,
 			&restaurant.CreatedAt,
 		)
 		if err != nil {
@@ -73,9 +75,10 @@ func (rr *restaurantRepository) SaveWithTx(ctx context.Context, tx *sql.Tx, rest
 		"nearest_station",
 		"address",
 		"url",
+		"posted_by",
 	}
 	query := fmt.Sprintf(
-		"insert into restaurants (%s) values (?, ?, ?, ?, ?, ?)",
+		"insert into restaurants (%s) values (?, ?, ?, ?, ?, ?, ?)",
 		strings.Join(fields, ", "),
 	)
 	_, err := tx.ExecContext(
@@ -87,6 +90,7 @@ func (rr *restaurantRepository) SaveWithTx(ctx context.Context, tx *sql.Tx, rest
 		restaurant.NearestStation,
 		restaurant.Address,
 		restaurant.URL,
+		restaurant.PostedBy,
 	)
 	if err != nil {
 		return err

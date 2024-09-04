@@ -27,6 +27,7 @@ func Load() {
 func initConfigFile(configFilename string) error {
 	viper.SetConfigType("yaml")
 	viper.Set(LINE_NOTIFY_API_TOKEN, "")
+	viper.Set(USERNAME, "nanashi")
 
 	err := viper.WriteConfigAs(configFilename)
 	if err != nil {

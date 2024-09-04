@@ -26,6 +26,7 @@ type SaveRestaurantUseCaseInputDto struct {
 	NearestStation string
 	Address        string
 	URL            string
+	PostedBy       string
 }
 
 type SaveRestaurantUseCaseOutputDto struct {
@@ -35,10 +36,11 @@ type SaveRestaurantUseCaseOutputDto struct {
 	NearestStation string
 	Address        string
 	URL            string
+	PostedBy       string
 }
 
 func (uc *SaveRestaurantUseCase) Run(ctx context.Context, dto SaveRestaurantUseCaseInputDto) (*SaveRestaurantUseCaseOutputDto, error) {
-	restaurant, err := restaurantDomain.NewRestaurant(dto.Name, dto.Genre, dto.NearestStation, dto.Address, dto.URL, time.Now())
+	restaurant, err := restaurantDomain.NewRestaurant(dto.Name, dto.Genre, dto.NearestStation, dto.Address, dto.URL, dto.PostedBy, time.Now())
 	if err != nil {
 		return nil, err
 	}
@@ -66,5 +68,6 @@ func (uc *SaveRestaurantUseCase) Run(ctx context.Context, dto SaveRestaurantUseC
 		NearestStation: restaurant.NearestStation,
 		Address:        restaurant.Address,
 		URL:            restaurant.URL,
+		PostedBy:       restaurant.PostedBy,
 	}, nil
 }

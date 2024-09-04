@@ -59,6 +59,7 @@ func (h *handler) ListRestaurants(w http.ResponseWriter, r *http.Request) {
 				NearestStation: v.NearestStation,
 				Address:        v.Address,
 				URL:            v.URL,
+				PostedBy:       v.PostedBy,
 				CreatedAt:      v.CreatedAt,
 			},
 		)
@@ -89,6 +90,7 @@ func (h *handler) SaveRestaurant(w http.ResponseWriter, r *http.Request) {
 		NearestStation: params.NearestStation,
 		Address:        params.Address,
 		URL:            params.URL,
+		PostedBy:       params.PostedBy,
 	}
 
 	outputDto, err := h.saveRestaurantUsecase.Run(ctx, inputDto)
@@ -104,6 +106,7 @@ func (h *handler) SaveRestaurant(w http.ResponseWriter, r *http.Request) {
 		NearestStation: outputDto.NearestStation,
 		Address:        outputDto.Address,
 		URL:            outputDto.URL,
+		PostedBy:       outputDto.PostedBy,
 	}
 	responder.ReturnStatusOK(w, response)
 }
