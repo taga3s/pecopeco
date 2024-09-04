@@ -62,6 +62,11 @@ $ pecopeco run
 $ pecopeco config --token <LINE_NOTIFY_API_TOKEN>
 ```
 
+- configure `Username`
+```
+$ pecopeco config --username <Username>
+```
+
 ## Setup
 
 ### 共通
